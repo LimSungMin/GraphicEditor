@@ -152,6 +152,7 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     LTEXT           "TODO: 이 대화 상자에 폼 컨트롤을 배치합니다.",IDC_STATIC,24,42,280,8
+    PUSHBUTTON      "으아니",IDC_BUTTON1,117,110,50,14
 END
 
 

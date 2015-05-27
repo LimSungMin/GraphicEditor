@@ -17,7 +17,7 @@ public:
 
 // 작업입니다.
 public:
-
+	int m_switchVar;
 // 재정의입니다.
 public:
 	virtual BOOL OnNewDocument();

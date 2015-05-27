@@ -20,7 +20,7 @@ public:
 public:
 	CGEDoc* GetDocument() const;
 	CString str;
-	CString lwjstr;
+	CString lwjstけいしけいしr;
 // 拙穣脊艦陥.
 public:
 

@@ -20,6 +20,7 @@ public:
 public:
 	CGEDoc* GetDocument() const;
 	CString str;
+	CString lwjstr;
 // 작업입니다.
 public:
 

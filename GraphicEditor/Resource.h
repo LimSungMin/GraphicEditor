@@ -18,13 +18,17 @@
 #define ID_WINDOW_MANAGER               131
 #define IDS_EDIT_MENU                   306
 #define ID_BUTTON32772                  32772
+#define ID_BUTTON32774                  32774
+#define ID_BUTTON32775                  32775
+#define ID_BUTTON32777                  32777
+#define ID_BUTTON32781                  32781
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        310
-#define _APS_NEXT_COMMAND_VALUE         32773
+#define _APS_NEXT_COMMAND_VALUE         32782
 #define _APS_NEXT_CONTROL_VALUE         1000
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

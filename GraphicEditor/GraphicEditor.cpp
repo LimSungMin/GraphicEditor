@@ -1,56 +1,59 @@
 
-// GE.cpp : 응용 프로그램에 대한 클래스 동작을 정의합니다.
+// GraphicEditor.cpp : 응용 프로그램에 대한 클래스 동작을 정의합니다.
 //
 
 #include "stdafx.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
-#include "GE.h"
+#include "GraphicEditor.h"
 #include "MainFrm.h"
 
-#include "GEDoc.h"
-#include "GEView.h"
+#include "ChildFrm.h"
+#include "GraphicEditorDoc.h"
+#include "LeftView.h"
 
 #ifdef _DEBUG
-#define new DEBUG_NEW // ㅁ
+#define new DEBUG_NEW
 #endif
 
 
-// CGEApp
+// CGraphicEditorApp
 
-BEGIN_MESSAGE_MAP(CGEApp, CWinApp)
-	ON_COMMAND(ID_APP_ABOUT, &CGEApp::OnAppAbout)
+BEGIN_MESSAGE_MAP(CGraphicEditorApp, CWinAppEx)
+	ON_COMMAND(ID_APP_ABOUT, &CGraphicEditorApp::OnAppAbout)
 	// 표준 파일을 기초로 하는 문서 명령입니다.
-	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
+	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
+	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
 END_MESSAGE_MAP()
 
 
-// CGEApp 생성
+// CGraphicEditorApp 생성
 
-CGEApp::CGEApp()
+CGraphicEditorApp::CGraphicEditorApp()
 {
+	m_bHiColorIcons = TRUE;
+
 	// TODO: 아래 응용 프로그램 ID 문자열을 고유 ID 문자열로 바꾸십시오(권장).
 	// 문자열에 대한 서식: CompanyName.ProductName.SubProduct.VersionInformation
-	SetAppID(_T("GE.AppID.NoVersion"));
+	SetAppID(_T("GraphicEditor.AppID.NoVersion"));
 
 	// TODO: 여기에 생성 코드를 추가합니다.
 	// InitInstance에 모든 중요한 초기화 작업을 배치합니다.
 }
 
-// 유일한 CGEApp 개체입니다.
+// 유일한 CGraphicEditorApp 개체입니다.
 
-CGEApp theApp;
+CGraphicEditorApp theApp;
 
 
-// CGEApp 초기화
+// CGraphicEditorApp 초기화
 
-BOOL CGEApp::InitInstance()
+BOOL CGraphicEditorApp::InitInstance()
 {
-	CWinApp::InitInstance();
+	CWinAppEx::InitInstance();
 
 
-	EnableTaskbarInteraction(FALSE);
+	EnableTaskbarInteraction();
 
 	// RichEdit 컨트롤을 사용하려면  AfxInitRichEdit2()가 있어야 합니다.	
 	// AfxInitRichEdit2();
@@ -66,17 +69,35 @@ BOOL CGEApp::InitInstance()
 	LoadStdProfileSettings(4);  // MRU를 포함하여 표준 INI 파일 옵션을 로드합니다.
 
 
+	InitContextMenuManager();
+
+	InitKeyboardManager();
+
+	InitTooltipManager();
+	CMFCToolTipInfo ttParams;
+	ttParams.m_bVislManagerTheme = TRUE;
+	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
+		RUNTIME_CLASS(CMFCToolTipCtrl), &ttParams);
+
 	// 응용 프로그램의 문서 템플릿을 등록합니다.  문서 템플릿은
 	//  문서, 프레임 창 및 뷰 사이의 연결 역할을 합니다.
-	CSingleDocTemplate* pDocTemplate;
-	pDocTemplate = new CSingleDocTemplate(
-		IDR_MAINFRAME,
-		RUNTIME_CLASS(CGEDoc),
-		RUNTIME_CLASS(CMainFrame),       // 주 SDI 프레임 창입니다.
-		RUNTIME_CLASS(CGEView));
+	CMultiDocTemplate* pDocTemplate;
+	pDocTemplate = new CMultiDocTemplate(IDR_GraphicEditorTYPE,
+		RUNTIME_CLASS(CGraphicEditorDoc),
+		RUNTIME_CLASS(CChildFrame), // 사용자 지정 MDI 자식 프레임입니다.
+		RUNTIME_CLASS(CLeftView));
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
+
+	// 주 MDI 프레임 창을 만듭니다.
+	CMainFrame* pMainFrame = new CMainFrame;
+	if (!pMainFrame || !pMainFrame->LoadFrame(IDR_MAINFRAME))
+	{
+		delete pMainFrame;
+		return FALSE;
+	}
+	m_pMainWnd = pMainFrame;
 
 
 	// 표준 셸 명령, DDE, 파일 열기에 대한 명령줄을 구문 분석합니다.
@@ -89,14 +110,20 @@ BOOL CGEApp::InitInstance()
 	// 응용 프로그램이 /RegServer, /Register, /Unregserver 또는 /Unregister로 시작된 경우 FALSE를 반환합니다.
 	if (!ProcessShellCommand(cmdInfo))
 		return FALSE;
+	// 주 창이 초기화되었으므로 이를 표시하고 업데이트합니다.
+	pMainFrame->ShowWindow(m_nCmdShow);
+	pMainFrame->UpdateWindow();
 
-	// 창 하나만 초기화되었으므로 이를 표시하고 업데이트합니다.
-	m_pMainWnd->ShowWindow(SW_SHOW);
-	m_pMainWnd->UpdateWindow();
 	return TRUE;
 }
 
-// CGEApp 메시지 처리기
+int CGraphicEditorApp::ExitInstance()
+{
+	//TODO: 추가한 추가 리소스를 처리합니다.
+	return CWinAppEx::ExitInstance();
+}
+
+// CGraphicEditorApp 메시지 처리기
 
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
@@ -130,13 +157,32 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 // 대화 상자를 실행하기 위한 응용 프로그램 명령입니다.
-void CGEApp::OnAppAbout()
+void CGraphicEditorApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
 }
 
-// CGEApp 메시지 처리기
+// CGraphicEditorApp 사용자 지정 로드/저장 메서드
+
+void CGraphicEditorApp::PreLoadState()
+{
+	BOOL bNameValid;
+	CString strName;
+	bNameValid = strName.LoadString(IDS_EDIT_MENU);
+	ASSERT(bNameValid);
+	GetContextMenuManager()->AddMenu(strName, IDR_POPUP_EDIT);
+}
+
+void CGraphicEditorApp::LoadCustomState()
+{
+}
+
+void CGraphicEditorApp::SaveCustomState()
+{
+}
+
+// CGraphicEditorApp 메시지 처리기
 
 
 

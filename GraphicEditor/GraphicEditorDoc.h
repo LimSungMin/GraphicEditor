@@ -1,24 +1,23 @@
 
-// GEDoc.h : CGEDoc 클래스의 인터페이스
+// GraphicEditorDoc.h : CGraphicEditorDoc 클래스의 인터페이스
 //
 
 
 #pragma once
 
 
-class CGEDoc : public CDocument
+class CGraphicEditorDoc : public CDocument
 {
 protected: // serialization에서만 만들어집니다.
-	CGEDoc();
-	DECLARE_DYNCREATE(CGEDoc)
+	CGraphicEditorDoc();
+	DECLARE_DYNCREATE(CGraphicEditorDoc)
 
 // 특성입니다.
 public:
 
 // 작업입니다.
 public:
-	int m_switchVar;
-	CString 이것은테스트변수입니다;
+
 // 재정의입니다.
 public:
 	virtual BOOL OnNewDocument();
@@ -30,7 +29,7 @@ public:
 
 // 구현입니다.
 public:
-	virtual ~CGEDoc();
+	virtual ~CGraphicEditorDoc();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;

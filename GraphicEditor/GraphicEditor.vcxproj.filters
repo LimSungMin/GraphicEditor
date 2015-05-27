@@ -18,7 +18,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GE.h">
+    <ClInclude Include="GraphicEditor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
@@ -30,10 +30,16 @@
     <ClInclude Include="MainFrm.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GEDoc.h">
+    <ClInclude Include="ChildFrm.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GEView.h">
+    <ClInclude Include="GraphicEditorDoc.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicEditorView.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LeftView.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
@@ -41,7 +47,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GE.cpp">
+    <ClCompile Include="GraphicEditor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -50,29 +56,44 @@
     <ClCompile Include="MainFrm.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GEDoc.cpp">
+    <ClCompile Include="ChildFrm.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GEView.cpp">
+    <ClCompile Include="GraphicEditorDoc.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicEditorView.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="LeftView.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GE.rc">
+    <ResourceCompile Include="GraphicEditor.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\GE.rc2">
+    <Image Include="UserImages.bmp">
       <Filter>리소스 파일</Filter>
-    </None>
+    </Image>
+    <Image Include="res\GraphicEditorDoc.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\GraphicEditor.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\GEDoc.ico">
+    <None Include="res\GraphicEditor.rc2">
       <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="res\GE.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
+    </None>
   </ItemGroup>
 </Project>

@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1A7E8F82-3482-4CCF-B4BD-6C69519C30C8}</ProjectGuid>
-    <RootNamespace>GE</RootNamespace>
+    <ProjectGuid>{C4626CF3-8167-47ED-B707-B1F270E3DD45}</ProjectGuid>
+    <RootNamespace>GraphicEditor</RootNamespace>
     <Keyword>MFCProj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -99,18 +99,22 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GE.h" />
-    <ClInclude Include="GEDoc.h" />
-    <ClInclude Include="GEView.h" />
+    <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="GraphicEditor.h" />
+    <ClInclude Include="GraphicEditorDoc.h" />
+    <ClInclude Include="GraphicEditorView.h" />
+    <ClInclude Include="LeftView.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GE.cpp" />
-    <ClCompile Include="GEDoc.cpp" />
-    <ClCompile Include="GEView.cpp" />
+    <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="GraphicEditor.cpp" />
+    <ClCompile Include="GraphicEditorDoc.cpp" />
+    <ClCompile Include="GraphicEditorView.cpp" />
+    <ClCompile Include="LeftView.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -118,21 +122,19 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GE.rc" />
+    <ResourceCompile Include="GraphicEditor.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\GE.rc2" />
+    <Image Include="res\GraphicEditor.ico" />
+    <Image Include="res\GraphicEditorDoc.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\GE.ico" />
-    <Image Include="res\GEDoc.ico" />
+    <None Include="res\GraphicEditor.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties RESOURCE_FILE="GE.rc" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

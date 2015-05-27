@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GE", "GE\GE.vcxproj", "{1A7E8F82-3482-4CCF-B4BD-6C69519C30C8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphicEditor", "GraphicEditor\GraphicEditor.vcxproj", "{C4626CF3-8167-47ED-B707-B1F270E3DD45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1A7E8F82-3482-4CCF-B4BD-6C69519C30C8}.Debug|Win32.ActiveCfg = Debug|Win32
-		{1A7E8F82-3482-4CCF-B4BD-6C69519C30C8}.Debug|Win32.Build.0 = Debug|Win32
-		{1A7E8F82-3482-4CCF-B4BD-6C69519C30C8}.Release|Win32.ActiveCfg = Release|Win32
-		{1A7E8F82-3482-4CCF-B4BD-6C69519C30C8}.Release|Win32.Build.0 = Release|Win32
+		{C4626CF3-8167-47ED-B707-B1F270E3DD45}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C4626CF3-8167-47ED-B707-B1F270E3DD45}.Debug|Win32.Build.0 = Debug|Win32
+		{C4626CF3-8167-47ED-B707-B1F270E3DD45}.Release|Win32.ActiveCfg = Release|Win32
+		{C4626CF3-8167-47ED-B707-B1F270E3DD45}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

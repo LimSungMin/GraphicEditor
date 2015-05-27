@@ -19,7 +19,7 @@ public:
 // 특성입니다.
 public:
 	CGEDoc* GetDocument() const;
-
+	CString str;
 // 작업입니다.
 public:
 

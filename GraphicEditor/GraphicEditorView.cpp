@@ -119,7 +119,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:
-		//SetCapture();
+		
 		line.SetStart(point.x, point.y);
 		pos = point;
 		break;
@@ -138,11 +138,16 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	ldown = FALSE;
 	switch (CurrentMode)
 	{
-	case DrawMode::LINE:
-		//ReleaseCapture();
+	case DrawMode::LINE:{
 		line.SetEnd(point.x, point.y);
-		pos = point;
+		CClientDC dc(this);
+		dc.MoveTo(pos);
+		dc.LineTo(point);
+		//pos = point;
 		break;
+	}
+		
+		
 	default:
 		break;
 	}
@@ -157,10 +162,8 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 		switch (CurrentMode)
 		{
 		case DrawMode::LINE:{
-			CClientDC dc(this);
-			dc.MoveTo(pos);
-			dc.LineTo(point);
-			pos = point;
+			
+			
 			break;
 		}
 

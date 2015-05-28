@@ -28,7 +28,9 @@ public:
 	Line line;
 	POINT pos;
 	BOOL ldown;
-
+	BOOL m_textin = FALSE;
+	
+	CArray<TCHAR, TCHAR> m_str;
 	
 // 작업입니다.
 public:
@@ -70,6 +72,8 @@ public:
 	afx_msg void OnUpdatePolyline(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateEllipse(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateLine(CCmdUI *pCmdUI);
+	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
+	CString m_stringreg;
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

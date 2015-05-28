@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_UPDATE_COMMAND_UI(ID_POLYLINE, &CGraphicEditorView::OnUpdatePolyline)
 	ON_UPDATE_COMMAND_UI(ID_ELLIPSE, &CGraphicEditorView::OnUpdateEllipse)
 	ON_UPDATE_COMMAND_UI(ID_LINE, &CGraphicEditorView::OnUpdateLine)
+	ON_WM_CHAR()
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -45,6 +46,7 @@ END_MESSAGE_MAP()
 
 CGraphicEditorView::CGraphicEditorView()
 	: CFormView(CGraphicEditorView::IDD)
+	, m_stringreg(_T(""))
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
 	//CurrentMode = DrawMode::LINE;								// 기본값은 라인
@@ -132,6 +134,12 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		//pDoc->m_rectsCurrent = pDoc->m_rects.GetCount() - 1;
 		break;
 	}
+
+	case DrawMode::TEXT:{
+		line.SetStart(point.x, point.y);
+		line.SetEnd(point.x, point.y);
+		break;
+	}
 	default:
 		break;
 	}
@@ -164,6 +172,44 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		dc.Rectangle(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y);
 		break;
 	}
+	
+	case DrawMode::TEXT:{
+		
+		
+			line.SetEnd(point.x, point.y);
+			JRectangle r(line.getstart(), line.getend());
+			CClientDC dc(this);
+			dc.SelectStockObject(NULL_BRUSH);
+			dc.SetROP2(R2_COPYPEN);
+			dc.Rectangle(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y);
+
+			//m_str.Add('\0');
+			m_stringreg = CString(m_str.GetData());
+
+			CPaintDC dt(this);
+
+			//CString test = _T("this is test of textbox");
+			dc.SetBkMode(TRANSPARENT);
+			
+			if (r.getstart().x > r.getend().x && r.getstart().y > r.getend().y)
+			{
+				dc.DrawText(_T("this is test of textbox"),
+					CRect(r.getend().x, r.getend().y, r.getstart().x, r.getstart().y)
+					, DT_LEFT | DT_WORDBREAK );
+				
+			}
+			else{
+			dc.DrawText(m_stringreg,
+				CRect(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y)
+				, DT_LEFT | DT_WORDBREAK);
+			}
+
+			m_str.RemoveAll();
+			
+		break;
+	}
+
+
 	default:
 		break;
 	}
@@ -281,4 +327,30 @@ void CGraphicEditorView::OnUpdateLine(CCmdUI *pCmdUI)
 {
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
 	pCmdUI->SetCheck(CurrentMode == DrawMode::LINE);
+}
+
+
+void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	switch (CurrentMode)
+	{
+	case DrawMode::TEXT:{
+
+		if (nChar == _T('\b')){
+			if (m_str.GetSize() > 0)
+				m_str.RemoveAt(m_str.GetSize() - 1);
+		}
+
+		else {
+			m_str.Add(nChar);
+		}
+
+		break;
+	}
+
+	default:
+		break;
+	}
+	CFormView::OnChar(nChar, nRepCnt, nFlags);
 }

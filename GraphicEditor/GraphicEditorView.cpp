@@ -10,6 +10,7 @@
 #endif
 #include "GraphicEditorDoc.h"
 #include "GraphicEditorView.h"
+#include "Rectangle.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -116,13 +117,20 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	ldown = TRUE;
+	CGraphicEditorDoc* pDoc = GetDocument();
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:
-		
 		line.SetStart(point.x, point.y);
 		pos = point;
 		break;
+	case DrawMode::RECT:{
+		line.SetStart(point.x, point.y);
+		//JRectangle* rect = new JRectangle(point, point);
+		//pDoc->m_rects.Add(*rect);
+		//pDoc->m_rectsCurrent = pDoc->m_rects.GetCount() - 1;
+		break;
+	}
 	default:
 		break;
 	}
@@ -146,8 +154,15 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		//pos = point;
 		break;
 	}
-		
-		
+	case DrawMode::RECT:{
+		line.SetEnd(point.x, point.y);
+		JRectangle r(line.getstart(), line.getend());
+		CClientDC dc(this);
+		dc.SelectStockObject(NULL_BRUSH);
+		dc.SetROP2(R2_COPYPEN);
+		dc.Rectangle(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y);
+		break;
+	}
 	default:
 		break;
 	}
@@ -165,6 +180,25 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			
 			
 			break;
+		}
+		case DrawMode::RECT:{
+			CGraphicEditorDoc* pDoc = GetDocument();
+			CClientDC dc(this);
+			dc.SelectStockObject(NULL_BRUSH);
+			dc.SetROP2(R2_NOT);
+			/*
+			dc.Rectangle(pDoc->m_rects[pDoc->m_rectsCurrent].getstart().x, 
+				pDoc->m_rects[pDoc->m_rectsCurrent].getstart().y, 
+				pDoc->m_rects[pDoc->m_rectsCurrent].getend().x, 
+				pDoc->m_rects[pDoc->m_rectsCurrent].getend().y); // 기존 위치의 사각형 지우기
+
+			//pDoc->m_rects[pDoc->m_rectsCurrent].getstart().x += point.x - pDoc->m_rects[pDoc->m_rectsCurrent].
+			pDoc->m_rects[pDoc->m_rectsCurrent].SetEnd(point.x, point.y);
+			dc.Rectangle(pDoc->m_rects[pDoc->m_rectsCurrent].getstart().x,
+				pDoc->m_rects[pDoc->m_rectsCurrent].getstart().y,
+				pDoc->m_rects[pDoc->m_rectsCurrent].getend().x,
+				pDoc->m_rects[pDoc->m_rectsCurrent].getend().y); // 새로 그리기
+				*/
 		}
 
 		default:

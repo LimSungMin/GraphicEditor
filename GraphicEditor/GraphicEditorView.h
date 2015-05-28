@@ -28,6 +28,8 @@ public:
 	Line line;
 	POINT pos;
 	BOOL ldown;
+
+	
 // 작업입니다.
 public:
 

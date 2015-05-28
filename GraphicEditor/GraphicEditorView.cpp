@@ -121,6 +121,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	case DrawMode::LINE:
 		//SetCapture();
 		line.SetStart(point.x, point.y);
+		pos = point;
 		break;
 	default:
 		break;
@@ -159,7 +160,7 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			CClientDC dc(this);
 			dc.MoveTo(pos);
 			dc.LineTo(point);
-
+			pos = point;
 			break;
 		}
 

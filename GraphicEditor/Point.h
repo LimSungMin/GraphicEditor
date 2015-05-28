@@ -9,7 +9,7 @@ public:
 	int GetX();
 	int GetY();
 	void SetPoint(int x1, int y2);
-	~Point();
+	virtual ~Point();
 private:
 	int x;
 	int y;

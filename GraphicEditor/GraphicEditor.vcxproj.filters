@@ -48,12 +48,6 @@
     <ClInclude Include="헤더.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Rectangle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -78,12 +72,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="LeftView.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Rectangle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Point.cpp">

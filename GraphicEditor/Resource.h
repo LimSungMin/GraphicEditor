@@ -19,6 +19,7 @@
 #define IDS_EDIT_MENU                   306
 #define ID_BUTTON32772                  32772
 #define ID_BUTTON32774                  32774
+#define ID_POLYLINE                     32774
 #define ID_BUTTON32775                  32775
 #define ID_BUTTON32777                  32777
 #define ID_BUTTON32781                  32781

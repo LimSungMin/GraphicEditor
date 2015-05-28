@@ -19,7 +19,6 @@
 #define IDS_EDIT_MENU                   306
 #define ID_ELLIPSE                      32772
 #define ID_RECTANGLE                    32775
-#define ID_BUTTON32777                  32777
 #define ID_TEXT                         32777
 #define ID_LINE                         32781
 #define ID_POLYLINE                     32782

@@ -453,6 +453,15 @@ BEGIN
     IDS_EDIT_MENU           "편집"
 END
 
+STRINGTABLE
+BEGIN
+    ID_ELLIPSE              "원을 그립니다"
+    ID_RECTANGLE            "사각형을 그립니다"
+    ID_TEXT                 "텍스트를 씁니다"
+    ID_LINE                 "선을 그립니다"
+    ID_POLYLINE             "다각선을 그립니다"
+END
+
 #endif    // 한국어(대한민국) resources
 /////////////////////////////////////////////////////////////////////////////
 

@@ -106,8 +106,6 @@
     <ClInclude Include="LeftView.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="Point.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -122,8 +120,6 @@
     <ClCompile Include="LeftView.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Point.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -146,4 +142,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="GraphicEditor.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

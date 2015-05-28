@@ -251,32 +251,32 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 }
 
 
-
+// 이것은 라인 메시지 처리기 입니다
 void CMainFrame::OnLine()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	MessageBox(_T("test"));
 }
 
-
+// 이것은 폴리라인 메시지 처리기 입니다.
 void CMainFrame::OnPolyline()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 }
 
-
+// 이것은 사각형 메시지 처리기 입니다.
 void CMainFrame::OnRectangle()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 }
 
-
+// 이것은 타원 메시지 처리기 입니다.
 void CMainFrame::OnEllipse()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 }
 
-
+// 이것은 텍스트 메시지 처리기 입니다.
 void CMainFrame::OnText()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.

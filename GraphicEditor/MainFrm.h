@@ -43,6 +43,12 @@ protected:
 	afx_msg LRESULT OnToolbarCreateNew(WPARAM wp, LPARAM lp);
 	DECLARE_MESSAGE_MAP()
 
+public:
+	afx_msg void OnLine();
+	afx_msg void OnPolyline();
+	afx_msg void OnRectangle();
+	afx_msg void OnEllipse();
+	afx_msg void OnText();
 };
 
 

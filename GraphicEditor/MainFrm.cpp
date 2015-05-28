@@ -24,6 +24,11 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_WINDOW_MANAGER, &CMainFrame::OnWindowManager)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, &CMainFrame::OnViewCustomize)
 	ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
+	ON_COMMAND(ID_LINE, &CMainFrame::OnLine)
+	ON_COMMAND(ID_POLYLINE, &CMainFrame::OnPolyline)
+	ON_COMMAND(ID_RECTANGLE, &CMainFrame::OnRectangle)
+	ON_COMMAND(ID_ELLIPSE, &CMainFrame::OnEllipse)
+	ON_COMMAND(ID_TEXT, &CMainFrame::OnText)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -245,3 +250,34 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 	return TRUE;
 }
 
+
+
+void CMainFrame::OnLine()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	MessageBox(_T("test"));
+}
+
+
+void CMainFrame::OnPolyline()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CMainFrame::OnRectangle()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CMainFrame::OnEllipse()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CMainFrame::OnText()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}

@@ -5,6 +5,7 @@
 #pragma once
 
 #include "resource.h"
+#include "Line.h"
 
 
 class CGraphicEditorView : public CFormView
@@ -19,7 +20,14 @@ public:
 // 특성입니다.
 public:
 	CGraphicEditorDoc* GetDocument() const;
-
+	enum DrawMode
+	{
+		LINE, POLY, RECT, ELLP, TEXT
+	};
+	int CurrentMode;
+	Line line;
+	POINT pos;
+	BOOL ldown;
 // 작업입니다.
 public:
 
@@ -48,6 +56,18 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLine();
+	afx_msg void OnPolyline();
+	afx_msg void OnRectangle();
+	afx_msg void OnEllipse();
+	afx_msg void OnText();
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnUpdateText(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateRectangle(CCmdUI *pCmdUI);
+	afx_msg void OnUpdatePolyline(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateEllipse(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateLine(CCmdUI *pCmdUI);
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

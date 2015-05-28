@@ -254,8 +254,7 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 // 이것은 라인 메시지 처리기 입니다
 void CMainFrame::OnLine()
 {
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-	MessageBox(_T("test"));
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.	
 }
 
 // 이것은 폴리라인 메시지 처리기 입니다.

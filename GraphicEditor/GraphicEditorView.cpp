@@ -8,7 +8,6 @@
 #ifndef SHARED_HANDLERS
 #include "GraphicEditor.h"
 #endif
-
 #include "GraphicEditorDoc.h"
 #include "GraphicEditorView.h"
 
@@ -25,14 +24,29 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 	ON_WM_LBUTTONDOWN()
+	ON_COMMAND(ID_LINE, &CGraphicEditorView::OnLine)
+	ON_COMMAND(ID_POLYLINE, &CGraphicEditorView::OnPolyline)
+	ON_COMMAND(ID_RECTANGLE, &CGraphicEditorView::OnRectangle)
+	ON_COMMAND(ID_ELLIPSE, &CGraphicEditorView::OnEllipse)
+	ON_COMMAND(ID_TEXT, &CGraphicEditorView::OnText)
+	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
+	ON_UPDATE_COMMAND_UI(ID_TEXT, &CGraphicEditorView::OnUpdateText)
+	ON_UPDATE_COMMAND_UI(ID_RECTANGLE, &CGraphicEditorView::OnUpdateRectangle)
+	ON_UPDATE_COMMAND_UI(ID_POLYLINE, &CGraphicEditorView::OnUpdatePolyline)
+	ON_UPDATE_COMMAND_UI(ID_ELLIPSE, &CGraphicEditorView::OnUpdateEllipse)
+	ON_UPDATE_COMMAND_UI(ID_LINE, &CGraphicEditorView::OnUpdateLine)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
+
+
 
 CGraphicEditorView::CGraphicEditorView()
 	: CFormView(CGraphicEditorView::IDD)
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
+	//CurrentMode = DrawMode::LINE;								// 기본값은 라인
 
 }
 
@@ -101,6 +115,127 @@ CGraphicEditorDoc* CGraphicEditorView::GetDocument() const // 디버그되지 않은 버
 void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
+	ldown = TRUE;
+	switch (CurrentMode)
+	{
+	case DrawMode::LINE:
+		//SetCapture();
+		line.SetStart(point.x, point.y);
+		break;
+	default:
+		break;
+	}
 	CFormView::OnLButtonDown(nFlags, point);
+}
+
+
+
+void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	ldown = FALSE;
+	switch (CurrentMode)
+	{
+	case DrawMode::LINE:
+		//ReleaseCapture();
+		line.SetEnd(point.x, point.y);
+		pos = point;
+		break;
+	default:
+		break;
+	}
+	CFormView::OnLButtonUp(nFlags, point);
+}
+
+
+void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	if (ldown){
+		switch (CurrentMode)
+		{
+		case DrawMode::LINE:{
+			CClientDC dc(this);
+			dc.MoveTo(pos);
+			dc.LineTo(point);
+
+			break;
+		}
+
+		default:
+			break;
+		}
+		CFormView::OnMouseMove(nFlags, point);
+	}
+	
+}
+void CGraphicEditorView::OnLine()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CurrentMode = DrawMode::LINE;
+}
+
+
+void CGraphicEditorView::OnPolyline()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CurrentMode = DrawMode::POLY;
+}
+
+
+void CGraphicEditorView::OnRectangle()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CurrentMode = DrawMode::RECT;
+}
+
+
+void CGraphicEditorView::OnEllipse()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CurrentMode = DrawMode::ELLP;
+}
+
+
+void CGraphicEditorView::OnText()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CurrentMode = DrawMode::TEXT;
+}
+
+
+
+void CGraphicEditorView::OnUpdateText(CCmdUI *pCmdUI)
+{
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+	pCmdUI->SetCheck(CurrentMode == DrawMode::TEXT);
+}
+
+
+void CGraphicEditorView::OnUpdateRectangle(CCmdUI *pCmdUI)
+{
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+	pCmdUI->SetCheck(CurrentMode == DrawMode::RECT);
+}
+
+
+void CGraphicEditorView::OnUpdatePolyline(CCmdUI *pCmdUI)
+{
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+	pCmdUI->SetCheck(CurrentMode == DrawMode::POLY);
+}
+
+
+void CGraphicEditorView::OnUpdateEllipse(CCmdUI *pCmdUI)
+{
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+	pCmdUI->SetCheck(CurrentMode == DrawMode::ELLP);
+}
+
+
+void CGraphicEditorView::OnUpdateLine(CCmdUI *pCmdUI)
+{
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+	pCmdUI->SetCheck(CurrentMode == DrawMode::LINE);
 }

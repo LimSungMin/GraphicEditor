@@ -126,6 +126,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		break;
 	case DrawMode::RECT:{
 		line.SetStart(point.x, point.y);
+		line.SetEnd(point.x, point.y);
 		//JRectangle* rect = new JRectangle(point, point);
 		//pDoc->m_rects.Add(*rect);
 		//pDoc->m_rectsCurrent = pDoc->m_rects.GetCount() - 1;
@@ -186,6 +187,10 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			CClientDC dc(this);
 			dc.SelectStockObject(NULL_BRUSH);
 			dc.SetROP2(R2_NOT);
+			dc.Rectangle(line.getstart().x, line.getstart().y, line.getend().x, line.getend().y);
+
+			line.SetEnd(point.x, point.y);
+			dc.Rectangle(line.getstart().x, line.getstart().y, line.getend().x, line.getend().y);
 			/*
 			dc.Rectangle(pDoc->m_rects[pDoc->m_rectsCurrent].getstart().x, 
 				pDoc->m_rects[pDoc->m_rectsCurrent].getstart().y, 

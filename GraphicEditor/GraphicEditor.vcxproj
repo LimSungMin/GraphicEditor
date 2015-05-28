@@ -104,6 +104,7 @@
     <ClInclude Include="GraphicEditorDoc.h" />
     <ClInclude Include="GraphicEditorView.h" />
     <ClInclude Include="LeftView.h" />
+    <ClInclude Include="Line.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Point.h" />
@@ -119,6 +120,7 @@
     <ClCompile Include="GraphicEditorDoc.cpp" />
     <ClCompile Include="GraphicEditorView.cpp" />
     <ClCompile Include="LeftView.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Point.cpp" />

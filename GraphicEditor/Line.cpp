@@ -31,9 +31,15 @@ int Line::getY()
 	return starty;
 }
 
-POINT Line::getxy(){
+POINT Line::getstart(){
 	POINT pos;
 	pos.x = startx;
 	pos.y = starty;
+	return pos;
+}
+POINT Line::getend(){
+	POINT pos;
+	pos.x = endx;
+	pos.y = endy;
 	return pos;
 }

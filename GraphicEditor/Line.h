@@ -8,7 +8,8 @@ public:
 	void SetStart(int x, int y);
 	int getX();
 	int getY();
-	POINT getxy();
+	POINT getstart();
+	POINT getend();
 private:
 	int startx, starty;
 	int endx, endy;

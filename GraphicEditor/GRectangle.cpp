@@ -13,6 +13,9 @@ void GRectangle::draw(CDC* dc, int mode){
 int GRectangle::getEndX(){ return m_endX; }
 int GRectangle::getEndY(){ return m_endY; }
 
+void GRectangle::setEndX(int x){ m_endX = x; }
+void GRectangle::setEndY(int y){ m_endY = y; }
+
 GRectangle::~GRectangle()
 {
 }

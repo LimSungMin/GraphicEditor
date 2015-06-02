@@ -17,6 +17,7 @@
 #define IDR_GraphicEditorTYPE           130
 #define ID_WINDOW_MANAGER               131
 #define IDS_EDIT_MENU                   306
+#define IDC_EDIT1                       1000
 #define ID_ELLIPSE                      32772
 #define ID_RECTANGLE                    32775
 #define ID_TEXT                         32777
@@ -29,7 +30,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        310
 #define _APS_NEXT_COMMAND_VALUE         32783
-#define _APS_NEXT_CONTROL_VALUE         1000
+#define _APS_NEXT_CONTROL_VALUE         1001
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

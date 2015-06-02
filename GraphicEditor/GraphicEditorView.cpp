@@ -11,6 +11,9 @@
 #include "GraphicEditorDoc.h"
 #include "GraphicEditorView.h"
 #include "Rectangle.h"
+#include "GObject.h"
+#include "GRectangle.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -127,7 +130,10 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		pos = point;
 		break;
 	case DrawMode::RECT:{
-
+		pDoc->m_rect.setStartX(point.x);
+		pDoc->m_rect.setStartY(point.y);
+		pDoc->m_rect.setEndX(point.x);
+		pDoc->m_rect.setEndY(point.y);
 		//line.SetStart(point.x, point.y);
 		//line.SetEnd(point.x, point.y);
 		//JRectangle* rect = new JRectangle(point, point);
@@ -165,12 +171,13 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		break;
 	}
 	case DrawMode::RECT:{
-		line.SetEnd(point.x, point.y);
+		/*line.SetEnd(point.x, point.y);
 		JRectangle r(line.getstart(), line.getend());
 		CClientDC dc(this);
 		dc.SelectStockObject(NULL_BRUSH);
 		dc.SetROP2(R2_COPYPEN);
-		dc.Rectangle(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y);
+		dc.Rectangle(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y);*/
+
 		break;
 	}
 	
@@ -221,35 +228,21 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
 	if (ldown){
 		switch (CurrentMode)
 		{
 		case DrawMode::LINE:{
-			CClientDC dc(this);
 			
-			dc.SetROP2(R2_NOT);
 			
-			///////////
-			
-			dc.MoveTo(pos);
-			dc.LineTo(point);
-			
-			dc.SetROP2(R2_NOT);
-			dc.MoveTo(pos);
-			dc.LineTo(point);
 			break;
 		}
 		case DrawMode::RECT:{
-			CGraphicEditorDoc* pDoc = GetDocument();
-			CClientDC dc(this);
-			dc.SelectStockObject(NULL_BRUSH);
-			dc.SetROP2(R2_NOT);
-			dc.Rectangle(line.getstart().x, line.getstart().y, line.getend().x, line.getend().y);
-
-			line.SetEnd(point.x, point.y);
-			dc.Rectangle(line.getstart().x, line.getstart().y, line.getend().x, line.getend().y);		
+			pDoc->m_rect.setEndX(point.x);
+			pDoc->m_rect.setEndY(point.y);
+			Invalidate();
 		}
-							
+
 		default:
 			break;
 		}
@@ -351,4 +344,18 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 		break;
 	}
 	CFormView::OnChar(nChar, nRepCnt, nFlags);
+}
+
+
+void CGraphicEditorView::OnDraw(CDC* pDC)
+{
+	CGraphicEditorDoc* pDoc = GetDocument();
+
+	switch (CurrentMode){
+	case DrawMode::RECT:{
+		pDoc->m_rect.draw(pDC, 0);
+		break;
+		}
+	}
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }

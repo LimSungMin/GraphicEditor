@@ -2,11 +2,11 @@
 #include "GObject.h"
 
 
-GObject::GObject() : m_startX(0), m_startY(0)
+GObject::GObject() : m_startX(0), m_startY(0), m_thick(4)
 {
 }
 
-GObject::GObject(int x, int y) : m_startX(x), m_startY(y)
+GObject::GObject(int x, int y) : m_startX(x), m_startY(y), m_thick(4)
 {
 }
 
@@ -46,11 +46,11 @@ int GObject::getPattern(){
 	return m_pattern;
 }
 
-double GObject::getThick(){
+int GObject::getThick(){
 	return m_thick;
 }
 
-void GObject::setThick(double thick){
+void GObject::setThick(int thick){
 	m_thick = thick;
 }
 

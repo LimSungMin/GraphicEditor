@@ -75,6 +75,7 @@ public:
 	afx_msg void OnUpdateLine(CCmdUI *pCmdUI);
 	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 	CString m_stringreg;
+	virtual void OnDraw(CDC* /*pDC*/);
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

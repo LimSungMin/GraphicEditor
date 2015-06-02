@@ -16,6 +16,7 @@ protected: // serialization에서만 만들어집니다.
 public:
 	BOOL m_enableRectangle;
 	GRectangle m_rect;
+	//CList<GRectangle, GRectangle&> m_rects;
 	//CArray<JRectangle, JRectangle&> m_rects;
 	//int m_rectsCurrent;
 // 작업입니다.

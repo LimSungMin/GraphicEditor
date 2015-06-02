@@ -14,14 +14,14 @@ public:
 	void setColor(int r, int g, int b);
 	void setPattern(int pattern);
 	int getPattern();
-	void setThick(double thick);
-	double getThick();
+	void setThick(int thick);
+	int getThick();
 	COLORREF getColor();
 private:
 	int m_startX;
 	int m_startY;
 	COLORREF m_color;
-	double m_thick;
+	int m_thick;
 	CPen m_pen;
 	int m_pattern;
 };

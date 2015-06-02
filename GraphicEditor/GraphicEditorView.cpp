@@ -225,8 +225,12 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 		switch (CurrentMode)
 		{
 		case DrawMode::LINE:{
+			CClientDC dc(this);
 			
 			
+			dc.MoveTo(pos);
+			dc.LineTo(point);
+			pos = point;
 			break;
 		}
 		case DrawMode::RECT:{
@@ -237,22 +241,9 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			dc.Rectangle(line.getstart().x, line.getstart().y, line.getend().x, line.getend().y);
 
 			line.SetEnd(point.x, point.y);
-			dc.Rectangle(line.getstart().x, line.getstart().y, line.getend().x, line.getend().y);
-			/*
-			dc.Rectangle(pDoc->m_rects[pDoc->m_rectsCurrent].getstart().x, 
-				pDoc->m_rects[pDoc->m_rectsCurrent].getstart().y, 
-				pDoc->m_rects[pDoc->m_rectsCurrent].getend().x, 
-				pDoc->m_rects[pDoc->m_rectsCurrent].getend().y); // 기존 위치의 사각형 지우기
-
-			//pDoc->m_rects[pDoc->m_rectsCurrent].getstart().x += point.x - pDoc->m_rects[pDoc->m_rectsCurrent].
-			pDoc->m_rects[pDoc->m_rectsCurrent].SetEnd(point.x, point.y);
-			dc.Rectangle(pDoc->m_rects[pDoc->m_rectsCurrent].getstart().x,
-				pDoc->m_rects[pDoc->m_rectsCurrent].getstart().y,
-				pDoc->m_rects[pDoc->m_rectsCurrent].getend().x,
-				pDoc->m_rects[pDoc->m_rectsCurrent].getend().y); // 새로 그리기
-				*/
+			dc.Rectangle(line.getstart().x, line.getstart().y, line.getend().x, line.getend().y);		
 		}
-
+							
 		default:
 			break;
 		}

@@ -1,5 +1,5 @@
 #pragma once
-class Line	
+class Line	: CObject
 {
 public:
 	Line();

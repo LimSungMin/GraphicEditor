@@ -127,8 +127,9 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		pos = point;
 		break;
 	case DrawMode::RECT:{
-		line.SetStart(point.x, point.y);
-		line.SetEnd(point.x, point.y);
+
+		//line.SetStart(point.x, point.y);
+		//line.SetEnd(point.x, point.y);
 		//JRectangle* rect = new JRectangle(point, point);
 		//pDoc->m_rects.Add(*rect);
 		//pDoc->m_rectsCurrent = pDoc->m_rects.GetCount() - 1;

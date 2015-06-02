@@ -4,6 +4,7 @@
 
 
 #pragma once
+#include "afxtempl.h"
 
 
 class CGraphicEditorDoc : public CDocument
@@ -16,6 +17,7 @@ protected: // serialization에서만 만들어집니다.
 public:
 	BOOL m_enableRectangle;
 	GRectangle m_rect;
+	GPolyline m_poly;
 	//CList<GRectangle, GRectangle&> m_rects;
 	//CArray<JRectangle, JRectangle&> m_rects;
 	//int m_rectsCurrent;
@@ -49,4 +51,6 @@ protected:
 	// 검색 처리기에 대한 검색 콘텐츠를 설정하는 도우미 함수
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+public:
+	CArray<POINT, POINT&> m_polypoints;
 };

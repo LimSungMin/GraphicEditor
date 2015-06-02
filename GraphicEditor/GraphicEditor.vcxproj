@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="GObject.h" />
+    <ClInclude Include="GPolyline.h" />
     <ClInclude Include="GraphicEditor.h" />
     <ClInclude Include="GraphicEditorDoc.h" />
     <ClInclude Include="GraphicEditorView.h" />
@@ -117,6 +118,7 @@
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="GObject.cpp" />
+    <ClCompile Include="GPolyline.cpp" />
     <ClCompile Include="GraphicEditor.cpp" />
     <ClCompile Include="GraphicEditorDoc.cpp" />
     <ClCompile Include="GraphicEditorView.cpp" />

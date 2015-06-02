@@ -227,10 +227,16 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 		case DrawMode::LINE:{
 			CClientDC dc(this);
 			
+			dc.SetROP2(R2_NOT);
+			
+			///////////
 			
 			dc.MoveTo(pos);
 			dc.LineTo(point);
-			pos = point;
+			
+			dc.SetROP2(R2_NOT);
+			dc.MoveTo(pos);
+			dc.LineTo(point);
 			break;
 		}
 		case DrawMode::RECT:{

@@ -27,6 +27,7 @@ public:
 	int CurrentMode;
 	Line line;
 	POINT pos;
+	POINT postPos;
 	BOOL ldown;
 	BOOL m_textin = FALSE;
 	

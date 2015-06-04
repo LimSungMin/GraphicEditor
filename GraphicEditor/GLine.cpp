@@ -1,43 +1,43 @@
 #include "stdafx.h"
-#include "Line.h"
+#include "GLine.h"
 
 
-Line::Line()	
+GLine::Line()	
 	:startx(0), starty(0), endx(0), endy(0)
 {
 	
 }
 
 
-Line::~Line()
+GLine::~Line()
 {
 }
 
-void Line::SetStart(int x, int y){
+void GLine::SetStart(int x, int y){
 	startx = x;
 	starty = y;
 }
-void Line::SetEnd(int x, int y){
+void GLine::SetEnd(int x, int y){
 	endx = x;
 	endy = y;
 }
 
-int Line::getX()
+int GLine::getX()
 {
 	return startx;
 }
-int Line::getY()
+int GLine::getY()
 {
 	return starty;
 }
 
-POINT Line::getstart(){
+POINT GLine::getstart(){
 	POINT pos;
 	pos.x = startx;
 	pos.y = starty;
 	return pos;
 }
-POINT Line::getend(){
+POINT GLine::getend(){
 	POINT pos;
 	pos.x = endx;
 	pos.y = endy;

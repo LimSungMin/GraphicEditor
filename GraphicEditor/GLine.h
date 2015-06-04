@@ -1,9 +1,9 @@
 #pragma once
-class Line	: CObject
+class GLine	: CObject
 {
 public:
-	Line();
-	~Line();
+	GLine();
+	~GLine();
 	void SetEnd(int x, int y);
 	void SetStart(int x, int y);
 	int getX();

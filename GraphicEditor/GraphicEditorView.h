@@ -5,7 +5,7 @@
 #pragma once
 
 #include "resource.h"
-#include "Line.h"
+#include "GLine.h"
 
 
 class CGraphicEditorView : public CFormView
@@ -25,7 +25,7 @@ public:
 		LINE, POLY, RECT, ELLP, TEXT
 	};
 	int CurrentMode;
-	Line line;
+	GLine line;
 	POINT pos;
 	POINT postPos;
 	BOOL ldown;

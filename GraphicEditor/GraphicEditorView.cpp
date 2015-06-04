@@ -55,7 +55,7 @@ CGraphicEditorView::CGraphicEditorView()
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
 	//CurrentMode = DrawMode::LINE;								// 기본값은 라인
-
+	
 }
 
 CGraphicEditorView::~CGraphicEditorView()
@@ -132,20 +132,19 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		pos = point;
 		break;
 	case DrawMode::RECT:{
-		/*pDoc->m_rect.setStartX(point.x);
-		pDoc->m_rect.setStartY(point.y);
-		pDoc->m_rect.setEndX(point.x);
-		pDoc->m_rect.setEndY(point.y);*/
+		/*pDoc->m_rect.setStartX(point.x-10);
+		pDoc->m_rect.setStartY(point.y-10);
+		pDoc->m_rect.setEndX(point.x+10);
+		pDoc->m_rect.setEndY(point.y+10);*/
 		
-		GRectangle* rect = new GRectangle(point.x, point.y, point.x, point.y);
+		GRectangle* rect = new GRectangle();
+		rect->setStartX(point.x - 10);
+		rect->setStartY(point.y - 10);
+		rect->setEndX(point.x + 10);
+		rect->setEndY(point.y + 10);
 		pDoc->m_shapes.Add(*rect);
 		pDoc->m_shapesCurrent = pDoc->m_shapes.GetCount() - 1;
-
-		//line.SetStart(point.x, point.y);
-		//line.SetEnd(point.x, point.y);
-		//JRectangle* rect = new JRectangle(point, point);
-		//pDoc->m_rects.Add(*rect);
-		//pDoc->m_rectsCurrent = pDoc->m_rects.GetCount() - 1;
+		Invalidate();
 		break;
 	}
 
@@ -193,6 +192,11 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		//pDoc->m_rects.Add(pDoc->m_rect);
 		//GRectangle rect = GRectangle(pDoc->m_rect);
 		//pDoc->m_shapes.Add(rect);
+
+		/*GRectangle* rect = new GRectangle(pDoc->m_rect);
+		pDoc->m_shapes.Add(*rect);
+		pDoc->m_shapesCurrent = pDoc->m_shapes.GetCount() - 1;
+		*/
 		Invalidate();
 		break;
 	}
@@ -259,10 +263,10 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			break;
 		}
 		case DrawMode::RECT:{
-			/*pDoc->m_rect.setEndX(point.x);
-			pDoc->m_rect.setEndY(point.y);*/
-			pDoc->m_shapes[pDoc->m_shapesCurrent].setEndX(point.x);
-			pDoc->m_shapes[pDoc->m_shapesCurrent].setEndY(point.y);
+			pDoc->m_rect.setEndX(point.x);
+			pDoc->m_rect.setEndY(point.y);
+			/*pDoc->m_shapes[pDoc->m_shapesCurrent].setEndX(point.x);
+			pDoc->m_shapes[pDoc->m_shapesCurrent].setEndY(point.y);*/
 
 			Invalidate();
 		}
@@ -374,6 +378,8 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGraphicEditorView::OnDraw(CDC* pDC)
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
+	//pDC->SelectStockObject(NULL_BRUSH);
+
 	for (int i = 0; i < pDoc->m_shapes.GetCount(); i++){
 		pDoc->m_shapes[i].draw(pDC);
 	}

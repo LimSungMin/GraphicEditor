@@ -132,10 +132,15 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		pos = point;
 		break;
 	case DrawMode::RECT:{
-		pDoc->m_rect.setStartX(point.x);
+		/*pDoc->m_rect.setStartX(point.x);
 		pDoc->m_rect.setStartY(point.y);
 		pDoc->m_rect.setEndX(point.x);
-		pDoc->m_rect.setEndY(point.y);
+		pDoc->m_rect.setEndY(point.y);*/
+		
+		GRectangle* rect = new GRectangle(point.x, point.y, point.x, point.y);
+		pDoc->m_shapes.Add(*rect);
+		pDoc->m_shapesCurrent = pDoc->m_shapes.GetCount() - 1;
+
 		//line.SetStart(point.x, point.y);
 		//line.SetEnd(point.x, point.y);
 		//JRectangle* rect = new JRectangle(point, point);
@@ -165,7 +170,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
+	CGraphicEditorDoc* pDoc = GetDocument();
 	ldown = FALSE;
 	switch (CurrentMode)
 	{
@@ -184,7 +189,11 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		dc.SelectStockObject(NULL_BRUSH);
 		dc.SetROP2(R2_COPYPEN);
 		dc.Rectangle(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y);*/
-
+		
+		//pDoc->m_rects.Add(pDoc->m_rect);
+		//GRectangle rect = GRectangle(pDoc->m_rect);
+		//pDoc->m_shapes.Add(rect);
+		Invalidate();
 		break;
 	}
 	
@@ -250,8 +259,11 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			break;
 		}
 		case DrawMode::RECT:{
-			pDoc->m_rect.setEndX(point.x);
-			pDoc->m_rect.setEndY(point.y);
+			/*pDoc->m_rect.setEndX(point.x);
+			pDoc->m_rect.setEndY(point.y);*/
+			pDoc->m_shapes[pDoc->m_shapesCurrent].setEndX(point.x);
+			pDoc->m_shapes[pDoc->m_shapesCurrent].setEndY(point.y);
+
 			Invalidate();
 		}
 
@@ -362,7 +374,11 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CGraphicEditorView::OnDraw(CDC* pDC)
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
-
+	for (int i = 0; i < pDoc->m_shapes.GetCount(); i++){
+		pDoc->m_shapes[i].draw(pDC);
+	}
+	//pDoc->m_rect.draw(pDC);
+	/*
 	switch (CurrentMode){
 	case DrawMode::RECT:{
 		pDoc->m_rect.draw(pDC, 0);
@@ -373,7 +389,8 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		pDoc->m_poly.draw(pDC, 0);
 		break;
 	}
-	}
+	
+	}*/
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }
 

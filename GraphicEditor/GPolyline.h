@@ -6,7 +6,7 @@ class GPolyline :
 public:
 	GPolyline();
 	virtual ~GPolyline();
-	virtual void draw(CDC* dc, int mode);
+	virtual void draw(CDC* dc);
 	void setEndX(int x);
 	void setEndY(int y);
 	int getEndX();

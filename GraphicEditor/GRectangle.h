@@ -5,8 +5,9 @@ class GRectangle :
 {
 public:
 	GRectangle();
+	GRectangle(int x1, int y1, int x2, int y2);
 	virtual ~GRectangle();
-	virtual void draw(CDC* dc, int mode);
+	virtual void draw(CDC* dc);
 	void setEndX(int x);
 	void setEndY(int y);
 	int getEndX();

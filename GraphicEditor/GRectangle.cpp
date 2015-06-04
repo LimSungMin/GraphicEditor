@@ -6,7 +6,11 @@ GRectangle::GRectangle() : GObject(0, 0), m_endX(0), m_endY(0)
 {
 }
 
-void GRectangle::draw(CDC* dc, int mode){
+GRectangle::GRectangle(int x1, int y1, int x2, int y2) : GObject(x1, y1), m_endX(x2), m_endY(y2)
+{
+}
+
+void GRectangle::draw(CDC* dc){
 	CPen pen(this->getPattern(), this->getThick(), this->getColor());
 	dc->SelectObject(&pen);
 	dc->Rectangle(this->getStartX(), this->getStartY(), this->getEndX(), this->getEndY());

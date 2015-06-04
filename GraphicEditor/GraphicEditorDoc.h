@@ -16,6 +16,8 @@ protected: // serialization에서만 만들어집니다.
 // 특성입니다.
 public:
 	BOOL m_enableRectangle;
+	CArray<GObject, GObject&> m_shapes;
+	int m_shapesCurrent;
 	GRectangle m_rect;
 	GPolyline m_poly;
 	//CList<GRectangle, GRectangle&> m_rects;

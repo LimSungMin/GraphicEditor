@@ -2,14 +2,14 @@
 #include "GLine.h"
 
 
-GLine::Line()	
+GLine::GLine()	
 	:startx(0), starty(0), endx(0), endy(0)
 {
 	
 }
 
 
-GLine::~Line()
+GLine::~GLine()
 {
 }
 

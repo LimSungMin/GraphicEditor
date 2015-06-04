@@ -13,7 +13,7 @@
 #include "Rectangle.h"
 #include "GObject.h"
 #include "GRectangle.h"
-
+#include "GPolyline.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -41,6 +41,8 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_UPDATE_COMMAND_UI(ID_ELLIPSE, &CGraphicEditorView::OnUpdateEllipse)
 	ON_UPDATE_COMMAND_UI(ID_LINE, &CGraphicEditorView::OnUpdateLine)
 	ON_WM_CHAR()
+//	ON_WM_PAINT()
+	ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -147,6 +149,11 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		line.SetEnd(point.x, point.y);
 		break;
 	}
+
+	case DrawMode::POLY:{
+
+		pDoc->m_poly.polypointset(point);
+	}
 	default:
 		break;
 	}
@@ -216,6 +223,11 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 			
 		break;
 	}
+	case DrawMode::POLY:{
+
+		Invalidate();
+
+						}
 
 
 	default:
@@ -356,6 +368,24 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		pDoc->m_rect.draw(pDC, 0);
 		break;
 		}
+
+	case DrawMode::POLY:{
+		pDoc->m_poly.draw(pDC, 0);
+		break;
+	}
 	}
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+}
+
+
+
+void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CGraphicEditorDoc* pDoc = GetDocument();
+
+	//pDoc->m_polypoints.Add(NULL);
+
+	CFormView::OnLButtonDblClk(nFlags, point);
 }

@@ -76,6 +76,8 @@ public:
 	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 	CString m_stringreg;
 	virtual void OnDraw(CDC* /*pDC*/);
+//	afx_msg void OnPaint();
+	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

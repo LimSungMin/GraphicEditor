@@ -136,7 +136,9 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		pDoc->m_line->setStartX(point.x);
 		pDoc->m_line->setStartY(point.y);
 		pDoc->m_line->SetEnd(point);
-		//pDoc->m_line.Set
+
+
+		
 		pos = point;
 		break;
 	case DrawMode::RECT:{
@@ -180,7 +182,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:{
-		pDoc->v.push_back(pDoc->m_line);
+		pDoc->vo.push_back(pDoc->m_line);
 		
 		break;
 	}
@@ -200,7 +202,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->m_shapes.Add(*rect);
 		pDoc->m_shapesCurrent = pDoc->m_shapes.GetCount() - 1;
 		*/
-		pDoc->vr.push_back(pDoc->m_rect);
+		pDoc->vo.push_back(pDoc->m_rect);
 		Invalidate();
 		break;
 	}
@@ -266,7 +268,7 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			
 
 			pDoc->m_line->SetEnd(point);
-			
+
 			Invalidate();
 			break;
 		}
@@ -390,17 +392,11 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	CString str;
 	CGraphicEditorDoc* pDoc = GetDocument();
 
-	for (auto i : pDoc->v) i->draw(pDC, 0);
-	for (auto i : pDoc->vr) i->draw(pDC);
+	for (auto i : pDoc->vo) i->draw(pDC);
 	switch (CurrentMode){
 	case DrawMode::LINE:{
-		pDoc->m_line->draw(pDC, 0);
+		pDoc->m_line->draw(pDC);
 		
-		
-
-		str.Format(_T("%d°³ Ãß°¡µÊ"), i++);
-
-		SetDlgItemText(IDC_STATIC, str);
 		break;
 	}
 	case DrawMode::RECT:{

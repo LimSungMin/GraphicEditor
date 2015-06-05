@@ -21,6 +21,8 @@ public:
 	GRectangle* m_rect;
 	GPolyline m_poly;
 	GLine* m_line;
+	
+	vector <GObject*> vo;
 	vector<GLine*> v;
 	vector<GRectangle*> vr;
 		

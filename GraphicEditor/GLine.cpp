@@ -11,7 +11,7 @@ GLine::~GLine()
 {
 }
 
-void GLine::draw(CDC* dc, int mode){
+void GLine::draw(CDC* dc){
 	CPen pen(this->getPattern(), this->getThick(), this->getColor());
 	dc->SelectObject(&pen);
 	// 선 그리기는 여기서부터

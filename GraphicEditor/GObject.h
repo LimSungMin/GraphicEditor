@@ -4,12 +4,16 @@ class GObject
 public:
 	GObject();
 	GObject(int x, int y);
+	GObject(const GObject& objectSrc){ *this = objectSrc; }
+	GObject& operator=(const GObject& objectSrc) { return *this; }
 	virtual ~GObject();
-	virtual void draw(CDC* dc, int x, int y); // 다른 곳에서도 draw가 있으니까.
+	virtual void draw(CDC* dc); // 다른 곳에서도 draw가 있으니까.
 	void setStartX(int x);
 	void setStartY(int y);
 	int getStartX();
 	int getStartY();
+	virtual void setEndX(int x){}
+	virtual void setEndY(int y){}
 	void setColor(COLORREF c);
 	void setColor(int r, int g, int b);
 	void setPattern(int pattern);

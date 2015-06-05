@@ -21,7 +21,8 @@ public:
 	GRectangle* m_rect;
 	GPolyline m_poly;
 	GLine* m_line;
-	
+	GEllipse* m_ellp;
+
 	vector <GObject*> vo;
 		
 // 작업입니다. 

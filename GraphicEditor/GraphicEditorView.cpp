@@ -15,6 +15,7 @@
 #include "GRectangle.h"
 #include "GPolyline.h"
 #include "GLine.h"
+#include "GEllipse.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -141,6 +142,12 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		
 		pos = point;
 		break;
+	case DrawMode::ELLP:{
+		pDoc->m_ellp = new GEllipse();
+		pDoc->m_ellp->setStartX(point.x);
+		pDoc->m_ellp->setStartY(point.y);
+		pDoc->m_ellp->SetEnd(point);
+	}
 	case DrawMode::RECT:{
 		
 		//GRectangle* rect = new GRectangle();
@@ -184,6 +191,10 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	case DrawMode::LINE:{
 		pDoc->vo.push_back(pDoc->m_line);
 		
+		break;
+	}
+	case DrawMode::ELLP:{
+		pDoc->vo.push_back(pDoc->m_ellp);
 		break;
 	}
 	case DrawMode::RECT:{
@@ -272,6 +283,14 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			Invalidate();
 			break;
 		}
+		case DrawMode::ELLP:{
+			pDoc->m_ellp->SetEnd(point);
+
+			Invalidate();
+			break;
+		}
+
+
 		case DrawMode::RECT:{
 			pDoc->m_rect->setEndX(point.x);
 			pDoc->m_rect->setEndY(point.y);
@@ -397,6 +416,10 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	case DrawMode::LINE:{
 		pDoc->m_line->draw(pDC);
 		
+		break;
+	}
+	case DrawMode::ELLP:{
+		pDoc->m_ellp->draw(pDC);
 		break;
 	}
 	case DrawMode::RECT:{

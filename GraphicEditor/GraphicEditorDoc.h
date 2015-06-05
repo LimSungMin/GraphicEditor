@@ -23,8 +23,6 @@ public:
 	GLine* m_line;
 	
 	vector <GObject*> vo;
-	vector<GLine*> v;
-	vector<GRectangle*> vr;
 		
 // 작업입니다. 
 public:

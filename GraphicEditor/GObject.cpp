@@ -53,16 +53,6 @@ int GObject::getThick(){
 void GObject::setThick(int thick){
 	m_thick = thick;
 }
-/*
-void GObject::draw(CDC* dc){
-	/*
-	CPen pen(this->getPattern(), this->getThick(), this->getColor());
-	dc->SelectObject(&pen);
-	// 선 그리기는 여기서부터
-	dc->MoveTo(getStartX(), getStartY());
-	dc->LineTo(getStartX() + 100, getStartY()+100);
-	*/
-//}*/
 
 GObject::~GObject()
 {

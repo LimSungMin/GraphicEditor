@@ -432,6 +432,7 @@ void CGraphicEditorView::OnEditUndo()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
-	pDoc->v.pop_back();
+	Invalidate();
+	pDoc->vo.pop_back();
 	Invalidate();
 }

@@ -53,4 +53,5 @@ protected:
 #endif // SHARED_HANDLERS
 public:
 	CArray<POINT, POINT&> m_polypoints;
+	afx_msg void OnEditUndo();
 };

@@ -22,6 +22,7 @@
 IMPLEMENT_DYNCREATE(CGraphicEditorDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CGraphicEditorDoc, CDocument)
+	
 END_MESSAGE_MAP()
 
 
@@ -135,3 +136,5 @@ void CGraphicEditorDoc::Dump(CDumpContext& dc) const
 
 
 // CGraphicEditorDoc ¸í·É
+
+

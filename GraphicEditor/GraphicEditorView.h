@@ -77,6 +77,7 @@ public:
 	virtual void OnDraw(CDC* /*pDC*/);
 //	afx_msg void OnPaint();
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+	afx_msg void OnEditUndo();
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

@@ -44,6 +44,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_WM_CHAR()
 //	ON_WM_PAINT()
 	ON_WM_LBUTTONDBLCLK()
+	ON_COMMAND(ID_EDIT_UNDO, &CGraphicEditorView::OnEditUndo)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -181,7 +182,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->v.push_back(pDoc->m_line);
 		CDC* pDC = GetDC();
 		
-		for (auto i : pDoc->v) i->draw(pDC, 0);
+		//for (auto i : pDoc->v) i->draw(pDC, 0);
 		
 		break;
 	}
@@ -380,7 +381,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	case DrawMode::LINE:{
 		pDoc->m_line->draw(pDC, 0);
 		
-		
+		for (auto i : pDoc->v) i->draw(pDC, 0);
 
 		str.Format(_T("%d개 추가됨"), i++);
 		
@@ -411,4 +412,13 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	//pDoc->m_polypoints.Add(NULL);
 
 	CFormView::OnLButtonDblClk(nFlags, point);
+}
+
+
+void CGraphicEditorView::OnEditUndo()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	pDoc->v.pop_back();
+	Invalidate();
 }

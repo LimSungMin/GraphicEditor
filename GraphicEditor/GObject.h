@@ -17,6 +17,7 @@ public:
 	virtual int getEndX(){ return 0; }
 	virtual int getEndY(){ return 0; }
 	virtual void move(int x1, int y1, int x2, int y2){}
+	virtual BOOL getSelected(){ return m_isSelected; }
 	void setColor(COLORREF c);
 	void setColor(int r, int g, int b);
 	virtual void setPattern(int pattern);
@@ -24,7 +25,7 @@ public:
 	void setThick(int thick);
 	int getThick();
 	COLORREF getColor();
-	virtual void setSelected(BOOL selected){}
+	virtual void setSelected(BOOL selected){ m_isSelected = selected; }
 	virtual BOOL isInBound(CPoint point){ return FALSE; }
 private:
 	int m_startX;
@@ -33,7 +34,8 @@ private:
 	int m_thick;
 	CPen m_pen;
 	int m_pattern;
-	BOOL m_isSelected;
 	COLORREF m_colorFill;
+protected:
+	BOOL m_isSelected;
 };
 

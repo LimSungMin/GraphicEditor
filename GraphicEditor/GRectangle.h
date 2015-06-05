@@ -19,4 +19,5 @@ private:
 	int m_endX;
 	int m_endY;
 	int m_mode;
+	CRect* m_selectedRect[4];
 };

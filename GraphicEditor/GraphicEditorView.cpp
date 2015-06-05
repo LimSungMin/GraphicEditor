@@ -184,8 +184,6 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 				break;
 			}
 		}
-		//m_currentSelected = -1; // this causes error
-
 		break;
 	}
 	}

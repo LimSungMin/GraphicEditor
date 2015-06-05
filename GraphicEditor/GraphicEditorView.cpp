@@ -405,16 +405,16 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		break;
 	}
 	case DrawMode::RECT:{
-		pDoc->m_rect.draw(pDC, 0);
+		pDoc->m_rect.draw(pDC);
 		break;
 		}
 
 	case DrawMode::POLY:{
-		pDoc->m_poly.draw(pDC, 0);
+		pDoc->m_poly.draw(pDC);
 		break;
 	}
 	
-	}*/
+	}
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }
 

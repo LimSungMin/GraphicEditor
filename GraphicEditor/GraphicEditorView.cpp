@@ -45,6 +45,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 //	ON_WM_PAINT()
 	ON_WM_LBUTTONDBLCLK()
 	ON_COMMAND(ID_EDIT_UNDO, &CGraphicEditorView::OnEditUndo)
+	ON_BN_CLICKED(IDC_LineColor, &CGraphicEditorView::OnBnClickedLinecolor)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -162,12 +163,20 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 
 	case DrawMode::POLY:{
+		
+		if (m_firstclick == TRUE){
+			pDoc->m_poly = new GPolyline();
 
-		pDoc->m_poly.polypointset(point);
+			m_firstclick = FALSE;
+		}
+
+		pDoc->m_poly->polypointset(point);
 	}
 	default:
 		break;
 	}
+
+	
 	CFormView::OnLButtonDown(nFlags, point);
 }
 
@@ -244,6 +253,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	case DrawMode::POLY:{
 
+		pDoc->vo.push_back(pDoc->m_poly);
 		Invalidate();
 
 						}
@@ -342,6 +352,7 @@ void CGraphicEditorView::OnUpdatePolyline(CCmdUI *pCmdUI)
 {
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
 	pCmdUI->SetCheck(CurrentMode == DrawMode::POLY);
+
 }
 
 
@@ -392,15 +403,15 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	CString str;
 	CGraphicEditorDoc* pDoc = GetDocument();
 
-
+	/*
 	for (int i = 0; i < pDoc->m_shapes.GetCount(); i++){
 		pDoc->m_shapes[i].draw(pDC);
 	}
 	pDoc->m_poly.draw(pDC);
-	
+	*/
 
 	for (auto i : pDoc->vo) i->draw(pDC);
-
+	
 	switch (CurrentMode){
 	case DrawMode::LINE:{
 		pDoc->m_line->draw(pDC);
@@ -414,11 +425,12 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		}
 
 	case DrawMode::POLY:{
-		pDoc->m_poly.draw(pDC);
+		pDoc->m_poly->draw(pDC);
 		break;
 	}
 	
 	}
+	
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }
 
@@ -429,6 +441,9 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
 	CGraphicEditorDoc* pDoc = GetDocument();
+
+	if ( m_firstclick == FALSE)
+	pDoc->m_poly = new GPolyline();
 
 	//pDoc->m_polypoints.Add(NULL);
 
@@ -443,4 +458,18 @@ void CGraphicEditorView::OnEditUndo()
 	Invalidate();
 	pDoc->vo.pop_back();
 	Invalidate();
+}
+
+
+void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
+{
+	CColorDialog cdlg;
+
+	if (cdlg.DoModal() == IDOK)
+	{
+		
+	}
+
+
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

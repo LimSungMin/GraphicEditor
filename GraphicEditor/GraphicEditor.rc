@@ -256,11 +256,16 @@ FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
 END
 
-IDD_PAINTTOOL DIALOGEX 0, 0, 158, 252
+IDD_PAINTTOOL DIALOGEX 0, 0, 102, 252
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    GROUPBOX        "Static",IDC_STATIC,7,7,144,61
+    PUSHBUTTON      "PaneColor",IDC_PaneColor,7,38,50,14
+    PUSHBUTTON      "LineColor",IDC_LineColor,8,16,50,14
+    COMBOBOX        IDC_COMBO2,9,112,48,77,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Line Thick",IDC_STATIC,9,99,32,8
+    COMBOBOX        IDC_COMBO1,9,145,48,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Line Pattern",IDC_STATIC,9,133,40,8
 END
 
 
@@ -329,13 +334,35 @@ BEGIN
 
     IDD_PAINTTOOL, DIALOG
     BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 151
+        RIGHTMARGIN, 95
         TOPMARGIN, 7
         BOTTOMMARGIN, 245
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_PAINTTOOL DLGINIT
+BEGIN
+    IDC_COMBO2, 0x403, 2, 0
+0x0031, 
+    IDC_COMBO2, 0x403, 2, 0
+0x0032, 
+    IDC_COMBO2, 0x403, 2, 0
+0x0033, 
+    IDC_COMBO2, 0x403, 2, 0
+0x0034, 
+    IDC_COMBO2, 0x403, 2, 0
+0x0035, 
+    IDC_COMBO2, 0x403, 2, 0
+0x0036, 
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////

@@ -29,7 +29,7 @@ public:
 	POINT postPos;
 	BOOL ldown;
 	BOOL m_textin = FALSE;
-	
+	BOOL m_firstclick = TRUE;
 	CArray<TCHAR, TCHAR> m_str;
 	
 // 작업입니다.
@@ -78,6 +78,7 @@ public:
 //	afx_msg void OnPaint();
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnEditUndo();
+	afx_msg void OnBnClickedLinecolor();
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

@@ -10,10 +10,11 @@
 #endif
 #include "GraphicEditorDoc.h"
 #include "GraphicEditorView.h"
-#include "Rectangle.h"
+//#include "Rectangle.h"
 #include "GObject.h"
 #include "GRectangle.h"
 #include "GPolyline.h"
+#include "GLine.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -128,7 +129,9 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:
-		line.SetStart(point.x, point.y);
+		//line.SetStart(point.x, point.y);
+		pDoc->m_line.SetEnd(point);
+		//pDoc->m_line.Set
 		pos = point;
 		break;
 	case DrawMode::RECT:{
@@ -145,8 +148,8 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 
 	case DrawMode::TEXT:{
-		line.SetStart(point.x, point.y);
-		line.SetEnd(point.x, point.y);
+		//line.SetStart(point.x, point.y);
+		//line.SetEnd(point.x, point.y);
 		break;
 	}
 
@@ -170,11 +173,13 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:{
-		line.SetEnd(point.x, point.y);
-		CClientDC dc(this);
-		dc.MoveTo(pos);
-		dc.LineTo(point);
+		//line.SetEnd(point.x, point.y);
+		//CClientDC dc(this);
+		//dc.MoveTo(pos);
+		//dc.LineTo(point);
 		//pos = point;
+
+		
 		break;
 	}
 	case DrawMode::RECT:{
@@ -190,9 +195,9 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	
 	case DrawMode::TEXT:{
 		
-		
+		/*
 			line.SetEnd(point.x, point.y);
-			JRectangle r(line.getstart(), line.getend());
+			//JRectangle r(line.getstart(), line.getend());
 			CClientDC dc(this);
 			dc.SelectStockObject(NULL_BRUSH);
 			dc.SetROP2(R2_COPYPEN);
@@ -220,7 +225,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 			}
 
 			m_str.RemoveAll();
-			
+			*/
 		break;
 	}
 	case DrawMode::POLY:{

@@ -107,9 +107,8 @@
     <ClInclude Include="GraphicEditorView.h" />
     <ClInclude Include="GRectangle.h" />
     <ClInclude Include="LeftView.h" />
-    <ClInclude Include="Line.h" />
+    <ClInclude Include="GLine.h" />
     <ClInclude Include="MainFrm.h" />
-    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -124,9 +123,8 @@
     <ClCompile Include="GraphicEditorView.cpp" />
     <ClCompile Include="GRectangle.cpp" />
     <ClCompile Include="LeftView.cpp" />
-    <ClCompile Include="Line.cpp" />
+    <ClCompile Include="GLine.cpp" />
     <ClCompile Include="MainFrm.cpp" />
-    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

@@ -18,6 +18,8 @@ public:
 	BOOL m_enableRectangle;
 	GRectangle m_rect;
 	GPolyline m_poly;
+	GLine m_line;
+	
 	//CList<GRectangle, GRectangle&> m_rects;
 	//CArray<JRectangle, JRectangle&> m_rects;
 	//int m_rectsCurrent;

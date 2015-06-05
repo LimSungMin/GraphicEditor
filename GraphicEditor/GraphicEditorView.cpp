@@ -127,6 +127,8 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	ldown = TRUE;
 	CGraphicEditorDoc* pDoc = GetDocument();
+	for (int i = 0; i < pDoc->vo.size(); i++)
+		pDoc->vo[i]->setSelected(FALSE);
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:
@@ -163,13 +165,15 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		pDoc->m_poly.polypointset(point);
 	}
 	default:{ // DrawMode::NOTHING
+		for (int i = 0; i < pDoc->vo.size(); i++)
+			pDoc->vo[i]->setSelected(FALSE);
 		for (int i = pDoc->vo.size()-1; i >=0; i--){ // 맨 위에 있는 도형을 잡기 위해 역순으로 검사함.
 			if (pDoc->vo[i]->isInBound(point)){
 				m_move = TRUE;
 				pDoc->vo[i]->setSelected(TRUE);
 				m_currentSelected = i;
 				m_clickedPoint = point;
-				return;
+				break;
 			}
 		}
 

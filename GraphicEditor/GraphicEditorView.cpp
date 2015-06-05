@@ -165,8 +165,16 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		pDoc->m_poly.polypointset(point);
 	}
 	default:{ // DrawMode::NOTHING
-		for (int i = 0; i < pDoc->vo.size(); i++)
+		if (pDoc->vo.size()>0 && m_currentSelected >= 0){
+			if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0 ){ // 크기 조절 위치는 0~3
+				m_changeSize = TRUE;
+				pDoc->vo[m_currentSelected]->setSelected(TRUE);
+				return;
+			}
+		}
+		for (int i = 0; i < pDoc->vo.size(); i++) // 선택되었던 객체를 전부 선택 해제한다.
 			pDoc->vo[i]->setSelected(FALSE);
+
 		for (int i = pDoc->vo.size()-1; i >=0; i--){ // 맨 위에 있는 도형을 잡기 위해 역순으로 검사함.
 			if (pDoc->vo[i]->isInBound(point)){
 				m_move = TRUE;
@@ -176,6 +184,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 				break;
 			}
 		}
+		//m_currentSelected = -1; // this causes error
 
 		break;
 	}
@@ -191,6 +200,12 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
 	ldown = FALSE;
+	if (m_changeSize == TRUE){
+		m_changeSize = FALSE;
+		m_changeSizePosition = -1;
+		pDoc->vo[m_currentSelected]->setSelected(TRUE);
+		return;
+	}
 	GLine line;
 	switch (CurrentMode)
 	{
@@ -202,6 +217,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->m_rect->setPattern(PS_SOLID);
 		pDoc->m_rect->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_rect);
+		m_currentSelected = pDoc->vo.size()-1;
 		Invalidate();
 		break;
 	}
@@ -259,6 +275,35 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 	CGraphicEditorDoc* pDoc = GetDocument();
 
 	if (ldown){
+		if (m_changeSize == TRUE){
+			switch (m_changeSizePosition){
+			case 0:{ // 왼쪽 위
+				pDoc->m_rect->setStartX(point.x);
+				pDoc->m_rect->setStartY(point.y);
+				break;
+			}
+			case 1:{ // 오른쪽 위
+				pDoc->m_rect->setEndX(point.x);
+				pDoc->m_rect->setStartY(point.y);
+				break;
+			}
+			case 2:{ // 왼쪽 아래
+				pDoc->m_rect->setStartX(point.x);
+				pDoc->m_rect->setEndY(point.y);
+				break;
+			}
+			case 3:{ // 오른쪽 아래
+				pDoc->m_rect->setEndX(point.x);
+				pDoc->m_rect->setEndY(point.y);
+				break;
+			}
+			default:{
+				break;
+			}
+			}
+			Invalidate();
+			return;
+		}
 		switch (CurrentMode)
 		{
 		case DrawMode::LINE:{
@@ -414,13 +459,6 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	
 	CString str;
 	CGraphicEditorDoc* pDoc = GetDocument();
-
-
-	/*for (int i = 0; i < pDoc->m_shapes.GetCount(); i++){
-		pDoc->m_shapes[i].draw(pDC);
-	}
-	pDoc->m_poly.draw(pDC);*/
-	
 
 	for (auto i : pDoc->vo) i->draw(pDC); // 저장된 모든 도형 객체 출력
 

@@ -23,16 +23,11 @@ void GRectangle::draw(CDC* dc){
 		m_selectedRect[0] = new CRect(this->getStartX() - 5, this->getStartY() - 5, this->getStartX() + 5, this->getStartY() + 5);
 		m_selectedRect[1] = new CRect(this->getEndX() - 5, this->getStartY() - 5, this->getEndX() + 5, this->getStartY() + 5);
 		m_selectedRect[2] = new CRect(this->getStartX() - 5, this->getEndY() - 5, this->getStartX() + 5, this->getEndY() + 5);
-		m_selectedRect[3] = new CRect(this->getEndX() - 5, this->getEndY() - 5, this->getEndX() + 5, this->getEndY() + 5);
+		m_selectedRect[3] = new CRect(this->getEndX() - 5, this->getEndY() - 5, this->getEndX() + 5, this->getEndY() + 5); // 메모리 누수의 위험 있음. 수정바람!
 		dc->Rectangle(m_selectedRect[0]);
 		dc->Rectangle(m_selectedRect[1]);
 		dc->Rectangle(m_selectedRect[2]);
 		dc->Rectangle(m_selectedRect[3]);
-	}
-	else{
-		/*dc->SelectStockObject(NULL_BRUSH);
-		for (int i = 0; i < 4; i++)
-			dc->Rectangle(m_selectedRect[i]);*/
 	}
 }
 
@@ -49,6 +44,24 @@ BOOL GRectangle::isInBound(CPoint point){
 		}
 	}
 	return FALSE;
+}
+
+int GRectangle::isInSizeBound(CPoint point){
+	for (int i = 0; i < 4; i++){
+		if (this->m_selectedRect[i]->left <= point.x && point.x <= this->m_selectedRect[i]->right || this->m_selectedRect[i]->right <= point.x && point.x <= this->m_selectedRect[i]->left){
+			if (this->m_selectedRect[i]->top <= point.y && point.y <= this->m_selectedRect[i]->bottom || this->m_selectedRect[i]->bottom <= point.y && point.y <= this->m_selectedRect[i]->top){
+				MessageBeep(NULL);
+				return i;
+			}
+		}
+	}
+	/*if (this->m_selectedRect[0]->left <= point.x && point.x <= this->m_selectedRect[0]->right || this->m_selectedRect[0]->right <= point.x && point.x <= this->m_selectedRect[0]->left){
+		if (this->m_selectedRect[0]->top <= point.y && point.y <= this->m_selectedRect[0]->bottom || this->m_selectedRect[0]->bottom <= point.y && point.y <= this->m_selectedRect[0]->top){
+			MessageBeep(NULL);
+			return 0;
+		}
+	}*/
+	return -1;
 }
 
 void GRectangle::move(int x1, int y1, int x2, int y2){

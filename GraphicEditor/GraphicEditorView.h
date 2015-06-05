@@ -29,6 +29,11 @@ public:
 	POINT postPos;
 	BOOL ldown;
 	BOOL m_move = FALSE; // 도형을 잡고 끄는 상태
+	BOOL m_changeSize = FALSE; // 도형 끄트머리를 잡고 크기를 변경하는 상태
+	/*enum ChangeSizePosition{
+		NOTHING = -1, TOPLEFT, TOPRIGHT, BOTTOMLEFT, BOTTOMRIGHT
+	};*/
+	int m_changeSizePosition = -1;
 	BOOL m_textin = FALSE;
 	int m_currentSelected; // 선택된 도형의 m_shape index
 	POINT m_clickedPoint; // 도형을 선택했을 때 클릭된 마우스 포인터의 좌표

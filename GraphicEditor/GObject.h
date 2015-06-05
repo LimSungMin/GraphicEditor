@@ -27,6 +27,7 @@ public:
 	COLORREF getColor();
 	virtual void setSelected(BOOL selected){ m_isSelected = selected; }
 	virtual BOOL isInBound(CPoint point){ return FALSE; }
+	virtual int isInSizeBound(CPoint point){ return -1; }
 private:
 	int m_startX;
 	int m_startY;

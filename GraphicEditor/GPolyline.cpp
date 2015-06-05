@@ -19,6 +19,10 @@ int GPolyline::getEndY(){ return m_endY; }
 void GPolyline::setEndX(int x){ m_endX = x; }
 void GPolyline::setEndY(int y){ m_endY = y; }
 
+void GPolyline::move(int x1, int y1, int x2, int y2){
+
+}
+
 GPolyline::~GPolyline()
 {
 }

@@ -13,6 +13,8 @@ public:
 	int getEndX();
 	int getEndY();
 	void move(int x1, int y1, int x2, int y2);
+	BOOL isInBound(CPoint point);
+	void setSelected(BOOL selected);
 private:
 	int m_endX;
 	int m_endY;

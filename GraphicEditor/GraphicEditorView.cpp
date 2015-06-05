@@ -10,10 +10,11 @@
 #endif
 #include "GraphicEditorDoc.h"
 #include "GraphicEditorView.h"
-#include "Rectangle.h"
+//#include "Rectangle.h"
 #include "GObject.h"
 #include "GRectangle.h"
 #include "GPolyline.h"
+#include "GLine.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -43,6 +44,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_WM_CHAR()
 //	ON_WM_PAINT()
 	ON_WM_LBUTTONDBLCLK()
+	ON_COMMAND(ID_EDIT_UNDO, &CGraphicEditorView::OnEditUndo)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -55,7 +57,7 @@ CGraphicEditorView::CGraphicEditorView()
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
 	//CurrentMode = DrawMode::LINE;								// 기본값은 라인
-	
+
 }
 
 CGraphicEditorView::~CGraphicEditorView()
@@ -128,29 +130,34 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:
-		line.SetStart(point.x, point.y);
+		//line.SetStart(point.x, point.y);
+		pDoc->m_line = new GLine();
+		
+		pDoc->m_line->setStartX(point.x);
+		pDoc->m_line->setStartY(point.y);
+		pDoc->m_line->SetEnd(point);
+
+
+		
 		pos = point;
 		break;
 	case DrawMode::RECT:{
-		/*pDoc->m_rect.setStartX(point.x-10);
-		pDoc->m_rect.setStartY(point.y-10);
-		pDoc->m_rect.setEndX(point.x+10);
-		pDoc->m_rect.setEndY(point.y+10);*/
 		
-		GRectangle* rect = new GRectangle();
-		rect->setStartX(point.x - 10);
-		rect->setStartY(point.y - 10);
-		rect->setEndX(point.x + 10);
-		rect->setEndY(point.y + 10);
-		pDoc->m_shapes.Add(*rect);
-		pDoc->m_shapesCurrent = pDoc->m_shapes.GetCount() - 1;
+		//GRectangle* rect = new GRectangle();
+		pDoc->m_rect = new GRectangle();
+		pDoc->m_rect->setStartX(point.x - 10);
+		pDoc->m_rect->setStartY(point.y - 10);
+		pDoc->m_rect->setEndX(point.x + 10);
+		pDoc->m_rect->setEndY(point.y + 10);
+		// pDoc->m_shapes.Add(*rect);
+		// pDoc->m_shapesCurrent = pDoc->m_shapes.GetCount() - 1;
 		Invalidate();
 		break;
 	}
 
 	case DrawMode::TEXT:{
-		line.SetStart(point.x, point.y);
-		line.SetEnd(point.x, point.y);
+		//line.SetStart(point.x, point.y);
+		//line.SetEnd(point.x, point.y);
 		break;
 	}
 
@@ -171,14 +178,12 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
 	ldown = FALSE;
+	GLine line;
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:{
-		line.SetEnd(point.x, point.y);
-		CClientDC dc(this);
-		dc.MoveTo(pos);
-		dc.LineTo(point);
-		//pos = point;
+		pDoc->vo.push_back(pDoc->m_line);
+		
 		break;
 	}
 	case DrawMode::RECT:{
@@ -188,7 +193,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		dc.SelectStockObject(NULL_BRUSH);
 		dc.SetROP2(R2_COPYPEN);
 		dc.Rectangle(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y);*/
-		
+
 		//pDoc->m_rects.Add(pDoc->m_rect);
 		//GRectangle rect = GRectangle(pDoc->m_rect);
 		//pDoc->m_shapes.Add(rect);
@@ -197,15 +202,16 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->m_shapes.Add(*rect);
 		pDoc->m_shapesCurrent = pDoc->m_shapes.GetCount() - 1;
 		*/
+		pDoc->vo.push_back(pDoc->m_rect);
 		Invalidate();
 		break;
 	}
 	
 	case DrawMode::TEXT:{
 		
-		
+		/*
 			line.SetEnd(point.x, point.y);
-			JRectangle r(line.getstart(), line.getend());
+			//JRectangle r(line.getstart(), line.getend());
 			CClientDC dc(this);
 			dc.SelectStockObject(NULL_BRUSH);
 			dc.SetROP2(R2_COPYPEN);
@@ -233,7 +239,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 			}
 
 			m_str.RemoveAll();
-			
+			*/
 		break;
 	}
 	case DrawMode::POLY:{
@@ -254,17 +260,21 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
+
 	if (ldown){
 		switch (CurrentMode)
 		{
 		case DrawMode::LINE:{
 			
-			
+
+			pDoc->m_line->SetEnd(point);
+
+			Invalidate();
 			break;
 		}
 		case DrawMode::RECT:{
-			pDoc->m_rect.setEndX(point.x);
-			pDoc->m_rect.setEndY(point.y);
+			pDoc->m_rect->setEndX(point.x);
+			pDoc->m_rect->setEndY(point.y);
 			/*pDoc->m_shapes[pDoc->m_shapesCurrent].setEndX(point.x);
 			pDoc->m_shapes[pDoc->m_shapesCurrent].setEndY(point.y);*/
 
@@ -372,31 +382,43 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 		break;
 	}
 	CFormView::OnChar(nChar, nRepCnt, nFlags);
+	
 }
-
+int i = 0;
 
 void CGraphicEditorView::OnDraw(CDC* pDC)
 {
+	
+	CString str;
 	CGraphicEditorDoc* pDoc = GetDocument();
-	//pDC->SelectStockObject(NULL_BRUSH);
+
 
 	for (int i = 0; i < pDoc->m_shapes.GetCount(); i++){
 		pDoc->m_shapes[i].draw(pDC);
 	}
 	pDoc->m_poly.draw(pDC);
-	/*
+	
+
+	for (auto i : pDoc->vo) i->draw(pDC);
+
 	switch (CurrentMode){
+	case DrawMode::LINE:{
+		pDoc->m_line->draw(pDC);
+		
+		break;
+	}
 	case DrawMode::RECT:{
-		pDoc->m_rect.draw(pDC, 0);
+		pDoc->m_rect->draw(pDC);
+		
 		break;
 		}
 
 	case DrawMode::POLY:{
-		pDoc->m_poly.draw(pDC, 0);
+		pDoc->m_poly.draw(pDC);
 		break;
 	}
 	
-	}*/
+	}
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }
 
@@ -411,4 +433,14 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	//pDoc->m_polypoints.Add(NULL);
 
 	CFormView::OnLButtonDblClk(nFlags, point);
+}
+
+
+void CGraphicEditorView::OnEditUndo()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	Invalidate();
+	pDoc->vo.pop_back();
+	Invalidate();
 }

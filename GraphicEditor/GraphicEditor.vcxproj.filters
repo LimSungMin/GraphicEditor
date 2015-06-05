@@ -48,12 +48,6 @@
     <ClInclude Include="헤더.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Rectangle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Line.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="GObject.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -61,6 +55,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="GPolyline.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GLine.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,12 +80,6 @@
     <ClCompile Include="LeftView.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Rectangle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Line.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>헤더 파일</Filter>
     </ClCompile>
@@ -99,6 +90,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="GPolyline.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GLine.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

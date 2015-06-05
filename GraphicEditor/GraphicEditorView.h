@@ -5,7 +5,6 @@
 #pragma once
 
 #include "resource.h"
-#include "Line.h"
 
 
 class CGraphicEditorView : public CFormView
@@ -25,8 +24,9 @@ public:
 		LINE, POLY, RECT, ELLP, TEXT
 	};
 	int CurrentMode;
-	Line line;
+	
 	POINT pos;
+	POINT postPos;
 	BOOL ldown;
 	BOOL m_textin = FALSE;
 	
@@ -77,6 +77,7 @@ public:
 	virtual void OnDraw(CDC* /*pDC*/);
 //	afx_msg void OnPaint();
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
+	afx_msg void OnEditUndo();
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

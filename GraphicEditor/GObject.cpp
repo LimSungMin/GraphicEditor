@@ -54,11 +54,6 @@ void GObject::setThick(int thick){
 	m_thick = thick;
 }
 
-void GObject::draw(CDC* dc){
-	CPen pen(this->getPattern(), this->getThick(), this->getColor());
-	dc->Rectangle(this->getStartX(), this->getStartY(), this->getStartX(), this->getStartY());
-}
-
 GObject::~GObject()
 {
 }

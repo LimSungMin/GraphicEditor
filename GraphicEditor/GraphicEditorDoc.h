@@ -5,8 +5,8 @@
 
 #pragma once
 #include "afxtempl.h"
-
-
+#include <vector>
+using namespace std;
 class CGraphicEditorDoc : public CDocument
 {
 protected: // serialization에서만 만들어집니다.
@@ -18,12 +18,13 @@ public:
 	BOOL m_enableRectangle;
 	CArray<GObject, GObject&> m_shapes;
 	int m_shapesCurrent;
-	GRectangle m_rect;
+	GRectangle* m_rect;
 	GPolyline m_poly;
-	//CList<GRectangle, GRectangle&> m_rects;
-	//CArray<JRectangle, JRectangle&> m_rects;
-	//int m_rectsCurrent;
-// 작업입니다.
+	GLine* m_line;
+	
+	vector <GObject*> vo;
+		
+// 작업입니다. 
 public:
 
 // 재정의입니다.
@@ -55,4 +56,5 @@ protected:
 #endif // SHARED_HANDLERS
 public:
 	CArray<POINT, POINT&> m_polypoints;
+	afx_msg void OnEditUndo();
 };

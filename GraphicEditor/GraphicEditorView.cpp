@@ -383,7 +383,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	for (int i = 0; i < pDoc->m_shapes.GetCount(); i++){
 		pDoc->m_shapes[i].draw(pDC);
 	}
-	//pDoc->m_rect.draw(pDC);
+	pDoc->m_poly.draw(pDC);
 	/*
 	switch (CurrentMode){
 	case DrawMode::RECT:{

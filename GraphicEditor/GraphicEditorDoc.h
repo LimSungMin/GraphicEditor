@@ -18,11 +18,12 @@ public:
 	BOOL m_enableRectangle;
 	CArray<GObject, GObject&> m_shapes;
 	int m_shapesCurrent;
-	GRectangle m_rect;
+	GRectangle* m_rect;
 	GPolyline m_poly;
 	GLine* m_line;
 	vector<GLine*> v;
-	
+	vector<GRectangle*> vr;
+		
 // 작업입니다. 
 public:
 

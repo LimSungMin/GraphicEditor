@@ -9,7 +9,7 @@ public:
 	POINT GetEnd();
 
 	// 다른 애들 거
-	virtual void draw(CDC* dc, int mode);
+	void draw(CDC* dc, int mode);
 
 	//void move(int x1, int y1, int x2, int y2);
 private:

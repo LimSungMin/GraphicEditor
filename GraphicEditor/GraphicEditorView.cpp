@@ -130,7 +130,11 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	{
 	case DrawMode::LINE:
 		//line.SetStart(point.x, point.y);
-		pDoc->m_line.SetEnd(point);
+		pDoc->m_line = new GLine();
+		
+		pDoc->m_line->setStartX(point.x);
+		pDoc->m_line->setStartY(point.y);
+		pDoc->m_line->SetEnd(point);
 		//pDoc->m_line.Set
 		pos = point;
 		break;
@@ -168,17 +172,16 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
+	CGraphicEditorDoc* pDoc = GetDocument();
 	ldown = FALSE;
+	GLine line;
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:{
-		//line.SetEnd(point.x, point.y);
-		//CClientDC dc(this);
-		//dc.MoveTo(pos);
-		//dc.LineTo(point);
-		//pos = point;
-
+		pDoc->v.push_back(pDoc->m_line);
+		CDC* pDC = GetDC();
+		
+		for (auto i : pDoc->v) i->draw(pDC, 0);
 		
 		break;
 	}
@@ -232,7 +235,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 
 		Invalidate();
 
-						}
+	}
 
 
 	default:
@@ -245,13 +248,17 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-	CGraphicEditorDoc* pDoc = GetDocument();
+	CGraphicEditorDoc* pDoc = GetDocument();		
+
 	if (ldown){
 		switch (CurrentMode)
 		{
 		case DrawMode::LINE:{
-			
-			
+			 
+
+			pDoc->m_line->SetEnd(point);
+	
+			Invalidate();
 			break;
 		}
 		case DrawMode::RECT:{
@@ -362,13 +369,24 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	CFormView::OnChar(nChar, nRepCnt, nFlags);
 }
-
+int i = 0;
 
 void CGraphicEditorView::OnDraw(CDC* pDC)
 {
+	
+	CString str;
 	CGraphicEditorDoc* pDoc = GetDocument();
-
 	switch (CurrentMode){
+	case DrawMode::LINE:{
+		pDoc->m_line->draw(pDC, 0);
+		
+		
+
+		str.Format(_T("%d개 추가됨"), i++);
+		
+		SetDlgItemText(IDC_STATIC, str);
+		break;
+	}
 	case DrawMode::RECT:{
 		pDoc->m_rect.draw(pDC, 0);
 		break;

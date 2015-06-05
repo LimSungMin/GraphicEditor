@@ -15,7 +15,8 @@ void GLine::draw(CDC* dc, int mode){
 	CPen pen(this->getPattern(), this->getThick(), this->getColor());
 	dc->SelectObject(&pen);
 	// 선 그리기는 여기서부터
-	//dc->MoveTo();
+	dc->MoveTo(getStartX(), getStartY());
+	dc->LineTo(GetEnd());
 }
 
 void GLine::SetEnd(POINT point){

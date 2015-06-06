@@ -276,23 +276,23 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 		if (m_changeSize == TRUE){
 			switch (m_changeSizePosition){
 			case 0:{ // 왼쪽 위
-				pDoc->m_rect->setStartX(point.x);
-				pDoc->m_rect->setStartY(point.y);
+				pDoc->vo[m_currentSelected]->setStartX(point.x);
+				pDoc->vo[m_currentSelected]->setStartY(point.y);
 				break;
 			}
 			case 1:{ // 오른쪽 위
-				pDoc->m_rect->setEndX(point.x);
-				pDoc->m_rect->setStartY(point.y);
+				pDoc->vo[m_currentSelected]->setEndX(point.x);
+				pDoc->vo[m_currentSelected]->setStartY(point.y);
 				break;
 			}
 			case 2:{ // 왼쪽 아래
-				pDoc->m_rect->setStartX(point.x);
-				pDoc->m_rect->setEndY(point.y);
+				pDoc->vo[m_currentSelected]->setStartX(point.x);
+				pDoc->vo[m_currentSelected]->setEndY(point.y);
 				break;
 			}
 			case 3:{ // 오른쪽 아래
-				pDoc->m_rect->setEndX(point.x);
-				pDoc->m_rect->setEndY(point.y);
+				pDoc->vo[m_currentSelected]->setEndX(point.x);
+				pDoc->vo[m_currentSelected]->setEndY(point.y);
 				break;
 			}
 			default:{

@@ -137,6 +137,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		}
 	}
 
+
 	// 메뉴 개인 설정을 활성화합니다(가장 최근에 사용한 명령).
 	// TODO: 사용자의 기본 명령을 정의하여 각 풀다운 메뉴에 하나 이상의 기본 명령을 포함시킵니다.
 	CList<UINT, UINT> lstBasicCommands;
@@ -158,6 +159,36 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// 창 제목 표시줄에서 문서 이름 및 응용 프로그램 이름의 순서를 전환합니다.
 	// 문서 이름이 축소판 그림과 함께 표시되므로 작업 표시줄의 기능성이 개선됩니다.
 	ModifyStyle(0, FWS_PREFIXTITLE);
+	/*
+	if (
+		!m_DockingBar.Create(
+		_T("DialogBar"), this, TRUE,
+		MAKEINTRESOURCE(IDD_PAINTTOOL),
+		WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_MINIMIZE |
+		CBRS_LEFT | CBRS_FLOAT_MULTI,
+		IDD_PAINTTOOL))
+	{
+		return -1;
+
+	}
+
+	m_DockingBar.EnableDocking(CBRS_ALIGN_ANY);
+	EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_DockingBar);
+	*/
+
+	if (!m_DockingBar.Create(this, IDD_PAINTTOOL,
+		CBRS_LEFT | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_HIDE_INPLACE,
+		IDD_PAINTTOOL))
+	{
+		TRACE0("Failed to create dialog bar m_wndPaintDialog\n");
+		return -1;		// fail to create
+	}
+
+	m_DockingBar.EnableDocking(CBRS_ALIGN_LEFT | CBRS_ALIGN_RIGHT);
+	EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_DockingBar);
+
 
 	return 0;
 }

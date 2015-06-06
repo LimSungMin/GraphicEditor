@@ -49,6 +49,7 @@ public:
 	afx_msg void OnRectangle();
 	afx_msg void OnEllipse();
 	afx_msg void OnText();
+	CPaneDialog m_DockingBar;
 };
 
 

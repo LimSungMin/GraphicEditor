@@ -170,7 +170,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 			m_firstclick = FALSE;
 		}
-
+		// 푸시가 되었는지 확인한다 
 		pDoc->m_poly->polypointset(point);
 	}
 	default:

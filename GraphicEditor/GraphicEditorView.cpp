@@ -221,7 +221,9 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	{
 	case DrawMode::LINE:{
 		pDoc->m_line->setPattern(PS_SOLID);
+		pDoc->m_line->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_line);
+		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		break;
 	}

@@ -8,6 +8,11 @@ public:
 	void SetEnd(POINT point);
 	POINT GetEnd();
 
+	void setEndX(int x);
+	void setEndY(int y);
+	int getEndX();
+	int getEndY();
+
 	// 다른 애들 거
 	void draw(CDC* dc);
 	

@@ -79,3 +79,8 @@ POINT GLine::GetEnd(){
 	value.y = m_endY;
 	return value;
 }
+int GLine::getEndX(){ return m_endX; }
+int GLine::getEndY(){ return m_endY; }
+
+void GLine::setEndX(int x){ m_endX = x; }
+void GLine::setEndY(int y){ m_endY = y; }

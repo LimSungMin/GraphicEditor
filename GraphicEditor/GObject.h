@@ -14,17 +14,29 @@ public:
 	int getStartY();
 	virtual void setEndX(int x){}
 	virtual void setEndY(int y){}
-	void setColor(COLORREF c);
-	void setColor(int r, int g, int b);
+	
 	void setPattern(int pattern);
 	int getPattern();
 	void setThick(int thick);
 	int getThick();
-	COLORREF getColor();
+	
+	void setLineColor(COLORREF c);
+	void setLineColor(int r, int g, int b);
+
+	void setPaneColor(COLORREF c);
+	void setPaneColor(int r, int g, int b);
+	
+	
+	COLORREF getLineColor();
+	COLORREF getPaneColor();
+
+
+
 private:
 	int m_startX;
 	int m_startY;
-	COLORREF m_color;
+	COLORREF m_linecolor;
+	COLORREF m_panecolor;
 	int m_thick;
 	CPen m_pen;
 	int m_pattern;

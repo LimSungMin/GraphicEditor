@@ -79,6 +79,7 @@ public:
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnEditUndo();
 	afx_msg void OnBnClickedLinecolor();
+	afx_msg void OnBnClickedPanecolor();
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

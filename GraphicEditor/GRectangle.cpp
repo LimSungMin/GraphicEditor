@@ -28,6 +28,8 @@ void GRectangle::draw(CDC* dc){
 		dc->Rectangle(m_selectedRect[1]);
 		dc->Rectangle(m_selectedRect[2]);
 		dc->Rectangle(m_selectedRect[3]);
+
+
 	}
 }
 

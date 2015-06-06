@@ -532,36 +532,6 @@ void CGraphicEditorView::OnEditUndo()
 
 
 
-void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
-{
-	CColorDialog cdlg;
-	CGraphicEditorDoc* pDoc = GetDocument();
-
-	if (cdlg.DoModal() == IDOK)
-	{
-		switch (CurrentMode){
-		case DrawMode::LINE:{
-			pDoc->m_line->setLineColor(cdlg.GetColor());
-
-			break;
-		}
-		case DrawMode::RECT:{
-			pDoc->m_rect->setLineColor(cdlg.GetColor());
-
-			break;
-		}
-
-		case DrawMode::POLY:{
-			pDoc->m_poly->setLineColor(cdlg.GetColor());
-			break;
-		}
-		}
-	}
-	//시발
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-}
-
-
 void CGraphicEditorView::OnBnClickedPanecolor()
 {
 	CColorDialog cdlg;

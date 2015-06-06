@@ -5,7 +5,7 @@
 #include "GraphicEditor.h"
 #include "ControlEdit.h"
 #include "afxdialogex.h"
-
+#include "GraphicEditorDoc.h"
 
 // ControlEdit 대화 상자입니다.
 
@@ -28,7 +28,7 @@ void ControlEdit::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(ControlEdit, CDialog)
+
 END_MESSAGE_MAP()
 
 
-// ControlEdit 메시지 처리기입니다.

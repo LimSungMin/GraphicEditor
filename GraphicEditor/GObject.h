@@ -23,12 +23,12 @@ public:
 	void setLineColor(COLORREF c);
 	void setLineColor(int r, int g, int b);
 
-	void setPaneColor(COLORREF c);
-	void setPaneColor(int r, int g, int b);
+	void setFillColor(COLORREF c);
+	void setFillColor(int r, int g, int b);
 	
 	
 	COLORREF getLineColor();
-	COLORREF getPaneColor();
+	COLORREF getFillColor();
 
 
 

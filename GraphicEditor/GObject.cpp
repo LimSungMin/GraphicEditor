@@ -38,15 +38,15 @@ void GObject::setLineColor(int r, int g, int b){
 	m_linecolor = RGB(r, g, b);
 }
 
-COLORREF GObject::getPaneColor(){
+COLORREF GObject::getFillColor(){
 	return m_panecolor;
 }
 
-void GObject::setPaneColor(COLORREF c){
+void GObject::setFillColor(COLORREF c){
 	m_panecolor = c;
 }
 
-void GObject::setPaneColor(int r, int g, int b){
+void GObject::setFillColor(int r, int g, int b){
 	m_panecolor = RGB(r, g, b);
 }
 

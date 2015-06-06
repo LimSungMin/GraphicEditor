@@ -16,12 +16,10 @@ GLine::~GLine()
 void GLine::draw(CDC* dc){
 	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
 	dc->SelectObject(&pen);
-	
+	dc->SelectStockObject(NULL_BRUSH);
 	// 선 그리기는 여기서부터
 	dc->MoveTo(getStartX(), getStartY());
-	dc->LineTo(GetEnd());
-	
-	dc->SelectStockObject(NULL_BRUSH);
+	dc->LineTo(GetEnd());		
 	
 	if (this->getSelected()){
 		CBrush brush(RGB(255, 255, 255));
@@ -35,11 +33,14 @@ void GLine::draw(CDC* dc){
 }
 
 BOOL GLine::isInBound(CPoint point){
+	/*
 	if (this->getStartX() <= point.x && point.x <= this->getEndX() || this->getEndX() <= point.x && point.x <= this->getStartX()){
 		if (this->getStartY() <= point.y && point.y <= this->getEndY() || this->getEndY() <= point.y && point.y <= this->getStartY()){
 			return TRUE;
 		}
-	}
+	}*/
+	if (getStartX() <= point.x && point.x <= getEndX() && getStartY() <= point.y && point.y <= getEndY()) return TRUE;
+	if (getEndX() <= point.x && point.x <= getStartX() && getEndY() <= point.y && point.y <= getStartY()) return TRUE;
 	return FALSE;
 }
 
@@ -54,7 +55,7 @@ int GLine::isInSizeBound(CPoint point){
 		}
 	}
 
-	//return -1;
+	return -1;
 }
 
 void GLine::move(int x1, int y1, int x2, int y2){

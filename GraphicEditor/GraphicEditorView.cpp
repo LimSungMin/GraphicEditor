@@ -148,14 +148,14 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		
 		pos = point;
 		break;
-		/*
+		
 	case DrawMode::ELLP:{
 		pDoc->m_ellp = new GEllipse();
 		pDoc->m_ellp->setStartX(point.x);
 		pDoc->m_ellp->setStartY(point.y);
 		pDoc->m_ellp->SetEnd(point);
 	}
-	*/
+	
 	case DrawMode::RECT:{
 		
 		pDoc->m_rect = new GRectangle();
@@ -236,11 +236,11 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		Invalidate();
 		break;
 	}
-						/*
+						
 	case DrawMode::ELLP:{
 		pDoc->vo.push_back(pDoc->m_ellp);
 		break;
-	}*/
+	}
 	case DrawMode::RECT:{
 		pDoc->m_rect->setPattern(PS_SOLID);
 		pDoc->m_rect->setSelected(TRUE);
@@ -345,13 +345,13 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			Invalidate();
 			break;
 		}
-	/*	case DrawMode::ELLP:{
+		case DrawMode::ELLP:{
 			pDoc->m_ellp->SetEnd(point);
 			pDoc->m_ellp->setEndX(point.x);
 			pDoc->m_ellp->setEndY(point.y);
 			Invalidate();
 			break;
-		}*/
+		}
 
 
 		case DrawMode::RECT:{
@@ -513,10 +513,10 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		
 		break;
 	}
-	/*case DrawMode::ELLP:{
+	case DrawMode::ELLP:{
 		pDoc->m_ellp->draw(pDC);
 		break;
-	}*/
+	}
 	case DrawMode::RECT:{
 		pDoc->m_rect->draw(pDC);
 		

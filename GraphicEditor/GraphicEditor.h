@@ -12,7 +12,7 @@
 #include "GRectangle.h"
 #include "GPolyline.h"
 #include "GLine.h"
-
+#include "GEllipse.h"
 // CGraphicEditorApp:
 // 이 클래스의 구현에 대해서는 GraphicEditor.cpp을 참조하십시오.
 //

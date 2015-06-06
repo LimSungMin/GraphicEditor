@@ -545,7 +545,7 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	pDoc->m_poly = new GPolyline();
 
 	//pDoc->m_polypoints.Add(NULL);
-
+	//
 	CFormView::OnLButtonDblClk(nFlags, point);
 }
 

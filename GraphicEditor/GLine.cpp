@@ -8,7 +8,7 @@ GLine::GLine() : GObject(0, 0), m_endX(0), m_endY(0)
 }
 
 
-GLine::~GLine()
+GLine::~GLine() 
 {
 	//delete[] m_selectedRect;
 }
@@ -48,12 +48,13 @@ int GLine::isInSizeBound(CPoint point){
 		if (this->m_selectedRect[i]->left <= point.x && point.x <= this->m_selectedRect[i]->right || this->m_selectedRect[i]->right <= point.x && point.x <= this->m_selectedRect[i]->left){
 			if (this->m_selectedRect[i]->top <= point.y && point.y <= this->m_selectedRect[i]->bottom || this->m_selectedRect[i]->bottom <= point.y && point.y <= this->m_selectedRect[i]->top){
 				MessageBeep(NULL);
-				return i;
+				if (i == 0) return 0;
+				else if (i == 1) return 3;
 			}
 		}
 	}
 
-	return -1;
+	//return -1;
 }
 
 void GLine::move(int x1, int y1, int x2, int y2){

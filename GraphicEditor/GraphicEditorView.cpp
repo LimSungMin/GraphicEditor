@@ -138,6 +138,9 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		
 		pDoc->m_line->setStartX(point.x);
 		pDoc->m_line->setStartY(point.y);
+		pDoc->m_line->setEndX(point.x);
+		pDoc->m_line->setEndY(point.y);
+
 		pDoc->m_line->SetEnd(point);
 
 

@@ -529,8 +529,7 @@ void CGraphicEditorView::OnEditUndo()
 	pDoc->vo.pop_back();
 	Invalidate();
 }
-<<<<<<< HEAD
-=======
+
 
 
 void CGraphicEditorView::OnBnClickedLinecolor() // ¼± »ö ¼³Á¤À» ºÒ·¯¿È
@@ -574,4 +573,3 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 
 	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
 }
->>>>>>> origin/?´ì›ì¤€2

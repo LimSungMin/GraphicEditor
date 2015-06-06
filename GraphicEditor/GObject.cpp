@@ -2,11 +2,11 @@
 #include "GObject.h"
 
 
-GObject::GObject() : m_startX(0), m_startY(0), m_thick(4)
+GObject::GObject() : m_startX(0), m_startY(0), m_thick(1)
 {
 }
 
-GObject::GObject(int x, int y) : m_startX(x), m_startY(y), m_thick(4)
+GObject::GObject(int x, int y) : m_startX(x), m_startY(y), m_thick(1)
 {
 }
 

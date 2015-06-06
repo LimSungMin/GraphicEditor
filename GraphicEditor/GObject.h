@@ -14,31 +14,37 @@ public:
 	int getStartY();
 	virtual void setEndX(int x){}
 	virtual void setEndY(int y){}
-	
-	void setPattern(int pattern);
-	int getPattern();
+	virtual int getEndX(){ return 0; }
+	virtual int getEndY(){ return 0; }
+	virtual void move(int x1, int y1, int x2, int y2){}
+	virtual BOOL getSelected(){ return m_isSelected; }
+
+	virtual void setPattern(int pattern);
+	virtual int getPattern();
 	void setThick(int thick);
 	int getThick();
-	
+
+	virtual void setSelected(BOOL selected){ m_isSelected = selected; }
+	virtual BOOL isInBound(CPoint point){ return FALSE; }
+	virtual int isInSizeBound(CPoint point){ return -1; }
 	void setLineColor(COLORREF c);
 	void setLineColor(int r, int g, int b);
 
 	void setFillColor(COLORREF c);
 	void setFillColor(int r, int g, int b);
-	
-	
+
+
 	COLORREF getLineColor();
 	COLORREF getFillColor();
-
-
-
 private:
 	int m_startX;
 	int m_startY;
 	COLORREF m_linecolor;
-	COLORREF m_panecolor;
 	int m_thick;
 	CPen m_pen;
 	int m_pattern;
+	COLORREF m_panecolor;
+protected:
+	BOOL m_isSelected;
 };
 

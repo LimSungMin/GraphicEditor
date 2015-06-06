@@ -101,6 +101,7 @@
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ControlEdit.h" />
+    <ClInclude Include="GEllipse.h" />
     <ClInclude Include="GObject.h" />
     <ClInclude Include="GPolyline.h" />
     <ClInclude Include="GraphicEditor.h" />
@@ -119,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ControlEdit.cpp" />
+    <ClCompile Include="GEllipse.cpp" />
     <ClCompile Include="GObject.cpp" />
     <ClCompile Include="GPolyline.cpp" />
     <ClCompile Include="GraphicEditor.cpp" />

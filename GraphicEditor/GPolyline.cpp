@@ -42,6 +42,13 @@ void GPolyline::draw(CDC* dc){
 		dc->SelectObject(&pen2);
 		m_selectedRect[4] = new CRect(this->findleftest(), this->findhighest(), this->findrightest(), this->findlowest());
 		dc->Rectangle(m_selectedRect[4]);
+
+		for (int i = 0; i < this->m_polypoints.GetCount(); i++)
+		{
+			dc->SelectObject(&brush);
+			m_selectedPointRect[i] = new CRect(this->m_polypoints[i].x - 5, this->m_polypoints[i].y - 5, this->m_polypoints[i].x + 5, this->m_polypoints[i].y + 5);
+			dc->Rectangle(m_selectedPointRect[i]);
+		}
 		
 	}
 }
@@ -58,19 +65,10 @@ void GPolyline::setEndX(int x){ m_endX = x; }
 void GPolyline::setEndY(int y){ m_endY = y; }
 
 void GPolyline::move(int x1, int y1, int x2, int y2){
-	// 통째로 다시 그리는것임 즉 현재 위치와 차값을 구하여 각 좌표에 더하도록 함
-	/*
-	this->setStartX(x1);
-	this->setStartY(y1);
-	this->setEndX(x2);
-	this->setEndY(y2);
-	*/
-
-	int tmpx, tmpy; // 차 값을 저장하는 임시 변수 
+	// 각 좌표 이동값의 차를 인수로 받으므로, 해당 값 만큼을 기존 위치에 더함
 
 	this->xmover(x1);
 	this->ymover(y1);
-
 }
 
 void GPolyline::xmover(int x)
@@ -105,6 +103,21 @@ int GPolyline::findhighest()
 	return highest;
 }
 
+int GPolyline::isInSizeBound(CPoint point){
+	for (int i = 0; i < 4; i++){
+		if (this->m_selectedPointRect[i]->left <= point.x && point.x <= this->m_selectedPointRect[i]->right
+			|| this->m_selectedPointRect[i]->right <= point.x && point.x <= this->m_selectedPointRect[i]->left){
+			
+			if (this->m_selectedPointRect[i]->top <= point.y && point.y <= this->m_selectedPointRect[i]->bottom ||
+				this->m_selectedPointRect[i]->bottom <= point.y && point.y <= this->m_selectedPointRect[i]->top){
+				MessageBeep(NULL);
+				return i;
+			}
+		}
+	}
+
+	return -1;
+}
 
 
 int GPolyline::findlowest()

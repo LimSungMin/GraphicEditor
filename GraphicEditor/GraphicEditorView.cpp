@@ -545,9 +545,10 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 	CGraphicEditorDoc* pDoc = GetDocument();
 	
-	if ( m_firstclick == FALSE)
+	pDoc->m_poly->polypointset(point);
 	pDoc->m_poly = new GPolyline();
 	
+
 	//pDoc->m_poly->deletepolypointset(1);
 	//pDoc->m_polypoints.Add(NULL);
 	//

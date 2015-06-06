@@ -153,6 +153,8 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		pDoc->m_ellp = new GEllipse();
 		pDoc->m_ellp->setStartX(point.x);
 		pDoc->m_ellp->setStartY(point.y);
+		pDoc->m_ellp->setEndX(point.x);
+		pDoc->m_ellp->setEndY(point.y);
 		pDoc->m_ellp->SetEnd(point);
 	}
 	
@@ -240,7 +242,11 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 						
 	case DrawMode::ELLP:{
+		pDoc->m_ellp->setPattern(PS_SOLID);
+		pDoc->m_ellp->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_ellp);
+		m_currentSelected = pDoc->vo.size() - 1;
+		Invalidate();
 		break;
 	}
 	case DrawMode::RECT:{
@@ -573,6 +579,10 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 		case DrawMode::LINE:{
 			pDoc->m_line->setLineColor(cdlg.GetColor());
 
+			break;
+		}
+		case DrawMode::ELLP:{
+			pDoc->m_ellp->setLineColor(cdlg.GetColor());
 			break;
 		}
 		case DrawMode::RECT:{

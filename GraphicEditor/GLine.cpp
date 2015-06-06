@@ -10,7 +10,7 @@ GLine::GLine() : GObject(0, 0), m_endX(0), m_endY(0)
 
 GLine::~GLine() 
 {
-	//delete[] m_selectedRect;
+//	delete[] m_selectedRect;
 }
 
 void GLine::draw(CDC* dc){

@@ -217,7 +217,9 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:{
+		pDoc->m_line->setPattern(PS_SOLID);
 		pDoc->vo.push_back(pDoc->m_line);
+		Invalidate();
 		break;
 	}
 	case DrawMode::ELLP:{
@@ -319,12 +321,15 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 		{
 		case DrawMode::LINE:{
 			pDoc->m_line->SetEnd(point);
+			pDoc->m_line->setEndX(point.x);
+			pDoc->m_line->setEndY(point.y);
 			Invalidate();
 			break;
 		}
 		case DrawMode::ELLP:{
 			pDoc->m_ellp->SetEnd(point);
-
+			pDoc->m_ellp->setEndX(point.x);
+			pDoc->m_ellp->setEndY(point.y);
 			Invalidate();
 			break;
 		}

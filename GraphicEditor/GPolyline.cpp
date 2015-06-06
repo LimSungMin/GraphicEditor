@@ -8,8 +8,8 @@ GPolyline::GPolyline() : GObject(0, 0), m_endX(0), m_endY(0)
 
 void GPolyline::draw(CDC* dc){
 
-	//CPen pen(this->getPattern(), this->getThick(), this->getColor());
-
+	CPen pen(this->getPattern(),10, this->getLineColor());
+	dc->SelectObject(&pen);
 	dc->Polyline(this->m_polypoints.GetData(), this->m_polypoints.GetCount());
 }
 
@@ -22,7 +22,10 @@ void GPolyline::setEndX(int x){ m_endX = x; }
 void GPolyline::setEndY(int y){ m_endY = y; }
 
 void GPolyline::move(int x1, int y1, int x2, int y2){
-
+	this->setStartX(x1);
+	this->setStartY(y1);
+	this->setEndX(x2);
+	this->setEndY(y2);
 }
 
 GPolyline::~GPolyline()

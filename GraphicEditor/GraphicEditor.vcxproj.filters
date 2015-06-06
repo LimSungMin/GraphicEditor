@@ -60,13 +60,13 @@
     <ClInclude Include="GLine.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GEllipse.h">
+    <ClInclude Include="SelectAble.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="ControlEdit.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SelectAble.h">
+    <ClInclude Include="GEllipse.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -104,13 +104,13 @@
     <ClCompile Include="GLine.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GEllipse.cpp">
+    <ClCompile Include="SelectAble.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ControlEdit.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SelectAble.cpp">
+    <ClCompile Include="GEllipse.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

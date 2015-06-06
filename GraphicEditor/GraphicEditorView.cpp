@@ -46,6 +46,8 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 //	ON_WM_PAINT()
 	ON_WM_LBUTTONDBLCLK()
 	ON_COMMAND(ID_EDIT_UNDO, &CGraphicEditorView::OnEditUndo)
+	ON_BN_CLICKED(IDC_LineColor, &CGraphicEditorView::OnBnClickedLinecolor)
+	ON_BN_CLICKED(IDC_PaneColor, &CGraphicEditorView::OnBnClickedPanecolor)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -128,8 +130,10 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	ldown = TRUE;
 	CGraphicEditorDoc* pDoc = GetDocument();
+	
 	for (int i = 0; i < pDoc->vo.size(); i++)
 		pDoc->vo[i]->setSelected(FALSE);
+	
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:
@@ -138,22 +142,22 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		
 		pDoc->m_line->setStartX(point.x);
 		pDoc->m_line->setStartY(point.y);
-		pDoc->m_line->setEndX(point.x);
-		pDoc->m_line->setEndY(point.y);
-
 		pDoc->m_line->SetEnd(point);
 
 
 		
 		pos = point;
 		break;
+		
 	case DrawMode::ELLP:{
 		pDoc->m_ellp = new GEllipse();
 		pDoc->m_ellp->setStartX(point.x);
 		pDoc->m_ellp->setStartY(point.y);
 		pDoc->m_ellp->SetEnd(point);
 	}
+	
 	case DrawMode::RECT:{
+		
 		pDoc->m_rect = new GRectangle();
 		pDoc->m_rect->setPattern(PS_DOT);
 		pDoc->m_rect->setStartX(point.x - 10);
@@ -172,13 +176,17 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	case DrawMode::POLY:{
 		
-		//pDoc->m_poly.polypointset(point);
+		if (m_firstclick == TRUE){
+			pDoc->m_poly = new GPolyline();
+
+			m_firstclick = FALSE;
 		}
-		// 푸시가 되었는지 확인한다 
+
 		pDoc->m_poly->polypointset(point);
+	}
 	default:{ // DrawMode::NOTHING
 		if (pDoc->vo.size()>0 && m_currentSelected >= 0){
-			if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0 ){ // 크기 조절 위치는 0~3
+			if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0){ // 크기 조절 위치는 0~3
 				m_changeSize = TRUE;
 				pDoc->vo[m_currentSelected]->setSelected(TRUE);
 				return;
@@ -187,18 +195,20 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		for (int i = 0; i < pDoc->vo.size(); i++) // 선택되었던 객체를 전부 선택 해제한다.
 			pDoc->vo[i]->setSelected(FALSE);
 
-		for (int i = pDoc->vo.size()-1; i >=0; i--){ // 맨 위에 있는 도형을 잡기 위해 역순으로 검사함.
+		for (int i = pDoc->vo.size() - 1; i >= 0; i--){ // 맨 위에 있는 도형을 잡기 위해 역순으로 검사함.
 			if (pDoc->vo[i]->isInBound(point)){
 				m_move = TRUE;
 				pDoc->vo[i]->setSelected(TRUE);
 				m_currentSelected = i;
 				m_clickedPoint = point;
 				break;
-	}
+			}
 		}
 		break;
 	}
+		
 	}
+
 	Invalidate();
 	CFormView::OnLButtonDown(nFlags, point);
 }
@@ -216,17 +226,17 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->vo[m_currentSelected]->setSelected(TRUE);
 		return;
 	}
+
 	GLine line;
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:{
 		pDoc->m_line->setPattern(PS_SOLID);
-		pDoc->m_line->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_line);
-		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		break;
 	}
+						
 	case DrawMode::ELLP:{
 		pDoc->vo.push_back(pDoc->m_ellp);
 		break;
@@ -235,7 +245,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->m_rect->setPattern(PS_SOLID);
 		pDoc->m_rect->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_rect);
-		m_currentSelected = pDoc->vo.size()-1;
+		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		break;
 	}
@@ -276,13 +286,17 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		break;
 	}
 	case DrawMode::POLY:{
+
+		pDoc->vo.push_back(pDoc->m_poly);
 		Invalidate();
+
 						}
+
+
 	default:
 		m_move = FALSE;
 		break;
 	}
-
 	CFormView::OnLButtonUp(nFlags, point);
 }
 
@@ -348,7 +362,7 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 		default:{
 			if (m_move == TRUE){ // 객체가 선택되었을 때 도형을 잡고 움직이는 상황
 				GObject* curr = pDoc->vo[m_currentSelected];
-				
+
 				int startX = curr->getStartX();
 				int startY = curr->getStartY();
 				int endX = curr->getEndX();
@@ -361,20 +375,20 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 
 				curr->move(startX, startY, endX, endY);
 				m_clickedPoint = point;
-			Invalidate();
-		}
+				Invalidate();
+			}
 			break;
 		}
 		}
 		CFormView::OnMouseMove(nFlags, point);
 	}
+
 	
 }
 void CGraphicEditorView::OnLine()
 {
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	if (CurrentMode != DrawMode::LINE)
-	CurrentMode = DrawMode::LINE;
+		CurrentMode = DrawMode::LINE;
 	else
 		CurrentMode = DrawMode::NOTHING;
 }
@@ -384,7 +398,7 @@ void CGraphicEditorView::OnPolyline()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	if (CurrentMode != DrawMode::POLY)
-	CurrentMode = DrawMode::POLY;
+		CurrentMode = DrawMode::POLY;
 	else
 		CurrentMode = DrawMode::NOTHING;
 }
@@ -394,7 +408,7 @@ void CGraphicEditorView::OnRectangle()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	if (CurrentMode != DrawMode::RECT)
-	CurrentMode = DrawMode::RECT;
+		CurrentMode = DrawMode::RECT;
 	else
 		CurrentMode = DrawMode::NOTHING;
 }
@@ -404,7 +418,7 @@ void CGraphicEditorView::OnEllipse()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	if (CurrentMode != DrawMode::ELLP)
-	CurrentMode = DrawMode::ELLP;
+		CurrentMode = DrawMode::ELLP;
 	else
 		CurrentMode = DrawMode::NOTHING;
 }
@@ -414,10 +428,11 @@ void CGraphicEditorView::OnText()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	if (CurrentMode != DrawMode::TEXT)
-	CurrentMode = DrawMode::TEXT;
+		CurrentMode = DrawMode::TEXT;
 	else
 		CurrentMode = DrawMode::NOTHING;
 }
+
 
 
 
@@ -439,6 +454,7 @@ void CGraphicEditorView::OnUpdatePolyline(CCmdUI *pCmdUI)
 {
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
 	pCmdUI->SetCheck(CurrentMode == DrawMode::POLY);
+
 }
 
 
@@ -489,7 +505,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	CString str;
 	CGraphicEditorDoc* pDoc = GetDocument();
 
-	for (auto i : pDoc->vo) i->draw(pDC); // 저장된 모든 도형 객체 출력
+	for (auto i : pDoc->vo) i->draw(pDC);
 	
 	switch (CurrentMode){
 	case DrawMode::LINE:{
@@ -508,12 +524,12 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		}
 
 	case DrawMode::POLY:{
-		//pDoc->m_poly.draw(pDC);
+		pDoc->m_poly->draw(pDC);
 		break;
 	}
-	default:
-		break;
+	
 	}
+	
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }
 
@@ -524,6 +540,9 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
 	CGraphicEditorDoc* pDoc = GetDocument();
+
+	if ( m_firstclick == FALSE)
+	pDoc->m_poly = new GPolyline();
 
 	//pDoc->m_polypoints.Add(NULL);
 
@@ -540,6 +559,35 @@ void CGraphicEditorView::OnEditUndo()
 	Invalidate();
 }
 
+
+void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
+{
+	CColorDialog cdlg;
+	CGraphicEditorDoc* pDoc = GetDocument();
+
+	if (cdlg.DoModal() == IDOK)
+	{
+		switch (CurrentMode){
+		case DrawMode::LINE:{
+			pDoc->m_line->setLineColor(cdlg.GetColor());
+
+			break;
+		}
+		case DrawMode::RECT:{
+			pDoc->m_rect->setLineColor(cdlg.GetColor());
+
+			break;
+		}
+
+		case DrawMode::POLY:{
+			pDoc->m_poly->setLineColor(cdlg.GetColor());
+			break;
+		}
+		}
+	}
+
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
 
 
 void CGraphicEditorView::OnBnClickedPanecolor()

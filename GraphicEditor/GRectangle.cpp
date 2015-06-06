@@ -56,10 +56,10 @@ int GRectangle::isInSizeBound(CPoint point){
 		}
 	}
 	/*if (this->m_selectedRect[0]->left <= point.x && point.x <= this->m_selectedRect[0]->right || this->m_selectedRect[0]->right <= point.x && point.x <= this->m_selectedRect[0]->left){
-		if (this->m_selectedRect[0]->top <= point.y && point.y <= this->m_selectedRect[0]->bottom || this->m_selectedRect[0]->bottom <= point.y && point.y <= this->m_selectedRect[0]->top){
-			MessageBeep(NULL);
-			return 0;
-		}
+	if (this->m_selectedRect[0]->top <= point.y && point.y <= this->m_selectedRect[0]->bottom || this->m_selectedRect[0]->bottom <= point.y && point.y <= this->m_selectedRect[0]->top){
+	MessageBeep(NULL);
+	return 0;
+	}
 	}*/
 	return -1;
 }

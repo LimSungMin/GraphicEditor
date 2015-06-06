@@ -31,3 +31,4 @@ void GEllipse::SetEnd(POINT point){
 	m_endX = point.x;
 	m_endY = point.y;
 }
+

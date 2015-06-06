@@ -135,13 +135,13 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	case DrawMode::LINE:
 		//line.SetStart(point.x, point.y);
 		pDoc->m_line = new GLine();
-
+		
 		pDoc->m_line->setStartX(point.x);
 		pDoc->m_line->setStartY(point.y);
 		pDoc->m_line->SetEnd(point);
 
 
-
+		
 		pos = point;
 		break;
 	case DrawMode::ELLP:{
@@ -168,9 +168,11 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 
 	case DrawMode::POLY:{
-
+		
 		//pDoc->m_poly.polypointset(point);
-	}
+		}
+		// 푸시가 되었는지 확인한다 
+		pDoc->m_poly->polypointset(point);
 	default:{ // DrawMode::NOTHING
 		if (pDoc->vo.size()>0 && m_currentSelected >= 0){
 			if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0 ){ // 크기 조절 위치는 0~3
@@ -189,7 +191,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 				m_currentSelected = i;
 				m_clickedPoint = point;
 				break;
-			}
+	}
 		}
 		break;
 	}
@@ -268,7 +270,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	case DrawMode::POLY:{
 		Invalidate();
-	}
+						}
 	default:
 		m_move = FALSE;
 		break;
@@ -346,11 +348,11 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 				startY += point.y - m_clickedPoint.y;
 				endX += point.x - m_clickedPoint.x;
 				endY += point.y - m_clickedPoint.y;
-				
+
 				curr->move(startX, startY, endX, endY);
 				m_clickedPoint = point;
-				Invalidate();
-			}
+			Invalidate();
+		}
 			break;
 		}
 		}
@@ -362,7 +364,7 @@ void CGraphicEditorView::OnLine()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	if (CurrentMode != DrawMode::LINE)
-		CurrentMode = DrawMode::LINE;
+	CurrentMode = DrawMode::LINE;
 	else
 		CurrentMode = DrawMode::NOTHING;
 }
@@ -382,7 +384,7 @@ void CGraphicEditorView::OnRectangle()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	if (CurrentMode != DrawMode::RECT)
-		CurrentMode = DrawMode::RECT;
+	CurrentMode = DrawMode::RECT;
 	else
 		CurrentMode = DrawMode::NOTHING;
 }
@@ -478,7 +480,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	CGraphicEditorDoc* pDoc = GetDocument();
 
 	for (auto i : pDoc->vo) i->draw(pDC); // 저장된 모든 도형 객체 출력
-
+	
 	switch (CurrentMode){
 	case DrawMode::LINE:{
 		pDoc->m_line->draw(pDC);

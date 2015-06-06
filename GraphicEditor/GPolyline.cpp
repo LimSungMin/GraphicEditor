@@ -8,6 +8,8 @@ GPolyline::GPolyline() : GObject(0, 0), m_endX(0), m_endY(0)
 
 void GPolyline::draw(CDC* dc){
 
+	//CPen pen(this->getPattern(), this->getThick(), this->getColor());
+
 	dc->Polyline(this->m_polypoints.GetData(), this->m_polypoints.GetCount());
 }
 

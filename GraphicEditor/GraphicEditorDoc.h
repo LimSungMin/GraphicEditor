@@ -19,7 +19,7 @@ public:
 	CArray<GObject, GObject&> m_shapes;
 	int m_shapesCurrent;
 	GRectangle* m_rect;
-	GPolyline m_poly;
+	GPolyline* m_poly;
 	GLine* m_line;
 	GEllipse* m_ellp;
 

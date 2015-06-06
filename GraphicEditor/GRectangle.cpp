@@ -13,7 +13,7 @@ GRectangle::GRectangle(int x1, int y1, int x2, int y2) : GObject(x1, y1), m_endX
 }
 
 void GRectangle::draw(CDC* dc){
-	CPen pen(this->getPattern(), this->getThick(), this->getColor());
+	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
 	dc->SelectObject(&pen);
 	dc->SelectStockObject(NULL_BRUSH);
 	dc->Rectangle(this->getStartX(), this->getStartY(), this->getEndX(), this->getEndY());

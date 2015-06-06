@@ -15,6 +15,7 @@ public:
 	
 	void polypointset(POINT point);
 
+	//vector <POINT> pointofpoly;
 
 private:
 	int m_endX;

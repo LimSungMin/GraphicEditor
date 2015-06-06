@@ -178,7 +178,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	*/
 
 	if (!m_DockingBar.Create(this, IDD_PAINTTOOL,
-		CBRS_LEFT | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_HIDE_INPLACE,
+		CBRS_RIGHT | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_HIDE_INPLACE,
 		IDD_PAINTTOOL))
 	{
 		TRACE0("Failed to create dialog bar m_wndPaintDialog\n");

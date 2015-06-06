@@ -26,17 +26,30 @@ int GObject::getStartY(){
 	return m_startY;
 }
 
-COLORREF GObject::getColor(){
-	return m_color;
+COLORREF GObject::getLineColor(){
+	return m_linecolor;
 }
 
-void GObject::setColor(COLORREF c){
-	m_color = c;
+void GObject::setLineColor(COLORREF c){
+	m_linecolor = c;
 }
 
-void GObject::setColor(int r, int g, int b){
-	m_color = RGB(r, g, b);
+void GObject::setLineColor(int r, int g, int b){
+	m_linecolor = RGB(r, g, b);
 }
+
+COLORREF GObject::getFillColor(){
+	return m_panecolor;
+}
+
+void GObject::setFillColor(COLORREF c){
+	m_panecolor = c;
+}
+
+void GObject::setFillColor(int r, int g, int b){
+	m_panecolor = RGB(r, g, b);
+}
+
 
 void GObject::setPattern(int pattern){
 	m_pattern = pattern;

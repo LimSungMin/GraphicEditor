@@ -169,7 +169,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	case DrawMode::POLY:{
 
-		pDoc->m_poly.polypointset(point);
+		//pDoc->m_poly.polypointset(point);
 	}
 	default:{ // DrawMode::NOTHING
 		if (pDoc->vo.size()>0 && m_currentSelected >= 0){
@@ -496,7 +496,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		}
 
 	case DrawMode::POLY:{
-		pDoc->m_poly.draw(pDC);
+		//pDoc->m_poly.draw(pDC);
 		break;
 	}
 	default:

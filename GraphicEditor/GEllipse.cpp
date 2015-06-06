@@ -13,7 +13,7 @@ GEllipse::~GEllipse()
 
 void GEllipse::draw(CDC* dc)
 {
-	CPen pen(this->getPattern(), this->getThick(), this->getColor());
+	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
 	dc->SelectObject(&pen);
 	// 원 그리기는 여기서부터
 	dc->MoveTo(getStartX(), getStartY());

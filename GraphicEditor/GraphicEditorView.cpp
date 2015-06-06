@@ -529,3 +529,49 @@ void CGraphicEditorView::OnEditUndo()
 	pDoc->vo.pop_back();
 	Invalidate();
 }
+<<<<<<< HEAD
+=======
+
+
+void CGraphicEditorView::OnBnClickedLinecolor() // ¼± »ö ¼³Á¤À» ºÒ·¯¿È
+{
+	CColorDialog cdlg;
+	CGraphicEditorDoc* pDoc = GetDocument();
+
+	if (cdlg.DoModal() == IDOK)
+	{
+		switch (CurrentMode){
+		case DrawMode::LINE:{
+			pDoc->m_line->setLineColor(cdlg.GetColor());
+
+			break;
+		}
+		case DrawMode::RECT:{
+			pDoc->m_rect->setLineColor(cdlg.GetColor());
+
+			break;
+		}
+
+		case DrawMode::POLY:{
+			pDoc->m_poly->setLineColor(cdlg.GetColor());
+			break;
+		}
+		}
+	}
+	//½Ã¹ß
+	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+}
+
+
+void CGraphicEditorView::OnBnClickedPanecolor()
+{
+	CColorDialog cdlg;
+
+	if (cdlg.DoModal() == IDOK)
+	{
+
+	}
+
+	// TODO: ¿©±â¿¡ ÄÁÆ®·Ñ ¾Ë¸² Ã³¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù.
+}
+>>>>>>> origin/?´ì›ì¤€2

@@ -87,3 +87,4 @@ inline CGraphicEditorDoc* CGraphicEditorView::GetDocument() const
    { return reinterpret_cast<CGraphicEditorDoc*>(m_pDocument); }
 #endif
 
+//½Ã¹ß

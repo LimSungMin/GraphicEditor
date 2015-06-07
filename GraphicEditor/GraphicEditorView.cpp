@@ -672,13 +672,7 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
-	/*for (auto iter = pDoc->vo.begin(); iter != pDoc->vo.end(); ){
-		if ((*iter)->getSelected())
-			iter = pDoc->vo.erase(iter);
-		else
-			iter++;
-		
-	}*/
+
 	pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
 	m_currentSelected = -1;
 	Invalidate();

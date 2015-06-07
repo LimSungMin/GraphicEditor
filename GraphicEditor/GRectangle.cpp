@@ -19,8 +19,8 @@ void GRectangle::draw(CDC* dc){
 	//dc->SelectStockObject(NULL_BRUSH);
 
 	CBrush brush2;
-	//brush2.CreateSolidBrush(this->getFillColor());
-	brush2.CreateHatchBrush(NULL, RGB(255, 0, 255));
+	brush2.CreateSolidBrush(this->getFillColor());
+	//brush2.CreateHatchBrush(HS_DIAGCROSS, RGB(255, 0, 255));
 	dc->SelectObject(&brush2);
 	if (this->getFillColor() == NULL)
 		dc->SelectStockObject(NULL_BRUSH);

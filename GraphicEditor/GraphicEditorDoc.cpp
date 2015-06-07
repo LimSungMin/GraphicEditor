@@ -33,6 +33,8 @@ CGraphicEditorDoc::CGraphicEditorDoc()
 {
 	// TODO: 여기에 일회성 생성 코드를 추가합니다.
 	m_shapesCurrent = -1;
+	m_colorLine = RGB(0, 0, 0);
+	m_colorFill = RGB(255, 255, 255);
 }
 
 CGraphicEditorDoc::~CGraphicEditorDoc()

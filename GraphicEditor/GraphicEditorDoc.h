@@ -23,6 +23,9 @@ public:
 	GLine* m_line;
 	GEllipse* m_ellp;
 
+	COLORREF m_colorLine;
+	COLORREF m_colorFill;
+
 	vector <GObject*> vo;
 
 	// 작업입니다. 

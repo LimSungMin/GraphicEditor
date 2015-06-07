@@ -168,6 +168,8 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		
 		pDoc->m_rect = new GRectangle();
 		pDoc->m_rect->setPattern(PS_DOT);
+		pDoc->m_rect->setLineColor(pDoc->m_colorLine);
+		pDoc->m_rect->setFillColor(pDoc->m_colorFill);
 		pDoc->m_rect->setStartX(point.x - 10);
 		pDoc->m_rect->setStartY(point.y - 10);
 		pDoc->m_rect->setEndX(point.x + 10);
@@ -627,12 +629,16 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 {
 	CColorDialog cdlg;
 	CGraphicEditorDoc* pDoc = GetDocument();
-	GObject* curr = pDoc->vo[m_currentSelected];
+	
 
 
 	if (cdlg.DoModal() == IDOK)
 	{
-		curr->setLineColor(cdlg.GetColor());
+		if (m_currentSelected >= 0){
+			GObject* curr = pDoc->vo[m_currentSelected];
+			curr->setLineColor(cdlg.GetColor());
+		}
+		pDoc->m_colorLine = cdlg.GetColor();
 		Invalidate();
 	}
 
@@ -644,11 +650,14 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 {
 	CColorDialog cdlg;
 	CGraphicEditorDoc* pDoc = GetDocument();
-	GObject* curr = pDoc->vo[m_currentSelected];
 
 	if (cdlg.DoModal() == IDOK)
 	{
-		curr->setFillColor(cdlg.GetColor());
+		if (m_currentSelected >= 0){
+			GObject* curr = pDoc->vo[m_currentSelected];
+			curr->setFillColor(cdlg.GetColor());
+		}
+		pDoc->m_colorFill = cdlg.GetColor();
 		Invalidate();
 	}
 

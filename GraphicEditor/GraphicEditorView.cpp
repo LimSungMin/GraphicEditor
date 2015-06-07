@@ -206,6 +206,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 					polypointmove = TRUE;
 					m_changeSize = TRUE;
 					pDoc->vo[m_currentSelected]->setSelected(TRUE);
+					polypointindex = m_changeSizePosition;
 					break;
 				}
 				
@@ -336,13 +337,24 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
 
+	int index;
+
 	if (ldown){
 		if (m_changeSize == TRUE){
 			if (pDoc->vo[m_currentSelected] == pDoc->m_poly){
+				
 				pDoc->vo[m_currentSelected]->polypointmovecheck(1);
-				pDoc->vo[m_currentSelected]->pointmover(point.x, point.y, pDoc->vo[m_currentSelected]->isInSizeBound(point));
+
+				if (pDoc->vo[m_currentSelected]->isInSizeBound(point) < 0){
+					index = polypointindex;
+				}
+				else
+					index = pDoc->vo[m_currentSelected]->isInSizeBound(point);
+				
+				pDoc->vo[m_currentSelected]->pointmover(point.x, point.y, index);
 				//MessageBeep(1);
-					
+				
+				
 					//m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point) // 몇번째 네모인지 확인
 			}
 		

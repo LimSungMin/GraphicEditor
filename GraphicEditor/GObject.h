@@ -33,10 +33,15 @@ public:
 	void setFillColor(COLORREF c);
 	void setFillColor(int r, int g, int b);
 
+	///// poly point만을 위한 함수들 
 	void polypointmovecheck(int x);
 
 	void polyundo();
 	
+	void pointmover(int, int, int);
+	CArray<POINT, POINT&> m_polypoints;
+	////
+
 	COLORREF getLineColor();
 	COLORREF getFillColor();
 private:

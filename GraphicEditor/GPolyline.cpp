@@ -68,11 +68,8 @@ void GPolyline::setEndY(int y){ m_endY = y; }
 void GPolyline::move(int x1, int y1, int x2, int y2){
 	// 각 좌표 이동값의 차를 인수로 받으므로, 해당 값 만큼을 기존 위치에 더함
 
-	if (this->polypointmove == FALSE)
+	
 		this->totalmover(x1, y1);
-
-	else if (this->polypointmove == TRUE)
-		this->pointmover(x1, y1, x2);
 }
 
 void GPolyline::totalmover(int x, int y)
@@ -89,8 +86,8 @@ void GPolyline::totalmover(int x, int y)
 
 void GPolyline::pointmover(int x, int y, int index){
 
-	this->m_polypoints[index].x += x;
-	this->m_polypoints[index].y += y;
+	this->m_polypoints[index].x = x;
+	this->m_polypoints[index].y = y;
 
 	//MessageBeep(1);
 }

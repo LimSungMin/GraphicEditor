@@ -317,6 +317,8 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 
 	default:
 		m_move = FALSE;
+
+		
 		break;
 	}
 	CFormView::OnLButtonUp(nFlags, point);
@@ -331,7 +333,11 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 	if (ldown){
 		if (m_changeSize == TRUE){
 			if (pDoc->vo[m_currentSelected] == pDoc->m_poly){
-				
+				pDoc->vo[m_currentSelected]->polypointmovecheck(1);
+				pDoc->vo[m_currentSelected]->pointmover(point.x, point.y, pDoc->vo[m_currentSelected]->isInSizeBound(point));
+				//MessageBeep(1);
+					
+					//m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point) // 몇번째 네모인지 확인
 			}
 		
 			else{

@@ -23,8 +23,10 @@ void GLine::draw(CDC* dc){
 	dc->LineTo(GetEnd());		
 	
 	if (this->getSelected()){
-		CBrush brush(RGB(255, 255, 255));
-		dc->SelectObject(brush);
+		CPen pen2(PS_SOLID, 0, RGB(0, 0, 0));
+		dc->SelectObject(&pen2);
+		CBrush brush2(RGB(255, 255, 255));
+		dc->SelectObject(&brush2);		
 		m_selectedRect[0] = new CRect(this->getStartX() - 5, this->getStartY() - 5, this->getStartX() + 5, this->getStartY() + 5);
 		m_selectedRect[1] = new CRect(this->GetEnd().x - 5, this->GetEnd().y - 5, this->GetEnd().x + 5, this->GetEnd().y + 5);
 

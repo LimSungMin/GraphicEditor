@@ -226,9 +226,12 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 				pDoc->vo[i]->setSelected(TRUE);
 				m_currentSelected = i;
 				m_clickedPoint = point;
-				break;
+				Invalidate();
+				return;
 			}
 		}
+		// 여기서부턴 누른 지점에 도형이 없을 때.
+		m_currentSelected = -1;
 		break;
 	}
 		

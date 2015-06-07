@@ -203,6 +203,7 @@ BEGIN
         MENUITEM "색 변경",                        IDC_LineColor
         MENUITEM "면색 변경",                       IDC_PaneColor
         MENUITEM "삭제",                          ID_DELETE
+        MENUITEM "선택모드",                        ID_SELECT
     END
 END
 

@@ -53,6 +53,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_BN_CLICKED(IDC_PaneColor, &CGraphicEditorView::OnBnClickedPanecolor)
 
 	ON_COMMAND(ID_DELETE, &CGraphicEditorView::OnDelete)
+	ON_COMMAND(ID_SELECT, &CGraphicEditorView::OnSelect)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -563,7 +564,6 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CFormView::OnChar(nChar, nRepCnt, nFlags);
 	
 }
-int i = 0;
 
 void CGraphicEditorView::OnDraw(CDC* pDC)
 {
@@ -675,5 +675,15 @@ void CGraphicEditorView::OnDelete()
 
 	pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
 	m_currentSelected = -1;
+	Invalidate();
+}
+
+
+void CGraphicEditorView::OnSelect()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	CurrentMode = DrawMode::NOTHING;				// 드로우 모드를 NOTHING 으로
+	for (auto i : pDoc->vo) i->setSelected(false);	// 모든 객체의 선택을 해제한다
 	Invalidate();
 }

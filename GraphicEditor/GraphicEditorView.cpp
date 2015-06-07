@@ -155,6 +155,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		
 	case DrawMode::ELLP:{
 		pDoc->m_ellp = new GEllipse();
+		
 		pDoc->m_ellp->setStartX(point.x);
 		pDoc->m_ellp->setStartY(point.y);
 		pDoc->m_ellp->setEndX(point.x);

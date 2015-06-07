@@ -66,7 +66,7 @@
     <ClInclude Include="GEllipse.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GTextBox.h">
+    <ClInclude Include="GGroup.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,7 +113,7 @@
     <ClCompile Include="GEllipse.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GTextBox.cpp">
+    <ClCompile Include="GGroup.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

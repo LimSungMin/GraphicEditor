@@ -5,6 +5,7 @@
 GRectangle::GRectangle() : GObject(0, 0), m_endX(0), m_endY(0)
 {
 	this->setPattern(PS_DOT);
+	this->setFillColor(NULL);
 }
 
 GRectangle::GRectangle(int x1, int y1, int x2, int y2) : GObject(x1, y1), m_endX(x2), m_endY(y2)
@@ -15,11 +16,20 @@ GRectangle::GRectangle(int x1, int y1, int x2, int y2) : GObject(x1, y1), m_endX
 void GRectangle::draw(CDC* dc){
 	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
 	dc->SelectObject(&pen);
-	dc->SelectStockObject(NULL_BRUSH);
+	//dc->SelectStockObject(NULL_BRUSH);
+
+	CBrush brush2;
+	brush2.CreateSolidBrush(this->getFillColor());
+	//brush2.CreateHatchBrush(HS_DIAGCROSS, RGB(255, 0, 255));
+	dc->SelectObject(&brush2);
+	if (this->getFillColor() == NULL)
+		dc->SelectStockObject(NULL_BRUSH);
 	dc->Rectangle(this->getStartX(), this->getStartY(), this->getEndX(), this->getEndY());
 	if (this->getSelected() == TRUE){
 		CBrush brush(RGB(255, 255, 255));
 		dc->SelectObject(&brush);
+		CPen penw(PS_SOLID, 0, RGB(0, 0, 0));
+		dc->SelectObject(&penw);
 		m_selectedRect[0] = new CRect(this->getStartX() - 5, this->getStartY() - 5, this->getStartX() + 5, this->getStartY() + 5);
 		m_selectedRect[1] = new CRect(this->getEndX() - 5, this->getStartY() - 5, this->getEndX() + 5, this->getStartY() + 5);
 		m_selectedRect[2] = new CRect(this->getStartX() - 5, this->getEndY() - 5, this->getStartX() + 5, this->getEndY() + 5);

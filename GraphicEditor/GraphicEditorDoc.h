@@ -25,8 +25,11 @@ public:
 	GTextBox* m_text;
 
 
-	vector <GObject*> vo;
+	COLORREF m_colorLine;
+	COLORREF m_colorFill;
 
+	vector <GObject*> vo;
+	CList<GObject, GObject&> m_group;
 	// 작업입니다. 
 public:
 

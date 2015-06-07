@@ -185,10 +185,23 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 
 		pDoc->m_poly->polypointset(point);
+
+		break;
 	}
 	default:{ // DrawMode::NOTHING
 		if (pDoc->vo.size()>0 && m_currentSelected >= 0){
 			if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0){ // 크기 조절 위치는 0~3
+				/*
+				if (pDoc->vo[m_currentSelected] == pDoc->m_poly){ // 폴리라인의 경우 특수하므로 바꾸어야됨
+					MessageBox(NULL, NULL, NULL);
+					
+					pDoc->vo[m_currentSelected]->polypointmovecheck(1);
+
+					polypointmove = TRUE;
+
+					break;
+				}*/
+				
 				m_changeSize = TRUE;
 				pDoc->vo[m_currentSelected]->setSelected(TRUE);
 				return;
@@ -383,6 +396,9 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 
 				curr->move(startX, startY, endX, endY);
 				m_clickedPoint = point;
+
+				
+
 				Invalidate();
 			}
 			break;
@@ -548,10 +564,12 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
 	CGraphicEditorDoc* pDoc = GetDocument();
+	
+	pDoc->m_poly->polypointset(point);
+	m_firstclick = TRUE;
+	
 
-	if ( m_firstclick == FALSE)
-	pDoc->m_poly = new GPolyline();
-
+	//pDoc->m_poly->deletepolypointset(1);
 	//pDoc->m_polypoints.Add(NULL);
 	//
 	CFormView::OnLButtonDblClk(nFlags, point);

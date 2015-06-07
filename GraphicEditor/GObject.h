@@ -33,7 +33,8 @@ public:
 	void setFillColor(COLORREF c);
 	void setFillColor(int r, int g, int b);
 
-
+	void polypointmovecheck(int x);
+	
 	COLORREF getLineColor();
 	COLORREF getFillColor();
 private:
@@ -44,6 +45,8 @@ private:
 	CPen m_pen;
 	int m_pattern;
 	COLORREF m_panecolor;
+	BOOL polypointmove = FALSE;
+
 protected:
 	BOOL m_isSelected;
 };

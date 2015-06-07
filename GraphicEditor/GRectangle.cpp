@@ -28,6 +28,8 @@ void GRectangle::draw(CDC* dc){
 		dc->Rectangle(m_selectedRect[1]);
 		dc->Rectangle(m_selectedRect[2]);
 		dc->Rectangle(m_selectedRect[3]);
+
+
 	}
 }
 
@@ -50,7 +52,7 @@ int GRectangle::isInSizeBound(CPoint point){
 	for (int i = 0; i < 4; i++){
 		if (this->m_selectedRect[i]->left <= point.x && point.x <= this->m_selectedRect[i]->right || this->m_selectedRect[i]->right <= point.x && point.x <= this->m_selectedRect[i]->left){
 			if (this->m_selectedRect[i]->top <= point.y && point.y <= this->m_selectedRect[i]->bottom || this->m_selectedRect[i]->bottom <= point.y && point.y <= this->m_selectedRect[i]->top){
-				MessageBeep(NULL);
+				
 				return i;
 			}
 		}

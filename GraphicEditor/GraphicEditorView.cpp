@@ -239,6 +239,30 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 		}
 	}
+	else{ // Ctrl키를 누른 상태로 클릭 => 다중 선택 필요!
+		
+		for (int i = pDoc->vo.size() - 1; i >= 0; i--){ // 맨 위에 있는 도형을 잡기 위해 역순으로 검사함.
+			if (pDoc->vo[i]->isInBound(point)){
+				GObject* ptr = pDoc->vo[i];
+				if (pDoc->vo[i]->getSelected() == FALSE){
+					pDoc->vo[i]->setSelected(TRUE);
+					MessageBeep(0);
+				}
+				else{
+					pDoc->vo[i]->setSelected(FALSE);
+
+				}
+				
+				//m_move = TRUE;
+				
+				//m_currentSelected = i;
+				m_clickedPoint = point;
+				
+				Invalidate();
+				return;
+			}
+		}
+	}
 	Invalidate();
 	CFormView::OnLButtonDown(nFlags, point);
 }
@@ -345,85 +369,77 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 	CGraphicEditorDoc* pDoc = GetDocument();
 
 	int index;
-
-	if (ldown){
-		if (m_changeSize == TRUE){
-			if (pDoc->vo[m_currentSelected] == pDoc->m_poly){
-				
-				pDoc->vo[m_currentSelected]->polypointmovecheck(1);
-
-				if (pDoc->vo[m_currentSelected]->isInSizeBound(point) < 0){
-					index = polypointindex;
-				}
-				else
-					index = pDoc->vo[m_currentSelected]->isInSizeBound(point);
-				
-				pDoc->vo[m_currentSelected]->pointmover(point.x, point.y, index);
-				//MessageBeep(1);
-				
-				
+	if (!(nFlags&MK_CONTROL)){ // Ctrl키가 눌려 있지 않을 때.
+		if (ldown){ // 왼쪽 버튼이 눌려 있어야만 끌려야 하니까.
+			if (m_changeSize == TRUE){ // 크기 변경 사각형을 눌렀을 때.
+				if (pDoc->vo[m_currentSelected] == pDoc->m_poly){
+					pDoc->vo[m_currentSelected]->polypointmovecheck(1);
+					if (pDoc->vo[m_currentSelected]->isInSizeBound(point) < 0){
+						index = polypointindex;
+					}
+					else
+						index = pDoc->vo[m_currentSelected]->isInSizeBound(point);
+					pDoc->vo[m_currentSelected]->pointmover(point.x, point.y, index);
 					//m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point) // 몇번째 네모인지 확인
-			}
-		
-			else{
-				switch (m_changeSizePosition){
-				
-				case 0:{ // 왼쪽 위
-					pDoc->vo[m_currentSelected]->setStartX(point.x);
-					pDoc->vo[m_currentSelected]->setStartY(point.y);
-					break;
 				}
-				case 1:{ // 오른쪽 위
-					pDoc->vo[m_currentSelected]->setEndX(point.x);
-					pDoc->vo[m_currentSelected]->setStartY(point.y);
-					break;
+				else{ // Polyline이 아닐 때. 즉, 일반적인 도형의 끄트머리를 잡고 움직일 때.
+					switch (m_changeSizePosition){
+					case 0:{ // 왼쪽 위
+						pDoc->vo[m_currentSelected]->setStartX(point.x);
+						pDoc->vo[m_currentSelected]->setStartY(point.y);
+						break;
+					}
+					case 1:{ // 오른쪽 위
+						pDoc->vo[m_currentSelected]->setEndX(point.x);
+						pDoc->vo[m_currentSelected]->setStartY(point.y);
+						break;
+					}
+					case 2:{ // 왼쪽 아래
+						pDoc->vo[m_currentSelected]->setStartX(point.x);
+						pDoc->vo[m_currentSelected]->setEndY(point.y);
+						break;
+					}
+					case 3:{ // 오른쪽 아래
+						pDoc->vo[m_currentSelected]->setEndX(point.x);
+						pDoc->vo[m_currentSelected]->setEndY(point.y);
+						break;
+					}
+					default:{
+						break;
+					}
+					}
 				}
-				case 2:{ // 왼쪽 아래
-					pDoc->vo[m_currentSelected]->setStartX(point.x);
-					pDoc->vo[m_currentSelected]->setEndY(point.y);
-					break;
-				}
-				case 3:{ // 오른쪽 아래
-					pDoc->vo[m_currentSelected]->setEndX(point.x);
-					pDoc->vo[m_currentSelected]->setEndY(point.y);
-					break;
-				}
-				default:{
-					break;
-				}
-				}
-			}
 				Invalidate();
 				return;
-		}
-		switch (CurrentMode)
-		{
-		case DrawMode::LINE:{
-			pDoc->m_line->SetEnd(point);
-			pDoc->m_line->setEndX(point.x);
-			pDoc->m_line->setEndY(point.y);
-			Invalidate();
-			break;
-		}
-		case DrawMode::ELLP:{
-			pDoc->m_ellp->SetEnd(point);
-			pDoc->m_ellp->setEndX(point.x);
-			pDoc->m_ellp->setEndY(point.y);
-			Invalidate();
-			break;
-		}
+			}
+			
+			switch (CurrentMode)
+			{
+			case DrawMode::LINE:{
+				pDoc->m_line->SetEnd(point);
+				pDoc->m_line->setEndX(point.x);
+				pDoc->m_line->setEndY(point.y);
+				Invalidate();
+				break;
+			}
+			case DrawMode::ELLP:{
+				pDoc->m_ellp->SetEnd(point);
+				pDoc->m_ellp->setEndX(point.x);
+				pDoc->m_ellp->setEndY(point.y);
+				Invalidate();
+				break;
+			}
 
 
-		case DrawMode::RECT:{
-			pDoc->m_rect->setEndX(point.x);
-			pDoc->m_rect->setEndY(point.y);
-			Invalidate();
-		}
-		default:{
-			if (m_move == TRUE){ // 객체가 선택되었을 때 도형을 잡고 움직이는 상황
-				GObject* curr = pDoc->vo[m_currentSelected];
+			case DrawMode::RECT:{
+				pDoc->m_rect->setEndX(point.x);
+				pDoc->m_rect->setEndY(point.y);
+				Invalidate();
+			}
+			default:{
+				if (m_move == TRUE){ // 객체가 선택되었을 때 도형을 잡고 움직이는 상황
+					GObject* curr = pDoc->vo[m_currentSelected];
 
-				
 					int startX = curr->getStartX();
 					int startY = curr->getStartY();
 					int endX = curr->getEndX();
@@ -435,21 +451,21 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					endY += point.y - m_clickedPoint.y;
 
 					curr->move(startX, startY, endX, endY);
-				
-				
-					
+					m_clickedPoint = point;
 
-				
-				m_clickedPoint = point;
-
-				Invalidate();
+					Invalidate();
+				}
+				break;
 			}
-			break;
+			}
+			CFormView::OnMouseMove(nFlags, point);
 		}
-		}
-		CFormView::OnMouseMove(nFlags, point);
 	}
-
+	else{ // Ctrl이 눌려있을 때. pDoc->m_group을 돌면서 이동을 시켜야 함.
+		if (ldown){
+			
+		}
+	}
 	
 }
 void CGraphicEditorView::OnLine()
@@ -672,7 +688,7 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
-	if (pDoc->vo.size() > 0){
+	if (pDoc->vo.size() > 0 && m_currentSelected != -1){
 		pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
 		m_currentSelected = -1;
 	}

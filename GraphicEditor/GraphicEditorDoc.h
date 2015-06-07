@@ -27,7 +27,7 @@ public:
 	COLORREF m_colorFill;
 
 	vector <GObject*> vo;
-	vector <GObject*> m_group; // 그룹 선택을 위해
+	CList<GObject, GObject&> m_group;
 	// 작업입니다. 
 public:
 

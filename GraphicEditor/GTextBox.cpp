@@ -14,14 +14,23 @@ GTextBox::GTextBox()
 
 }
 
+void GTextBox::draw(CDC* dc)
+{
+	CRect rect;
+	rect.SetRect(this->getStartX(), this->getStartY(), this->getEndX(), this->getEndY());
+	dc->DrawText(CString("제대로 되는지 테스트 합니다"), &rect, NULL);
+}
 
 
 
-int GTextBox::getEndX(){ return m_endX; }
-int GTextBox::getEndY(){ return m_endY; }
 
-void GTextBox::setEndX(int x){ m_endX = x; }
-void GTextBox::setEndY(int y){ m_endY = y; }
+int GTextBox::getEndX(){ return m_textendX; }
+int GTextBox::getEndY(){ return m_textendY; }
+
+void GTextBox::setEndX(int x){ m_textendX = x; }
+void GTextBox::setEndY(int y){ m_textendY = y; }
+
+void GTextBox::setEndXY(int x, int y){ m_textendX = x; m_textendY = y; }
 
 void GTextBox::move(int x1, int y1, int x2, int y2){
 	this->setStartX(x1);

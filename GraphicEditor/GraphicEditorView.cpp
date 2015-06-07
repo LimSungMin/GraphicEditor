@@ -176,13 +176,20 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_rect->setStartY(point.y - 10);
 			pDoc->m_rect->setEndX(point.x + 10);
 			pDoc->m_rect->setEndY(point.y + 10);
-			//Invalidate();
+			
 			break;
 		}
 
 		case DrawMode::TEXT:{
-			//line.SetStart(point.x, point.y);
-			//line.SetEnd(point.x, point.y);
+			pDoc->m_text = new GTextBox();
+			pDoc->m_text->setPattern(PS_DOT);
+			pDoc->m_text->setLineColor(pDoc->m_colorLine);
+			pDoc->m_text->setFillColor(pDoc->m_colorFill);
+			pDoc->m_text->setStartX(point.x - 10);
+			pDoc->m_text->setStartY(point.y - 10);
+			pDoc->m_text->setEndX(point.x + 10);
+			pDoc->m_text->setEndY(point.y + 10);
+
 			break;
 		}
 
@@ -311,43 +318,19 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	
 	case DrawMode::TEXT:{
+		pDoc->m_text->setPattern(PS_SOLID);
+		pDoc->m_text->setSelected(TRUE);
+		pDoc->vo.push_back(pDoc->m_text);
+		m_currentSelected = pDoc->vo.size() - 1;
+		Invalidate();
+		break;
 		
-		/*
-			line.SetEnd(point.x, point.y);
-			//JRectangle r(line.getstart(), line.getend());
-			CClientDC dc(this);
-			dc.SelectStockObject(NULL_BRUSH);
-			dc.SetROP2(R2_COPYPEN);
-			dc.Rectangle(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y);
-
-			//m_str.Add('\0');
-			m_stringreg = CString(m_str.GetData());
-
-			CPaintDC dt(this);
-
-			//CString test = _T("this is test of textbox");
-			dc.SetBkMode(TRANSPARENT);
-			
-			if (r.getstart().x > r.getend().x && r.getstart().y > r.getend().y)
-			{
-				dc.DrawText(_T("this is test of textbox"),
-					CRect(r.getend().x, r.getend().y, r.getstart().x, r.getstart().y)
-					, DT_LEFT | DT_WORDBREAK );
-				
-			}
-			else{
-			dc.DrawText(m_stringreg,
-				CRect(r.getstart().x, r.getstart().y, r.getend().x, r.getend().y)
-				, DT_LEFT | DT_WORDBREAK);
-			}
-
-			m_str.RemoveAll();
-			*/
 		break;
 	}
 	case DrawMode::POLY:{
 
 		pDoc->vo.push_back(pDoc->m_poly);
+		//m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 
 						}
@@ -434,6 +417,12 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			case DrawMode::RECT:{
 				pDoc->m_rect->setEndX(point.x);
 				pDoc->m_rect->setEndY(point.y);
+				Invalidate();
+			}
+								
+			case DrawMode::TEXT:{
+				pDoc->m_text->setEndXY(point.x, point.y);
+				
 				Invalidate();
 			}
 			default:{
@@ -609,6 +598,9 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		pDoc->m_poly->draw(pDC);
 		break;
 	}
+	case DrawMode::TEXT:{
+		pDoc->m_text->draw(pDC);
+	}
 	
 	}
 	
@@ -689,6 +681,7 @@ void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
 	if (pDoc->vo.size() > 0 && m_currentSelected != -1){
+		
 		pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
 		m_currentSelected = -1;
 	}

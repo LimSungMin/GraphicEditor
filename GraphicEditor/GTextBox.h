@@ -1,9 +1,9 @@
 #pragma once
-#include "GRectangle.h"
+#include "GObject.h"
 
 // GTextBox
 
-class GTextBox : public GRectangle
+class GTextBox : public GObject
 {
 	
 
@@ -11,7 +11,7 @@ public:
 	GTextBox();
 	virtual ~GTextBox();
 
-	//virtual void draw(CDC* dc);
+	virtual void draw(CDC* dc);
 	void setEndX(int x);
 	void setEndY(int y);
 	int getEndX();
@@ -21,9 +21,11 @@ public:
 	void setSelected(BOOL selected);
 	int isInSizeBound(CPoint point);
 
+	void setEndXY(int, int);
+
 private:
-	int m_endX;
-	int m_endY;
+	int m_textendX;
+	int m_textendY;
 	int m_mode;
 	CRect* m_selectedRect[4];
 

@@ -325,7 +325,6 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->vo.push_back(pDoc->m_text);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
-		break;
 		
 		break;
 	}
@@ -334,7 +333,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->vo.push_back(pDoc->m_poly);
 		//m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
-
+		break;
 						}
 
 
@@ -420,12 +419,16 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 				pDoc->m_rect->setEndX(point.x);
 				pDoc->m_rect->setEndY(point.y);
 				Invalidate();
+
+				break;
 			}
 								
 			case DrawMode::TEXT:{
 				pDoc->m_text->setEndXY(point.x, point.y);
 				
 				Invalidate();
+				break;
+				
 			}
 			default:{
 				if (m_move == TRUE){ // 객체가 선택되었을 때 도형을 잡고 움직이는 상황

@@ -137,108 +137,108 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	ldown = TRUE;
 	CGraphicEditorDoc* pDoc = GetDocument();
-	
-	for (int i = 0; i < pDoc->vo.size(); i++)
-		pDoc->vo[i]->setSelected(FALSE);
-	
-	switch (CurrentMode)
-	{
-	case DrawMode::LINE:
-		//line.SetStart(point.x, point.y);
-		pDoc->m_line = new GLine();
-		
-		pDoc->m_line->setStartX(point.x);
-		pDoc->m_line->setStartY(point.y);
-		pDoc->m_line->SetEnd(point);
-		pDoc->m_line->setEndX(point.x);
-		pDoc->m_line->setEndY(point.y);
-		
-		
-		break;
-		
-	case DrawMode::ELLP:{
-		pDoc->m_ellp = new GEllipse();
-		
-		pDoc->m_ellp->setStartX(point.x);
-		pDoc->m_ellp->setStartY(point.y);
-		pDoc->m_ellp->setEndX(point.x);
-		pDoc->m_ellp->setEndY(point.y);
-		pDoc->m_ellp->SetEnd(point);
-	}
-	
-	case DrawMode::RECT:{
-		
-		pDoc->m_rect = new GRectangle();
-		pDoc->m_rect->setPattern(PS_DOT);
-		pDoc->m_rect->setLineColor(pDoc->m_colorLine);
-		pDoc->m_rect->setFillColor(pDoc->m_colorFill);
-		pDoc->m_rect->setStartX(point.x - 10);
-		pDoc->m_rect->setStartY(point.y - 10);
-		pDoc->m_rect->setEndX(point.x + 10);
-		pDoc->m_rect->setEndY(point.y + 10);
-		//Invalidate();
-		break;
-	}
-
-	case DrawMode::TEXT:{
-		//line.SetStart(point.x, point.y);
-		//line.SetEnd(point.x, point.y);
-		break;
-	}
-
-	case DrawMode::POLY:{
-		
-		if (m_firstclick == TRUE){
-			pDoc->m_poly = new GPolyline();
-
-			m_firstclick = FALSE;
-		}
-
-		pDoc->m_poly->polypointset(point);
-
-		break;
-	}
-	default:{ // DrawMode::NOTHING
-		if (pDoc->vo.size()>0 && m_currentSelected >= 0){
-			if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0){ // 크기 조절 위치는 0~3
-				
-				if (pDoc->vo[m_currentSelected] == pDoc->m_poly){ // 폴리라인의 경우 특수하므로 바꾸어야됨
-					//MessageBox(NULL, NULL, NULL);
-					
-					pDoc->vo[m_currentSelected]->polypointmovecheck(1);
-
-					polypointmove = TRUE;
-					m_changeSize = TRUE;
-					pDoc->vo[m_currentSelected]->setSelected(TRUE);
-					polypointindex = m_changeSizePosition;
-					break;
-				}
-				
-				m_changeSize = TRUE;
-				pDoc->vo[m_currentSelected]->setSelected(TRUE);
-				return;
-			}
-		}
-		for (int i = 0; i < pDoc->vo.size(); i++) // 선택되었던 객체를 전부 선택 해제한다.
+	if (!(nFlags & MK_CONTROL)){ // Ctrl 키를 누르지 않고 클릭 -> 하나의 객체만 선택
+		for (int i = 0; i < pDoc->vo.size(); i++)
 			pDoc->vo[i]->setSelected(FALSE);
 
-		for (int i = pDoc->vo.size() - 1; i >= 0; i--){ // 맨 위에 있는 도형을 잡기 위해 역순으로 검사함.
-			if (pDoc->vo[i]->isInBound(point)){
-				m_move = TRUE;
-				pDoc->vo[i]->setSelected(TRUE);
-				m_currentSelected = i;
-				m_clickedPoint = point;
-				Invalidate();
-				return;
-			}
-		}
-		// 여기서부턴 누른 지점에 도형이 없을 때.
-		m_currentSelected = -1;
-		break;
-	}
-		
-	}
+		switch (CurrentMode)
+		{
+		case DrawMode::LINE:
+			//line.SetStart(point.x, point.y);
+			pDoc->m_line = new GLine();
 
+			pDoc->m_line->setStartX(point.x);
+			pDoc->m_line->setStartY(point.y);
+			pDoc->m_line->SetEnd(point);
+			pDoc->m_line->setEndX(point.x);
+			pDoc->m_line->setEndY(point.y);
+
+
+			break;
+
+		case DrawMode::ELLP:{
+			pDoc->m_ellp = new GEllipse();
+
+			pDoc->m_ellp->setStartX(point.x);
+			pDoc->m_ellp->setStartY(point.y);
+			pDoc->m_ellp->setEndX(point.x);
+			pDoc->m_ellp->setEndY(point.y);
+			pDoc->m_ellp->SetEnd(point);
+		}
+
+		case DrawMode::RECT:{
+
+			pDoc->m_rect = new GRectangle();
+			pDoc->m_rect->setPattern(PS_DOT);
+			pDoc->m_rect->setLineColor(pDoc->m_colorLine);
+			pDoc->m_rect->setFillColor(pDoc->m_colorFill);
+			pDoc->m_rect->setStartX(point.x - 10);
+			pDoc->m_rect->setStartY(point.y - 10);
+			pDoc->m_rect->setEndX(point.x + 10);
+			pDoc->m_rect->setEndY(point.y + 10);
+			//Invalidate();
+			break;
+		}
+
+		case DrawMode::TEXT:{
+			//line.SetStart(point.x, point.y);
+			//line.SetEnd(point.x, point.y);
+			break;
+		}
+
+		case DrawMode::POLY:{
+
+			if (m_firstclick == TRUE){
+				pDoc->m_poly = new GPolyline();
+
+				m_firstclick = FALSE;
+			}
+
+			pDoc->m_poly->polypointset(point);
+
+			break;
+		}
+		default:{ // DrawMode::NOTHING
+			if (pDoc->vo.size() > 0 && m_currentSelected >= 0){
+				if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0){ // 크기 조절 위치는 0~3
+
+					if (pDoc->vo[m_currentSelected] == pDoc->m_poly){ // 폴리라인의 경우 특수하므로 바꾸어야됨
+						//MessageBox(NULL, NULL, NULL);
+
+						pDoc->vo[m_currentSelected]->polypointmovecheck(1);
+
+						polypointmove = TRUE;
+						m_changeSize = TRUE;
+						pDoc->vo[m_currentSelected]->setSelected(TRUE);
+						polypointindex = m_changeSizePosition;
+						break;
+					}
+
+					m_changeSize = TRUE;
+					pDoc->vo[m_currentSelected]->setSelected(TRUE);
+					return;
+				}
+			}
+			for (int i = 0; i < pDoc->vo.size(); i++) // 선택되었던 객체를 전부 선택 해제한다.
+				pDoc->vo[i]->setSelected(FALSE);
+
+			for (int i = pDoc->vo.size() - 1; i >= 0; i--){ // 맨 위에 있는 도형을 잡기 위해 역순으로 검사함.
+				if (pDoc->vo[i]->isInBound(point)){
+					m_move = TRUE;
+					pDoc->vo[i]->setSelected(TRUE);
+					m_currentSelected = i;
+					m_clickedPoint = point;
+					Invalidate();
+					return;
+				}
+			}
+			// 여기서부턴 누른 지점에 도형이 없을 때.
+			m_currentSelected = -1;
+			break;
+		}
+
+		}
+	}
 	Invalidate();
 	CFormView::OnLButtonDown(nFlags, point);
 }
@@ -672,9 +672,10 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
-
-	pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
-	m_currentSelected = -1;
+	if (pDoc->vo.size() > 0){
+		pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
+		m_currentSelected = -1;
+	}
 	Invalidate();
 }
 

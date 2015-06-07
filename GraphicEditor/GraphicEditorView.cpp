@@ -17,6 +17,9 @@
 #include "GLine.h"
 #include "GEllipse.h"
 
+// 컨트롤 에딧 헤더파일
+#include "ControlEdit.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -48,6 +51,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_COMMAND(ID_EDIT_UNDO, &CGraphicEditorView::OnEditUndo)
 	ON_BN_CLICKED(IDC_LineColor, &CGraphicEditorView::OnBnClickedLinecolor)
 	ON_BN_CLICKED(IDC_PaneColor, &CGraphicEditorView::OnBnClickedPanecolor)
+
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -596,7 +600,6 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 		switch (CurrentMode){
 		case DrawMode::LINE:{
 			pDoc->m_line->setLineColor(cdlg.GetColor());
-
 			break;
 		}
 		case DrawMode::ELLP:{
@@ -614,6 +617,7 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 			break;
 		}
 		}
+		Invalidate();
 	}
 
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
@@ -623,10 +627,31 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 void CGraphicEditorView::OnBnClickedPanecolor()
 {
 	CColorDialog cdlg;
+	CGraphicEditorDoc* pDoc = GetDocument();
 
 	if (cdlg.DoModal() == IDOK)
 	{
+		switch (CurrentMode){
+		case DrawMode::LINE:{
+			pDoc->m_line->setFillColor(cdlg.GetColor());
+			break;
+		}
+		case DrawMode::ELLP:{
+			pDoc->m_ellp->setFillColor(cdlg.GetColor());
+			break;
+		}
+		case DrawMode::RECT:{
+			pDoc->m_rect->setFillColor(cdlg.GetColor());
 
+			break;
+		}
+
+		case DrawMode::POLY:{
+			pDoc->m_poly->setFillColor(cdlg.GetColor());
+			break;
+		}
+		}
+		Invalidate();
 	}
 
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.

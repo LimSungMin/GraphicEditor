@@ -24,7 +24,6 @@
 #define IDC_LineThick                   1005
 #define IDC_LinePattern                 1006
 #define IDC_COMBO2                      1008
-#define IDC_BUTTON1                     1009
 #define ID_ELLIPSE                      32772
 #define ID_RECTANGLE                    32775
 #define ID_TEXT                         32777

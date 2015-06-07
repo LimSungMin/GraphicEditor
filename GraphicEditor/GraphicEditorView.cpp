@@ -191,16 +191,17 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	default:{ // DrawMode::NOTHING
 		if (pDoc->vo.size()>0 && m_currentSelected >= 0){
 			if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0){ // 크기 조절 위치는 0~3
-				/*
+				
 				if (pDoc->vo[m_currentSelected] == pDoc->m_poly){ // 폴리라인의 경우 특수하므로 바꾸어야됨
-					MessageBox(NULL, NULL, NULL);
+					//MessageBox(NULL, NULL, NULL);
 					
 					pDoc->vo[m_currentSelected]->polypointmovecheck(1);
 
 					polypointmove = TRUE;
-
+					m_changeSize = TRUE;
+					pDoc->vo[m_currentSelected]->setSelected(TRUE);
 					break;
-				}*/
+				}
 				
 				m_changeSize = TRUE;
 				pDoc->vo[m_currentSelected]->setSelected(TRUE);
@@ -329,33 +330,40 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 
 	if (ldown){
 		if (m_changeSize == TRUE){
-			switch (m_changeSizePosition){
-			case 0:{ // 왼쪽 위
-				pDoc->vo[m_currentSelected]->setStartX(point.x);
-				pDoc->vo[m_currentSelected]->setStartY(point.y);
-				break;
+			if (pDoc->vo[m_currentSelected] == pDoc->m_poly){
+				
 			}
-			case 1:{ // 오른쪽 위
-				pDoc->vo[m_currentSelected]->setEndX(point.x);
-				pDoc->vo[m_currentSelected]->setStartY(point.y);
-				break;
+		
+			else{
+				switch (m_changeSizePosition){
+				
+				case 0:{ // 왼쪽 위
+					pDoc->vo[m_currentSelected]->setStartX(point.x);
+					pDoc->vo[m_currentSelected]->setStartY(point.y);
+					break;
+				}
+				case 1:{ // 오른쪽 위
+					pDoc->vo[m_currentSelected]->setEndX(point.x);
+					pDoc->vo[m_currentSelected]->setStartY(point.y);
+					break;
+				}
+				case 2:{ // 왼쪽 아래
+					pDoc->vo[m_currentSelected]->setStartX(point.x);
+					pDoc->vo[m_currentSelected]->setEndY(point.y);
+					break;
+				}
+				case 3:{ // 오른쪽 아래
+					pDoc->vo[m_currentSelected]->setEndX(point.x);
+					pDoc->vo[m_currentSelected]->setEndY(point.y);
+					break;
+				}
+				default:{
+					break;
+				}
+				}
 			}
-			case 2:{ // 왼쪽 아래
-				pDoc->vo[m_currentSelected]->setStartX(point.x);
-				pDoc->vo[m_currentSelected]->setEndY(point.y);
-				break;
-			}
-			case 3:{ // 오른쪽 아래
-				pDoc->vo[m_currentSelected]->setEndX(point.x);
-				pDoc->vo[m_currentSelected]->setEndY(point.y);
-				break;
-			}
-			default:{
-				break;
-			}
-			}
-			Invalidate();
-			return;
+				Invalidate();
+				return;
 		}
 		switch (CurrentMode)
 		{
@@ -384,20 +392,24 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			if (m_move == TRUE){ // 객체가 선택되었을 때 도형을 잡고 움직이는 상황
 				GObject* curr = pDoc->vo[m_currentSelected];
 
-				int startX = curr->getStartX();
-				int startY = curr->getStartY();
-				int endX = curr->getEndX();
-				int endY = curr->getEndY();
+				
+					int startX = curr->getStartX();
+					int startY = curr->getStartY();
+					int endX = curr->getEndX();
+					int endY = curr->getEndY();
 
-				startX += point.x - m_clickedPoint.x;
-				startY += point.y - m_clickedPoint.y;
-				endX += point.x - m_clickedPoint.x;
-				endY += point.y - m_clickedPoint.y;
+					startX += point.x - m_clickedPoint.x;
+					startY += point.y - m_clickedPoint.y;
+					endX += point.x - m_clickedPoint.x;
+					endY += point.y - m_clickedPoint.y;
 
-				curr->move(startX, startY, endX, endY);
-				m_clickedPoint = point;
+					curr->move(startX, startY, endX, endY);
+				
+				
+					
 
 				
+				m_clickedPoint = point;
 
 				Invalidate();
 			}
@@ -565,6 +577,7 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 	CGraphicEditorDoc* pDoc = GetDocument();
 	
+	if (m_firstclick = FALSE)
 	pDoc->m_poly->polypointset(point);
 	m_firstclick = TRUE;
 	

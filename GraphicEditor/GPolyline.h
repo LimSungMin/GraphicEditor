@@ -38,6 +38,10 @@ public:
 
 	void pointmover(int x, int y, int index);
 
+	void polyundo();
+
+	int indexcheck;
+
 private:
 	int m_endX;
 	int m_endY;

@@ -34,6 +34,8 @@ public:
 	void setFillColor(int r, int g, int b);
 
 	void polypointmovecheck(int x);
+
+	void polyundo();
 	
 	COLORREF getLineColor();
 	COLORREF getFillColor();

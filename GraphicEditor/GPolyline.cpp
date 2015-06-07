@@ -18,26 +18,16 @@ void GPolyline::draw(CDC* dc){
 		CBrush brush(RGB(255, 255, 255));
 		dc->SelectObject(&brush);
 		m_selectedRect[0] = new CRect(this->findleftest() - 5, this->findhighest() - 5, this->findleftest() + 5, this->findhighest() + 5);
-		dc->Rectangle(m_selectedRect[0]);
-
-		CBrush brush1(RGB(255, 0, 0));
-		dc->SelectObject(&brush1);
 		m_selectedRect[1] = new CRect(this->findrightest() - 5, this->findhighest() - 5, this->findrightest() + 5, this->findhighest() + 5);
-		dc->Rectangle(m_selectedRect[1]);
-
-		CBrush brush2(RGB(0, 255, 0));
-		dc->SelectObject(&brush2);
 		m_selectedRect[2] = new CRect(this->findleftest() - 5, this->findlowest() - 5, this->findleftest() + 5, this->findlowest() + 5);
-		dc->Rectangle(m_selectedRect[2]);
-
-		CBrush brush3(RGB(0, 0, 255));
-		dc->SelectObject(&brush3);
 		m_selectedRect[3] = new CRect(this->findrightest() - 5, this->findlowest() - 5, this->findrightest() + 5, this->findlowest() + 5); // 메모리 누수의 위험 있음. 수정바람!
-		dc->Rectangle(m_selectedRect[3]);
+		
+		for (int i = 0; i < 4; i++)
+		dc->Rectangle(m_selectedRect[i]);
 		
 		
 		
-		CPen pen2(PS_DASH, this->getThick(), this->getLineColor());
+		CPen pen2(PS_DOT, this->getThick(), this->getLineColor());
 		dc->SelectStockObject(NULL_BRUSH);
 		dc->SelectObject(&pen2);
 		m_selectedRect[4] = new CRect(this->findleftest(), this->findhighest(), this->findrightest(), this->findlowest());

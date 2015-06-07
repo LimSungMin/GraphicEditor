@@ -627,29 +627,12 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 {
 	CColorDialog cdlg;
 	CGraphicEditorDoc* pDoc = GetDocument();
+	GObject* curr = pDoc->vo[m_currentSelected];
+
 
 	if (cdlg.DoModal() == IDOK)
 	{
-		switch (CurrentMode){
-			case DrawMode::LINE:{
-				pDoc->m_line->setLineColor(cdlg.GetColor());
-				break;
-			}
-			case DrawMode::ELLP:{
-				pDoc->m_ellp->setLineColor(cdlg.GetColor());
-				break;
-			}
-			case DrawMode::RECT:{
-				pDoc->m_rect->setLineColor(cdlg.GetColor());
-
-				break;
-			}
-
-			case DrawMode::POLY:{
-				pDoc->m_poly->setLineColor(cdlg.GetColor());
-				break;
-			}
-		}
+		curr->setLineColor(cdlg.GetColor());
 		Invalidate();
 	}
 
@@ -661,29 +644,11 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 {
 	CColorDialog cdlg;
 	CGraphicEditorDoc* pDoc = GetDocument();
+	GObject* curr = pDoc->vo[m_currentSelected];
 
 	if (cdlg.DoModal() == IDOK)
 	{
-		switch (CurrentMode){
-		case DrawMode::LINE:{
-			pDoc->m_line->setFillColor(cdlg.GetColor());
-			break;
-		}
-		case DrawMode::ELLP:{
-			pDoc->m_ellp->setFillColor(cdlg.GetColor());
-			break;
-		}
-		case DrawMode::RECT:{
-			pDoc->m_rect->setFillColor(cdlg.GetColor());
-
-			break;
-		}
-
-		case DrawMode::POLY:{
-			pDoc->m_poly->setFillColor(cdlg.GetColor());
-			break;
-		}
-		}
+		curr->setFillColor(cdlg.GetColor());
 		Invalidate();
 	}
 

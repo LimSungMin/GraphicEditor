@@ -52,6 +52,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_BN_CLICKED(IDC_LineColor, &CGraphicEditorView::OnBnClickedLinecolor)
 	ON_BN_CLICKED(IDC_PaneColor, &CGraphicEditorView::OnBnClickedPanecolor)
 
+	ON_COMMAND(ID_DELETE, &CGraphicEditorView::OnDelete)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -656,4 +657,17 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 	}
 
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+// 삭제 함수 입니다.
+void CGraphicEditorView::OnDelete()
+{
+	CGraphicEditorDoc* pDoc = GetDocument();
+	for (auto iter = pDoc->vo.begin(); iter != pDoc->vo.end();){
+		if ((*iter)->getSelected())
+			iter = pDoc->vo.erase(iter);
+		else
+			++iter;
+	}
+	Invalidate();
 }

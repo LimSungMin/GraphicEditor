@@ -58,4 +58,5 @@ protected:
 public:
 	CArray<POINT, POINT&> m_polypoints;
 	afx_msg void OnEditUndo();
+	afx_msg void OnDelete();
 };

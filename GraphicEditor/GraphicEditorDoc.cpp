@@ -23,6 +23,7 @@ IMPLEMENT_DYNCREATE(CGraphicEditorDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CGraphicEditorDoc, CDocument)
 
+	ON_COMMAND(ID_DELETE, &CGraphicEditorDoc::OnDelete)
 END_MESSAGE_MAP()
 
 
@@ -138,3 +139,10 @@ void CGraphicEditorDoc::Dump(CDumpContext& dc) const
 // CGraphicEditorDoc 명령
 
 
+
+
+void CGraphicEditorDoc::OnDelete()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	
+}

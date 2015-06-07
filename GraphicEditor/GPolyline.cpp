@@ -43,6 +43,7 @@ void GPolyline::draw(CDC* dc){
 		m_selectedRect[4] = new CRect(this->findleftest(), this->findhighest(), this->findrightest(), this->findlowest());
 		dc->Rectangle(m_selectedRect[4]);
 
+
 		for (int i = 0; i < this->m_polypoints.GetCount(); i++)
 		{
 			dc->SelectObject(&brush);
@@ -67,39 +68,34 @@ void GPolyline::setEndY(int y){ m_endY = y; }
 void GPolyline::move(int x1, int y1, int x2, int y2){
 	// 각 좌표 이동값의 차를 인수로 받으므로, 해당 값 만큼을 기존 위치에 더함
 
-	if (this->polypointmove == FALSE)
+	
 		this->totalmover(x1, y1);
-
-	else if (this->polypointmove == TRUE)
-		this->pointmover(x1, y1, x2);
 }
 
 void GPolyline::totalmover(int x, int y)
 {
+	// 전체를 움직임
 	for (int i = 0; i < this->m_polypoints.GetCount(); i++)
 		m_polypoints[i].x += x;
 
 	for (int i = 0; i < this->m_polypoints.GetCount(); i++)
 		m_polypoints[i].y += y;
 
+	
 }
 
+void GPolyline::pointmover(int x, int y, int index){
 
-int GPolyline::findhighest()
-{
-	POINT tmppoint;
+	this->m_polypoints[index].x = x;
+	this->m_polypoints[index].y = y;
 
-	int highest = 9999;
+	//MessageBeep(1);
+}
 
-	for (int i = 0; i < this->m_polypoints.GetCount(); i++)
-	{
-		tmppoint = m_polypoints[i];
-	
-		if (tmppoint.y < highest)
-			highest = tmppoint.y;
-	}
+void GPolyline::polyundo(){
+	int x = this->m_polypoints.GetCount() - 1;
 
-	return highest;
+	this->m_polypoints.RemoveAt(x);
 }
 
 int GPolyline::isInSizeBound(CPoint point){
@@ -109,7 +105,8 @@ int GPolyline::isInSizeBound(CPoint point){
 			
 			if (this->m_selectedPointRect[i]->top <= point.y && point.y <= this->m_selectedPointRect[i]->bottom ||
 				this->m_selectedPointRect[i]->bottom <= point.y && point.y <= this->m_selectedPointRect[i]->top){
-				//MessageBox(1);
+				
+				indexcheck = i;
 				return i;
 			}
 		}
@@ -118,11 +115,7 @@ int GPolyline::isInSizeBound(CPoint point){
 	return -1;
 }
 
-void GPolyline::pointmover(int x, int y, int index){
-	
-	this->m_polypoints[index].x += x;
-	this->m_polypoints[index].y += y;
-}
+
 
 void GPolyline::polypointmovecheck(int x)
 {
@@ -130,6 +123,24 @@ void GPolyline::polypointmovecheck(int x)
 		polypointmove = FALSE;
 	else if (x == 1)
 		polypointmove = TRUE;
+}
+
+// 각각 최고점, 최저점, 최좌점, 최우점을 찾아서 반환
+int GPolyline::findhighest()
+{
+	POINT tmppoint;
+
+	int highest = 9999;
+
+	for (int i = 0; i < this->m_polypoints.GetCount(); i++)
+	{
+		tmppoint = m_polypoints[i];
+
+		if (tmppoint.y < highest)
+			highest = tmppoint.y;
+	}
+
+	return highest;
 }
 
 int GPolyline::findlowest()

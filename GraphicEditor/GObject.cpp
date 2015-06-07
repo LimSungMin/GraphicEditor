@@ -76,6 +76,16 @@ void GObject::polypointmovecheck(int x)
 		polypointmove = TRUE;
 }
 
+void GObject::polyundo(){
+
+}
+
+void GObject::pointmover(int x, int y, int index){
+
+	this->m_polypoints[index].x = x;
+	this->m_polypoints[index].y = y;
+
+}
 
 GObject::~GObject()
 {

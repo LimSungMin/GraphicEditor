@@ -10,6 +10,7 @@ GLine::GLine() : GObject(0, 0), m_endX(0), m_endY(0)
 
 GLine::~GLine() 
 {
+	// 이것을 넣으면 heap 할당 에러가 뜬다.. 왜인지는 모름
 //	delete[] m_selectedRect;
 }
 
@@ -33,14 +34,13 @@ void GLine::draw(CDC* dc){
 }
 
 BOOL GLine::isInBound(CPoint point){
-	/*
+	
 	if (this->getStartX() <= point.x && point.x <= this->getEndX() || this->getEndX() <= point.x && point.x <= this->getStartX()){
 		if (this->getStartY() <= point.y && point.y <= this->getEndY() || this->getEndY() <= point.y && point.y <= this->getStartY()){
 			return TRUE;
 		}
-	}*/
-	if (getStartX() <= point.x && point.x <= getEndX() && getStartY() <= point.y && point.y <= getEndY()) return TRUE;
-	if (getEndX() <= point.x && point.x <= getStartX() && getEndY() <= point.y && point.y <= getStartY()) return TRUE;
+	}
+	
 	return FALSE;
 }
 

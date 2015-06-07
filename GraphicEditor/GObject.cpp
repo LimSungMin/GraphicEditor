@@ -67,6 +67,16 @@ void GObject::setThick(int thick){
 	m_thick = thick;
 }
 
+
+void GObject::polypointmovecheck(int x)
+{
+	if (x == 0)
+		polypointmove = FALSE;
+	else if (x == 1)
+		polypointmove = TRUE;
+}
+
+
 GObject::~GObject()
 {
 }

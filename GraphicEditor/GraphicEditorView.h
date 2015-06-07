@@ -38,6 +38,8 @@ public:
 	int m_currentSelected; // 선택된 도형의 m_shape index
 	POINT m_clickedPoint; // 도형을 선택했을 때 클릭된 마우스 포인터의 좌표
 
+	BOOL polypointmove = FALSE;
+
 // 작업입니다.
 public:
 

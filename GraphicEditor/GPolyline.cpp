@@ -67,23 +67,23 @@ void GPolyline::setEndY(int y){ m_endY = y; }
 void GPolyline::move(int x1, int y1, int x2, int y2){
 	// 각 좌표 이동값의 차를 인수로 받으므로, 해당 값 만큼을 기존 위치에 더함
 
-	this->xmover(x1);
-	this->ymover(y1);
+	if (this->polypointmove == FALSE)
+		this->totalmover(x1, y1);
+
+	else if (this->polypointmove == TRUE)
+		this->pointmover(x1, y1, x2);
 }
 
-void GPolyline::xmover(int x)
+void GPolyline::totalmover(int x, int y)
 {
 	for (int i = 0; i < this->m_polypoints.GetCount(); i++)
 		m_polypoints[i].x += x;
-}
-
-void GPolyline::ymover(int y)
-{
-	MessageBeep(1);
 
 	for (int i = 0; i < this->m_polypoints.GetCount(); i++)
 		m_polypoints[i].y += y;
+
 }
+
 
 int GPolyline::findhighest()
 {
@@ -94,8 +94,7 @@ int GPolyline::findhighest()
 	for (int i = 0; i < this->m_polypoints.GetCount(); i++)
 	{
 		tmppoint = m_polypoints[i];
-		
-		//Sleep(500);
+	
 		if (tmppoint.y < highest)
 			highest = tmppoint.y;
 	}
@@ -104,13 +103,13 @@ int GPolyline::findhighest()
 }
 
 int GPolyline::isInSizeBound(CPoint point){
-	for (int i = 0; i < 4; i++){
+	for (int i = 0; i < this->m_polypoints.GetCount() ; i++){
 		if (this->m_selectedPointRect[i]->left <= point.x && point.x <= this->m_selectedPointRect[i]->right
 			|| this->m_selectedPointRect[i]->right <= point.x && point.x <= this->m_selectedPointRect[i]->left){
 			
 			if (this->m_selectedPointRect[i]->top <= point.y && point.y <= this->m_selectedPointRect[i]->bottom ||
 				this->m_selectedPointRect[i]->bottom <= point.y && point.y <= this->m_selectedPointRect[i]->top){
-				MessageBeep(NULL);
+				//MessageBox(1);
 				return i;
 			}
 		}
@@ -119,6 +118,19 @@ int GPolyline::isInSizeBound(CPoint point){
 	return -1;
 }
 
+void GPolyline::pointmover(int x, int y, int index){
+	
+	this->m_polypoints[index].x += x;
+	this->m_polypoints[index].y += y;
+}
+
+void GPolyline::polypointmovecheck(int x)
+{
+	if (x == 0)
+		polypointmove = FALSE;
+	else if (x == 1)
+		polypointmove = TRUE;
+}
 
 int GPolyline::findlowest()
 {

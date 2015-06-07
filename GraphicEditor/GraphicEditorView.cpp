@@ -189,6 +189,17 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	default:{ // DrawMode::NOTHING
 		if (pDoc->vo.size()>0 && m_currentSelected >= 0){
 			if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0){ // 크기 조절 위치는 0~3
+				/*
+				if (pDoc->vo[m_currentSelected] == pDoc->m_poly){ // 폴리라인의 경우 특수하므로 바꾸어야됨
+					MessageBox(NULL, NULL, NULL);
+					
+					pDoc->vo[m_currentSelected]->polypointmovecheck(1);
+
+					polypointmove = TRUE;
+
+					break;
+				}*/
+				
 				m_changeSize = TRUE;
 				pDoc->vo[m_currentSelected]->setSelected(TRUE);
 				return;
@@ -379,6 +390,9 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 
 				curr->move(startX, startY, endX, endY);
 				m_clickedPoint = point;
+
+				
+
 				Invalidate();
 			}
 			break;
@@ -546,7 +560,7 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	CGraphicEditorDoc* pDoc = GetDocument();
 	
 	pDoc->m_poly->polypointset(point);
-	pDoc->m_poly = new GPolyline();
+	m_firstclick = TRUE;
 	
 
 	//pDoc->m_poly->deletepolypointset(1);

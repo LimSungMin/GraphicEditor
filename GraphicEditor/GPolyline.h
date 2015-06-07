@@ -30,8 +30,13 @@ public:
 	void setSElected(BOOL selected);
 	int isInSizeBound(CPoint point);
 
-	void xmover(int);
-	void ymover(int);
+	void totalmover(int, int);
+	
+	int movepointindex;
+
+	void polypointmovecheck(int);
+
+	void pointmover(int x, int y, int index);
 
 private:
 	int m_endX;
@@ -39,6 +44,6 @@ private:
 	int m_mode; 
 	CArray<POINT, POINT&> m_polypoints;
 	CRect* m_selectedRect[5]; // 4까지는 주변 4개의 점, 그리고 5는 둘레를 표시하는 사각형이다
-	
+	BOOL polypointmove = FALSE;
 	CRect* m_selectedPointRect[100];
 };

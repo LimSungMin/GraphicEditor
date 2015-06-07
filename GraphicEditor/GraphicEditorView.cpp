@@ -228,12 +228,13 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			}
 			for (int i = 0; i < pDoc->vo.size(); i++) // 선택되었던 객체를 전부 선택 해제한다.
 				pDoc->vo[i]->setSelected(FALSE);
-
+			m_group.group.RemoveAll();
 			for (int i = pDoc->vo.size() - 1; i >= 0; i--){ // 맨 위에 있는 도형을 잡기 위해 역순으로 검사함.
 				if (pDoc->vo[i]->isInBound(point)){
 					m_move = TRUE;
 					pDoc->vo[i]->setSelected(TRUE);
 					m_currentSelected = i;
+					m_group.group.Add(i);
 					m_clickedPoint = point;
 					Invalidate();
 					return;
@@ -253,11 +254,12 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 				GObject* ptr = pDoc->vo[i];
 				if (pDoc->vo[i]->getSelected() == FALSE){
 					pDoc->vo[i]->setSelected(TRUE);
+					//m_group.group.Add(i);
 					MessageBeep(0);
 				}
 				else{
 					pDoc->vo[i]->setSelected(FALSE);
-
+					//m_group.group.RemoveAt(0);
 				}
 				
 				//m_move = TRUE;
@@ -452,7 +454,28 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	else{ // Ctrl이 눌려있을 때. pDoc->m_group을 돌면서 이동을 시켜야 함.
 		if (ldown){
-			
+			for (int i = 0; i < pDoc->vo.size();i++){
+				if (pDoc->vo[i]->getSelected() == TRUE){
+					//CString str;
+					//str.Format(_T("%d"), i);
+					//MessageBox(str, _T("test"), MB_OK);
+					GObject* curr = pDoc->vo[i];
+
+					int startX = curr->getStartX();
+					int startY = curr->getStartY();
+					int endX = curr->getEndX();
+					int endY = curr->getEndY();
+
+					startX += point.x - m_clickedPoint.x;
+					startY += point.y - m_clickedPoint.y;
+					endX += point.x - m_clickedPoint.x;
+					endY += point.y - m_clickedPoint.y;
+
+					curr->move(startX, startY, endX, endY);
+					m_clickedPoint = point;
+					Invalidate();
+				}
+			}
 		}
 	}
 	

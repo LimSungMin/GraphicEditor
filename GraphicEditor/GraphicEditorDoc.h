@@ -22,6 +22,8 @@ public:
 	GPolyline* m_poly;
 	GLine* m_line;
 	GEllipse* m_ellp;
+	GTextBox* m_text;
+
 
 	vector <GObject*> vo;
 

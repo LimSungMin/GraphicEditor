@@ -557,7 +557,6 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CFormView::OnChar(nChar, nRepCnt, nFlags);
 	
 }
-int i = 0;
 
 void CGraphicEditorView::OnDraw(CDC* pDC)
 {

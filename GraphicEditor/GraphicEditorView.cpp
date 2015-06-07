@@ -65,7 +65,8 @@ CGraphicEditorView::CGraphicEditorView()
 {
 	// TODO: 여기에 생성 코드를 추가합니다.
 	//CurrentMode = DrawMode::LINE;								// 기본값은 라인
-
+	CurrentMode = DrawMode::NOTHING;
+	ldown = TRUE;
 }
 
 CGraphicEditorView::~CGraphicEditorView()
@@ -671,12 +672,14 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
-	for (auto iter = pDoc->vo.begin(); iter != pDoc->vo.end(); ){
+	/*for (auto iter = pDoc->vo.begin(); iter != pDoc->vo.end(); ){
 		if ((*iter)->getSelected())
 			iter = pDoc->vo.erase(iter);
 		else
 			iter++;
 		
-	}
+	}*/
+	pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
+	m_currentSelected = -1;
 	Invalidate();
 }

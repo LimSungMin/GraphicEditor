@@ -600,24 +600,24 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 	if (cdlg.DoModal() == IDOK)
 	{
 		switch (CurrentMode){
-		case DrawMode::LINE:{
-			pDoc->m_line->setLineColor(cdlg.GetColor());
-			break;
-		}
-		case DrawMode::ELLP:{
-			pDoc->m_ellp->setLineColor(cdlg.GetColor());
-			break;
-		}
-		case DrawMode::RECT:{
-			pDoc->m_rect->setLineColor(cdlg.GetColor());
+			case DrawMode::LINE:{
+				pDoc->m_line->setLineColor(cdlg.GetColor());
+				break;
+			}
+			case DrawMode::ELLP:{
+				pDoc->m_ellp->setLineColor(cdlg.GetColor());
+				break;
+			}
+			case DrawMode::RECT:{
+				pDoc->m_rect->setLineColor(cdlg.GetColor());
 
-			break;
-		}
+				break;
+			}
 
-		case DrawMode::POLY:{
-			pDoc->m_poly->setLineColor(cdlg.GetColor());
-			break;
-		}
+			case DrawMode::POLY:{
+				pDoc->m_poly->setLineColor(cdlg.GetColor());
+				break;
+			}
 		}
 		Invalidate();
 	}
@@ -663,11 +663,12 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
-	for (auto iter = pDoc->vo.begin(); iter != pDoc->vo.end();){
+	for (auto iter = pDoc->vo.begin(); iter != pDoc->vo.end(); ){
 		if ((*iter)->getSelected())
 			iter = pDoc->vo.erase(iter);
 		else
-			++iter;
+			iter++;
+		
 	}
 	Invalidate();
 }

@@ -57,6 +57,9 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_WM_ERASEBKGND()
 	ON_COMMAND(ID_GROUP, &CGraphicEditorView::OnGroup)
 	ON_COMMAND(ID_GroupDeselect, &CGraphicEditorView::OnGroupdeselect)
+	ON_CBN_SELCHANGE(IDC_LineThick, &CGraphicEditorView::OnCbnSelchangeLinethick)
+	ON_CBN_SELCHANGE(IDC_LinePattern, &CGraphicEditorView::OnCbnSelchangeLinepattern)
+	ON_CBN_SELCHANGE(IDC_FillPattern, &CGraphicEditorView::OnCbnSelchangeFillpattern)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -867,4 +870,22 @@ void CGraphicEditorView::OnGroupdeselect()
 		pDoc->vo[m_currentSelected]->setSelected(TRUE);
 	Invalidate(FALSE);
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CGraphicEditorView::OnCbnSelchangeLinethick()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CGraphicEditorView::OnCbnSelchangeLinepattern()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CGraphicEditorView::OnCbnSelchangeFillpattern()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

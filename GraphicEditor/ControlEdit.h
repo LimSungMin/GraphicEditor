@@ -27,4 +27,7 @@ public:
 //	afx_msg void OnCbnSelchangeFont();
 	virtual BOOL OnInitDialog();
 
+	CComboBox m_linethick;
+	CComboBox m_linepattern;
+	CComboBox m_fillpattern;
 };

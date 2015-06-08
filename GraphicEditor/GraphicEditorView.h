@@ -98,6 +98,9 @@ public:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnGroup();
 	afx_msg void OnGroupdeselect();
+	afx_msg void OnCbnSelchangeLinethick();
+	afx_msg void OnCbnSelchangeLinepattern();
+	afx_msg void OnCbnSelchangeFillpattern();
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

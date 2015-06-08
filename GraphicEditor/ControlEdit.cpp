@@ -25,6 +25,9 @@ void ControlEdit::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_Font, m_combofont);
+	DDX_Control(pDX, IDC_LineThick, m_linethick);
+	DDX_Control(pDX, IDC_LinePattern, m_linepattern);
+	DDX_Control(pDX, IDC_FillPattern, m_fillpattern);
 }
 
 

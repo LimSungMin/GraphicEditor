@@ -46,6 +46,7 @@ public:
 	CArray<TCHAR, TCHAR> m_tmpstr;
 	COLORREF getLineColor();
 	COLORREF getFillColor();
+	int m_groupIndex;
 private:
 	int m_startX;
 	int m_startY;

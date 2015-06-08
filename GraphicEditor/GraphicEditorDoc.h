@@ -30,7 +30,7 @@ public:
 
 	vector <GObject*> vo;
 	CArray <GObject*> co;
-	CList<GObject, GObject&> m_group;
+	CArray<GObject, GObject&> m_group[5];
 	// 작업입니다. 
 public:
 

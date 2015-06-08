@@ -55,6 +55,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_COMMAND(ID_DELETE, &CGraphicEditorView::OnDelete)
 	ON_COMMAND(ID_SELECT, &CGraphicEditorView::OnSelect)
 	ON_WM_ERASEBKGND()
+	ON_COMMAND(ID_GROUP, &CGraphicEditorView::OnGroup)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -236,7 +237,15 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 					m_move = TRUE;
 					pDoc->vo[i]->setSelected(TRUE);
 					m_currentSelected = i;
-					m_group.group.Add(i);
+					//m_group.group.Add(i);
+					/*for (int j = 0; j < pDoc->m_group[0].GetCount(); j++){ // 그룹에 있는 모든 변수 선택
+						pDoc->m_group[0].GetAt(j).setSelected(TRUE);
+					}*/
+					for (int j = 0; j < pDoc->vo.size(); j++){
+						if (pDoc->vo[i]->m_groupIndex == pDoc->vo[i]->m_groupIndex){
+							pDoc->vo[j]->setSelected(TRUE);
+						}
+					}
 					m_clickedPoint = point;
 					Invalidate(FALSE);
 					return;
@@ -753,4 +762,21 @@ BOOL CGraphicEditorView::OnEraseBkgnd(CDC* pDC)
 
 	//return CFormView::OnEraseBkgnd(pDC);
 	return TRUE;
+}
+
+
+void CGraphicEditorView::OnGroup()
+{
+	CGraphicEditorDoc* pDoc = GetDocument();
+	//GGroup* group = new GGroup();
+
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			//group->m_group.Add(*pDoc->vo[i]);
+			pDoc->vo[i]->m_groupIndex = 0;
+		}
+	}
+	//pDoc->m_group = group;
+
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 }

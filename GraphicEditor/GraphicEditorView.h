@@ -39,6 +39,8 @@ public:
 	POINT m_clickedPoint; // 도형을 선택했을 때 클릭된 마우스 포인터의 좌표
 	GGroup m_group;
 
+	int m_fontnumb;
+
 	int polypointindex; // 선택된 사각형 임시 저장 좌표
 
 	BOOL polypointmove = FALSE;

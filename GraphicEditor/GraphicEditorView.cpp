@@ -141,6 +141,10 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	ldown = TRUE;
+	ControlEdit dlg;
+
+	dlg.m_fontnumb = m_fontnumb;
+
 	CGraphicEditorDoc* pDoc = GetDocument();
 	if (!(nFlags & MK_CONTROL)){ // Ctrl 키를 누르지 않고 클릭 -> 하나의 객체만 선택
 		for (int i = 0; i < pDoc->vo.size(); i++)
@@ -616,6 +620,8 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	
 	CString str;
 	CGraphicEditorDoc* pDoc = GetDocument();
+	
+
 
 	CBrush brush(RGB(255, 255, 255));
 	pDC->SelectObject(&brush);
@@ -644,7 +650,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		break;
 	}
 	case DrawMode::TEXT:{
-		//pDoc->m
+		pDoc->m_text->m_font = m_fontnumb;
 		pDoc->m_text->draw(pDC);
 	}
 	

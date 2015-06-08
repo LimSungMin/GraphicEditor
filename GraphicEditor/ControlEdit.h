@@ -24,5 +24,7 @@ public:
 //	afx_msg void OnBnClickedLinecolor();
 	CComboBox m_combofont;
 	int m_fontnumb;
-	afx_msg void OnCbnSelchangeFont();
+//	afx_msg void OnCbnSelchangeFont();
+	virtual BOOL OnInitDialog();
+
 };

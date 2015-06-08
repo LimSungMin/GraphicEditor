@@ -30,14 +30,27 @@ void ControlEdit::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(ControlEdit, CDialog)
 
-	ON_CBN_SELCHANGE(IDC_Font, &ControlEdit::OnCbnSelchangeFont)
+	//ON_CBN_SELCHANGE(IDC_Font, &ControlEdit::OnCbnSelchangeFont)
 END_MESSAGE_MAP()
 
 
 
-
+/*
 void ControlEdit::OnCbnSelchangeFont()
 {
 	m_fontnumb = m_combofont.GetCurSel();
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+*/
+
+BOOL ControlEdit::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	m_combofont.SetCurSel(m_fontnumb);
+
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
 }

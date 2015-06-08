@@ -5,9 +5,6 @@
 #include "GTextBox.h"
 
 
-// GTextBox
-
-
 
 GTextBox::GTextBox()
 {
@@ -33,10 +30,32 @@ void GTextBox::draw(CDC* dc)
 	this->m_tmpstr.Add('\0');
 	
 	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
+	
 	dc->SelectObject(&pen);
 
 	dc->Rectangle(this->getStartX(), this->getStartY(), this->getEndX(), this->getEndY());
+	
+	
+	CFont font;
+	CString fontname;
+	// ±º∏≤ ±√º≠ πŸ≈¡
+	if (this->m_font == 1)
+	{
+		fontname = _T("±º∏≤");
+		MessageBeep(1);
+	}
+	else if (this->m_font == 2)
+	{
+		fontname = _T("±√º≠");
+	}
+	else if (this->m_font == 3)
+	{
+		fontname = _T("πŸ≈¡");
+	}
 
+	//fontname = _T("±√º≠");
+	font.CreatePointFont(100, fontname);
+	dc->SelectObject(&font);
 	dc->DrawText(CString(this->m_str.GetData()), this->m_str.GetCount(), &rect, DT_WORDBREAK);
 
 	this->m_tmpstr.RemoveAll();
@@ -106,10 +125,6 @@ int GTextBox::isInSizeBound(CPoint point){
 GTextBox::~GTextBox()
 {
 }
-
-
-
-
 
 
 // GTextBox ∏ﬁΩ√¡ˆ √≥∏Æ±‚¿‘¥œ¥Ÿ.

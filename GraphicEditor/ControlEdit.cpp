@@ -24,11 +24,20 @@ ControlEdit::~ControlEdit()
 void ControlEdit::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_Font, m_combofont);
 }
 
 
 BEGIN_MESSAGE_MAP(ControlEdit, CDialog)
 
+	ON_CBN_SELCHANGE(IDC_Font, &ControlEdit::OnCbnSelchangeFont)
 END_MESSAGE_MAP()
 
 
+
+
+void ControlEdit::OnCbnSelchangeFont()
+{
+	m_fontnumb = m_combofont.GetCurSel();
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}

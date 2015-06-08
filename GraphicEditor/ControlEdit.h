@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // ControlEdit 대화 상자입니다.
@@ -21,4 +22,7 @@ protected:
 public:
 //	afx_msg void OnBnClickedLinecolor();
 //	afx_msg void OnBnClickedLinecolor();
+	CComboBox m_combofont;
+	int m_fontnumb;
+	afx_msg void OnCbnSelchangeFont();
 };

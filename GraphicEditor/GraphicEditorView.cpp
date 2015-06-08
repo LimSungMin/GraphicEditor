@@ -55,6 +55,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_COMMAND(ID_DELETE, &CGraphicEditorView::OnDelete)
 	ON_COMMAND(ID_SELECT, &CGraphicEditorView::OnSelect)
 	ON_WM_ERASEBKGND()
+//	ON_CBN_SELCHANGE(IDC_Font, &CGraphicEditorView::OnCbnSelchangeFont)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -643,6 +644,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		break;
 	}
 	case DrawMode::TEXT:{
+		//pDoc->m
 		pDoc->m_text->draw(pDC);
 	}
 	
@@ -751,6 +753,27 @@ BOOL CGraphicEditorView::OnEraseBkgnd(CDC* pDC)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
-	//return CFormView::OnEraseBkgnd(pDC);
-	return TRUE;
+	return CFormView::OnEraseBkgnd(pDC);
+	//return TRUE;
 }
+
+/*
+void CGraphicEditorView::OnCbnSelchangeFont()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	CGraphicEditorDoc* pDoc = GetDocument();
+	ControlEdit ctdl;
+
+	//ctdl.GetDlgItemInt(IDC_Font, pDoc->vo[m_currentSelected]->setFon)
+
+	int tmp ;
+	
+	tmp=m_combo
+
+	pDoc->vo[m_currentSelected]->m_font = tmp;
+
+	Invalidate();
+
+}
+*/

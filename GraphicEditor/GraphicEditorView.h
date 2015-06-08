@@ -93,6 +93,7 @@ public:
 	afx_msg void OnBnClickedPanecolor();
 	afx_msg void OnDelete();
 	afx_msg void OnSelect();
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

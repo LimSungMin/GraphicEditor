@@ -54,6 +54,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 
 	ON_COMMAND(ID_DELETE, &CGraphicEditorView::OnDelete)
 	ON_COMMAND(ID_SELECT, &CGraphicEditorView::OnSelect)
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -729,4 +730,13 @@ void CGraphicEditorView::OnSelect()
 	CurrentMode = DrawMode::NOTHING;				// 드로우 모드를 NOTHING 으로
 	for (auto i : pDoc->vo) i->setSelected(false);	// 모든 객체의 선택을 해제한다
 	Invalidate(FALSE);
+}
+
+
+BOOL CGraphicEditorView::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	//return CFormView::OnEraseBkgnd(pDC);
+	return TRUE;
 }

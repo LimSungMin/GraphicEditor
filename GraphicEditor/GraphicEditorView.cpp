@@ -759,14 +759,17 @@ void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
 	
-	if (pDoc->vo.size() > 0 && m_currentSelected != -1){
-		if (pDoc->vo[m_currentSelected] == pDoc->m_poly){			
-			pDoc->vo[m_currentSelected]->m_polypoints.RemoveAll();
-		}		
-		
-		pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
-		m_currentSelected = -1;
-	}	
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			if (pDoc->vo[i] == pDoc->m_poly){
+				pDoc->vo[i]->m_polypoints.RemoveAll();
+			}
+			pDoc->vo.erase((pDoc->vo.begin() + i)); // vo의 크기가 줄어들음 => for문이 조기 종료됨!
+			i = -1; // 크기가 줄어드니까 그냥 처음부터 검사를 실행하자.
+		}
+	}
+	//pDoc->vo.resize(pDoc->vo.size());
+	m_currentSelected = -1;
 	Invalidate(FALSE);
 }
 

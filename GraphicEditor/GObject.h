@@ -42,6 +42,8 @@ public:
 	CArray<POINT, POINT&> m_polypoints;
 	////
 
+	CArray<TCHAR, TCHAR> m_str;
+	CArray<TCHAR, TCHAR> m_tmpstr;
 	COLORREF getLineColor();
 	COLORREF getFillColor();
 private:

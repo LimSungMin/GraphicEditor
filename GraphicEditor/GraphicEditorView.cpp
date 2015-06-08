@@ -210,8 +210,6 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 				if ((m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point)) >= 0){ // 크기 조절 위치는 0~3
 
 					if (pDoc->vo[m_currentSelected] == pDoc->m_poly){ // 폴리라인의 경우 특수하므로 바꾸어야됨
-						//MessageBox(NULL, NULL, NULL);
-
 						pDoc->vo[m_currentSelected]->polypointmovecheck(1);
 
 						polypointmove = TRUE;
@@ -573,17 +571,22 @@ void CGraphicEditorView::OnUpdateLine(CCmdUI *pCmdUI)
 void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	
+	CGraphicEditorDoc* pDoc = GetDocument();
+	GObject* curr = pDoc->vo[m_currentSelected];
+
 	switch (CurrentMode)
 	{
 	case DrawMode::TEXT:{
+		
 
 		if (nChar == _T('\b')){
-			if (m_str.GetSize() > 0)
-				m_str.RemoveAt(m_str.GetSize() - 1);
+			if (curr->m_str.GetSize() > 0)
+				curr->m_str.RemoveAt(curr->m_str.GetSize() - 1);
 		}
 
 		else {
-			m_str.Add(nChar);
+			curr->m_str.Add(nChar);
 		}
 
 		break;
@@ -592,6 +595,8 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	default:
 		break;
 	}
+
+	Invalidate(FALSE);
 	CFormView::OnChar(nChar, nRepCnt, nFlags);
 	
 }

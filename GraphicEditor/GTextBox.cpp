@@ -17,8 +17,27 @@ GTextBox::GTextBox()
 void GTextBox::draw(CDC* dc)
 {
 	CRect rect;
-	rect.SetRect(this->getStartX(), this->getStartY(), this->getEndX(), this->getEndY());
-	dc->DrawText(CString("제대로 되는지 테스트 합니다"), &rect, NULL);
+	if (this->getStartX() > this->getEndX() && this->getStartY() > this->getEndY())
+	{
+		rect.SetRect(this->getEndX()+5, this->getEndY()+5, this->getStartX(), this->getStartY());
+	}
+	else
+	{
+		rect.SetRect(this->getStartX()+5, this->getStartY()+5, this->getEndX(), this->getEndY());
+	}
+	
+	this->m_tmpstr.Copy(this->m_str);
+
+	this->m_tmpstr.Add('\0');
+	
+	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
+	dc->SelectObject(&pen);
+
+	dc->Rectangle(this->getStartX(), this->getStartY(), this->getEndX(), this->getEndY());
+
+	dc->DrawText(CString(this->m_str.GetData()), this->m_str.GetCount(), &rect, DT_WORDBREAK);
+
+	this->m_tmpstr.RemoveAll();
 }
 
 

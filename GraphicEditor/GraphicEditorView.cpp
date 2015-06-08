@@ -717,6 +717,11 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 		if (m_currentSelected >= 0){
 			GObject* curr = pDoc->vo[m_currentSelected];
 			curr->setLineColor(cdlg.GetColor());
+			for (int i = 0; i < pDoc->vo.size(); i++){
+				if (pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+					pDoc->vo[i]->setLineColor(cdlg.GetColor());
+				}
+			}
 		}
 		pDoc->m_colorLine = cdlg.GetColor();
 		Invalidate(FALSE);

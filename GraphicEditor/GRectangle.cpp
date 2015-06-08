@@ -83,10 +83,10 @@ void GRectangle::move(int x1, int y1, int x2, int y2){
 	this->setEndY(y2);
 }
 
-void GRectangle::setSelected(BOOL selected){
+/*void GRectangle::setSelected(BOOL selected){
 	m_isSelected = selected;
 
-}
+}*/
 
 GRectangle::~GRectangle()
 {

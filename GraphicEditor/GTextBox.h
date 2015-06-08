@@ -1,13 +1,16 @@
 #pragma once
 #include "GObject.h"
-class GRectangle :
-	public GObject
-{
-public:
 
-	GRectangle();
-	GRectangle(int x1, int y1, int x2, int y2);
-	virtual ~GRectangle();
+// GTextBox
+
+class GTextBox : public GObject
+{
+	
+
+public:
+	GTextBox();
+	virtual ~GTextBox();
+
 	virtual void draw(CDC* dc);
 	void setEndX(int x);
 	void setEndY(int y);
@@ -15,11 +18,19 @@ public:
 	int getEndY();
 	void move(int x1, int y1, int x2, int y2);
 	BOOL isInBound(CPoint point);
-	//void setSelected(BOOL selected);
+	void setSelected(BOOL selected);
 	int isInSizeBound(CPoint point);
+
+	void setEndXY(int, int);
+
 private:
-	int m_endX;
-	int m_endY;
+	int m_textendX;
+	int m_textendY;
 	int m_mode;
 	CRect* m_selectedRect[4];
+
+protected:
+	
 };
+
+

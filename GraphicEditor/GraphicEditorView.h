@@ -37,6 +37,7 @@ public:
 	int m_changeSizePosition = -1;
 	int m_currentSelected; // 선택된 도형의 m_shape index
 	POINT m_clickedPoint; // 도형을 선택했을 때 클릭된 마우스 포인터의 좌표
+	GGroup m_group;
 
 	int polypointindex; // 선택된 사각형 임시 저장 좌표
 
@@ -92,6 +93,7 @@ public:
 	afx_msg void OnBnClickedPanecolor();
 	afx_msg void OnDelete();
 	afx_msg void OnSelect();
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

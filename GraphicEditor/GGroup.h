@@ -6,6 +6,6 @@ class GGroup :
 public:
 	GGroup();
 	virtual ~GGroup();
-	CList<GObject, GObject&> m_group;
+	CUIntArray group;
 };
 

@@ -15,6 +15,7 @@
 #include "GLine.h"
 #include "GEllipse.h"
 #include "GGroup.h"
+#include "GTextBox.h"
 // CGraphicEditorApp:
 // 이 클래스의 구현에 대해서는 GraphicEditor.cpp을 참조하십시오.
 //

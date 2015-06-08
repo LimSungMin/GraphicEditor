@@ -741,6 +741,11 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 		if (m_currentSelected >= 0){
 			GObject* curr = pDoc->vo[m_currentSelected];
 			curr->setFillColor(cdlg.GetColor());
+			for (int i = 0; i < pDoc->vo.size(); i++){
+				if (pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+					pDoc->vo[i]->setFillColor(cdlg.GetColor());
+				}
+			}
 		}
 		pDoc->m_colorFill = cdlg.GetColor();
 		Invalidate(FALSE);
@@ -814,7 +819,11 @@ void CGraphicEditorView::OnGroupdeselect()
 	for (int i = 0; i < pDoc->vo.size(); i++){
 		if (pDoc->vo[i]->getSelected() == TRUE){
 			pDoc->vo[i]->m_groupIndex = pDoc->m_groupCurrent++;
+			pDoc->vo[i]->setSelected(FALSE);
 		}
 	}
+	if (m_currentSelected > 0)
+		pDoc->vo[m_currentSelected]->setSelected(TRUE);
+	Invalidate(FALSE);
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 }

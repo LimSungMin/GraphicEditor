@@ -31,6 +31,7 @@ public:
 	vector <GObject*> vo;
 	CArray <GObject*> co;
 	CArray<GObject, GObject&> m_group[5];
+	int m_groupCurrent = 0;
 	// 작업입니다. 
 public:
 

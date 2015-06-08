@@ -205,6 +205,7 @@ BEGIN
         MENUITEM "삭제",                          ID_DELETE
         MENUITEM "선택모드",                        ID_SELECT
         MENUITEM "그룹화",                         ID_GROUP
+        MENUITEM "그룹 해제",                       ID_GroupDeselect
     END
 END
 

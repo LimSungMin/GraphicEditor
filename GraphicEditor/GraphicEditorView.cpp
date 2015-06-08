@@ -467,7 +467,13 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 							startY += point.y - m_clickedPoint.y;
 							endX += point.x - m_clickedPoint.x;
 							endY += point.y - m_clickedPoint.y;
-
+							//if (pDoc->)
+							if (pDoc->vo[i] == pDoc->m_poly){
+								startX /= pDoc->vo[i]->m_polypoints.GetCount();
+								startY /= pDoc->vo[i]->m_polypoints.GetCount();
+								endX /= pDoc->vo[i]->m_polypoints.GetCount();
+								endY /= pDoc->vo[i]->m_polypoints.GetCount();
+							}
 							curr->move(startX, startY, endX, endY);
 						}
 					}
@@ -513,7 +519,12 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					startY += point.y - m_clickedPoint.y;
 					endX += point.x - m_clickedPoint.x;
 					endY += point.y - m_clickedPoint.y;
-
+					if (pDoc->vo[i] == pDoc->m_poly){
+						startX /= pDoc->vo[i]->m_polypoints.GetCount();
+						startY /= pDoc->vo[i]->m_polypoints.GetCount();
+						endX /= pDoc->vo[i]->m_polypoints.GetCount();
+						endY /= pDoc->vo[i]->m_polypoints.GetCount();
+					}
 					pDoc->vo[i]->move(startX, startY, endX, endY);
 					
 				}

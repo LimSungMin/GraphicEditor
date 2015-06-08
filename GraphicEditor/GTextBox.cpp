@@ -25,6 +25,8 @@ void GTextBox::draw(CDC* dc)
 	{
 		rect.SetRect(this->getStartX()+5, this->getStartY()+5, this->getEndX(), this->getEndY());
 	}
+
+
 	
 	this->m_tmpstr.Copy(this->m_str);
 
@@ -38,6 +40,20 @@ void GTextBox::draw(CDC* dc)
 	dc->DrawText(CString(this->m_str.GetData()), this->m_str.GetCount(), &rect, DT_WORDBREAK);
 
 	this->m_tmpstr.RemoveAll();
+	if ( this->getSelected() == TRUE){
+	
+		m_selectedRect[0] = new CRect(this->getStartX() - 5, this->getStartY() - 5, this->getStartX() + 5, this->getStartY() + 5);
+		m_selectedRect[1] = new CRect(this->getEndX() - 5, this->getStartY() - 5, this->getEndX() + 5, this->getStartY() + 5);
+		m_selectedRect[2] = new CRect(this->getStartX() - 5, this->getEndY() - 5, this->getStartX() + 5, this->getEndY() + 5);
+		m_selectedRect[3] = new CRect(this->getEndX() - 5, this->getEndY() - 5, this->getEndX() + 5, this->getEndY() + 5); // 메모리 누수의 위험 있음. 수정바람!
+
+		for (int i = 0; i < 4; i++)
+		{
+			dc->Rectangle(m_selectedRect[i]);
+		}
+
+	}
+	
 }
 
 

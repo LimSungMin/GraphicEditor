@@ -594,11 +594,7 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CGraphicEditorDoc* pDoc = GetDocument();
 	GObject* curr = pDoc->vo[m_currentSelected];
 
-	switch (CurrentMode)
-	{
-	case DrawMode::TEXT:{
-		
-
+	
 		if (nChar == _T('\b')){
 			if (curr->m_str.GetSize() > 0)
 				curr->m_str.RemoveAt(curr->m_str.GetSize() - 1);
@@ -608,12 +604,6 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 			curr->m_str.Add(nChar);
 		}
 
-		break;
-	}
-
-	default:
-		break;
-	}
 
 	Invalidate(FALSE);
 	CFormView::OnChar(nChar, nRepCnt, nFlags);

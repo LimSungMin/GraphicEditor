@@ -724,11 +724,15 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
+	
 	if (pDoc->vo.size() > 0 && m_currentSelected != -1){
+		if (pDoc->vo[m_currentSelected] == pDoc->m_poly){			
+			pDoc->vo[m_currentSelected]->m_polypoints.RemoveAll();
+		}		
 		
 		pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
 		m_currentSelected = -1;
-	}
+	}	
 	Invalidate(FALSE);
 }
 

@@ -29,6 +29,7 @@ public:
 	COLORREF m_colorFill;
 
 	vector <GObject*> vo;
+	CArray <GObject*> co;
 	CList<GObject, GObject&> m_group;
 	// 작업입니다. 
 public:

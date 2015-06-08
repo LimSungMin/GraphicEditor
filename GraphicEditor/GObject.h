@@ -46,6 +46,7 @@ public:
 	CArray<TCHAR, TCHAR> m_tmpstr;
 	COLORREF getLineColor();
 	COLORREF getFillColor();
+	int m_groupIndex;
 
 	int m_font;
 private:
@@ -57,7 +58,7 @@ private:
 	int m_pattern;
 	COLORREF m_panecolor;
 	BOOL polypointmove = FALSE;
-	
+
 protected:
 	BOOL m_isSelected;
 };

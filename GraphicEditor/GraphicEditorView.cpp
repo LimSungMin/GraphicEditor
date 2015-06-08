@@ -55,7 +55,8 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_COMMAND(ID_DELETE, &CGraphicEditorView::OnDelete)
 	ON_COMMAND(ID_SELECT, &CGraphicEditorView::OnSelect)
 	ON_WM_ERASEBKGND()
-//	ON_CBN_SELCHANGE(IDC_Font, &CGraphicEditorView::OnCbnSelchangeFont)
+	ON_COMMAND(ID_GROUP, &CGraphicEditorView::OnGroup)
+	ON_COMMAND(ID_GroupDeselect, &CGraphicEditorView::OnGroupdeselect)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -161,7 +162,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_line->SetEnd(point);
 			pDoc->m_line->setEndX(point.x);
 			pDoc->m_line->setEndY(point.y);
-
+			pDoc->m_line->m_groupIndex = pDoc->m_groupCurrent++;
 
 			break;
 
@@ -173,6 +174,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_ellp->setEndX(point.x);
 			pDoc->m_ellp->setEndY(point.y);
 			pDoc->m_ellp->SetEnd(point);
+			pDoc->m_ellp->m_groupIndex = pDoc->m_groupCurrent++;
 		}
 
 		case DrawMode::RECT:{
@@ -185,7 +187,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_rect->setStartY(point.y - 10);
 			pDoc->m_rect->setEndX(point.x + 10);
 			pDoc->m_rect->setEndY(point.y + 10);
-			
+			pDoc->m_rect->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
 		}
 
@@ -198,7 +200,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_text->setStartY(point.y - 10);
 			pDoc->m_text->setEndX(point.x + 10);
 			pDoc->m_text->setEndY(point.y + 10);
-
+			pDoc->m_text->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
 		}
 
@@ -206,7 +208,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 			if (m_firstclick == TRUE){
 				pDoc->m_poly = new GPolyline();
-
+				pDoc->m_poly->m_groupIndex = pDoc->m_groupCurrent++;
 				m_firstclick = FALSE;
 			}
 
@@ -241,7 +243,11 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 					m_move = TRUE;
 					pDoc->vo[i]->setSelected(TRUE);
 					m_currentSelected = i;
-					m_group.group.Add(i);
+					for (int j = 0; j < pDoc->vo.size(); j++){ // 선택된 도형과 같은 그룹에 있는 객체들을 선택시킨다.
+						if (pDoc->vo[i]->m_groupIndex != -1 && pDoc->vo[i]->m_groupIndex == pDoc->vo[j]->m_groupIndex){
+							pDoc->vo[j]->setSelected(TRUE);
+						}
+					}
 					m_clickedPoint = point;
 					Invalidate(FALSE);
 					return;
@@ -439,7 +445,7 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			}
 			default:{
 				if (m_move == TRUE){ // 객체가 선택되었을 때 도형을 잡고 움직이는 상황
-					GObject* curr = pDoc->vo[m_currentSelected];
+					/*GObject* curr = pDoc->vo[m_currentSelected];
 
 					int startX = curr->getStartX();
 					int startY = curr->getStartY();
@@ -451,7 +457,30 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					endX += point.x - m_clickedPoint.x;
 					endY += point.y - m_clickedPoint.y;
 
+					curr->move(startX, startY, endX, endY);*/
+					for (int i = 0; i < pDoc->vo.size(); i++){
+						if (pDoc->vo[i]->m_groupIndex  != -1 && pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+							GObject* curr = pDoc->vo[i];
+
+							int startX = curr->getStartX();
+							int startY = curr->getStartY();
+							int endX = curr->getEndX();
+							int endY = curr->getEndY();
+
+							startX += point.x - m_clickedPoint.x;
+							startY += point.y - m_clickedPoint.y;
+							endX += point.x - m_clickedPoint.x;
+							endY += point.y - m_clickedPoint.y;
+							//if (pDoc->)
+							if (pDoc->vo[i] == pDoc->m_poly){
+								startX /= pDoc->vo[i]->m_polypoints.GetCount();
+								startY /= pDoc->vo[i]->m_polypoints.GetCount();
+								endX /= pDoc->vo[i]->m_polypoints.GetCount();
+								endY /= pDoc->vo[i]->m_polypoints.GetCount();
+							}
 					curr->move(startX, startY, endX, endY);
+						}
+					}
 					m_clickedPoint = point;
 
 					Invalidate(FALSE);
@@ -494,7 +523,12 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					startY += point.y - m_clickedPoint.y;
 					endX += point.x - m_clickedPoint.x;
 					endY += point.y - m_clickedPoint.y;
-
+					if (pDoc->vo[i] == pDoc->m_poly){
+						startX /= pDoc->vo[i]->m_polypoints.GetCount();
+						startY /= pDoc->vo[i]->m_polypoints.GetCount();
+						endX /= pDoc->vo[i]->m_polypoints.GetCount();
+						endY /= pDoc->vo[i]->m_polypoints.GetCount();
+					}
 					pDoc->vo[i]->move(startX, startY, endX, endY);
 					
 				}
@@ -620,7 +654,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	
 	CString str;
 	CGraphicEditorDoc* pDoc = GetDocument();
-	
+
 
 
 	CBrush brush(RGB(255, 255, 255));
@@ -701,6 +735,11 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 		if (m_currentSelected >= 0){
 			GObject* curr = pDoc->vo[m_currentSelected];
 			curr->setLineColor(cdlg.GetColor());
+			for (int i = 0; i < pDoc->vo.size(); i++){
+				if (pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+					pDoc->vo[i]->setLineColor(cdlg.GetColor());
+		}
+			}
 		}
 		pDoc->m_colorLine = cdlg.GetColor();
 		Invalidate(FALSE);
@@ -720,6 +759,11 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 		if (m_currentSelected >= 0){
 			GObject* curr = pDoc->vo[m_currentSelected];
 			curr->setFillColor(cdlg.GetColor());
+			for (int i = 0; i < pDoc->vo.size(); i++){
+				if (pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+					pDoc->vo[i]->setFillColor(cdlg.GetColor());
+				}
+			}
 		}
 		pDoc->m_colorFill = cdlg.GetColor();
 		Invalidate(FALSE);
@@ -733,14 +777,17 @@ void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
 	
-	if (pDoc->vo.size() > 0 && m_currentSelected != -1){
-		if (pDoc->vo[m_currentSelected] == pDoc->m_poly){			
-			pDoc->vo[m_currentSelected]->m_polypoints.RemoveAll();
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			if (pDoc->vo[i] == pDoc->m_poly){
+				pDoc->vo[i]->m_polypoints.RemoveAll();
+			}
+			pDoc->vo.erase((pDoc->vo.begin() + i)); // vo의 크기가 줄어들음 => for문이 조기 종료됨!
+			i = -1; // 크기가 줄어드니까 그냥 처음부터 검사를 실행하자.
+		}
 		}		
-		
-		pDoc->vo.erase((pDoc->vo.begin() + m_currentSelected));
+	//pDoc->vo.resize(pDoc->vo.size());
 		m_currentSelected = -1;
-	}	
 	Invalidate(FALSE);
 }
 
@@ -782,4 +829,42 @@ void CGraphicEditorView::OnCbnSelchangeFont()
 	Invalidate();
 
 }
+
 */
+void CGraphicEditorView::OnGroup()
+{
+	CGraphicEditorDoc* pDoc = GetDocument();
+	//GGroup* group = new GGroup();
+	int groupNum;
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			groupNum = pDoc->vo[i]->m_groupIndex; // 맨 처음 도형의 인덱스 번호로 그룹을 설정한다.
+			break;
+		}
+	}
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			pDoc->vo[i]->m_groupIndex = groupNum; // 선택되었던 모든 객체의 그룹 번호를 groupNum으로 설정한다.
+		}
+	}
+	//pDoc->m_group = group;
+
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CGraphicEditorView::OnGroupdeselect()
+{
+	CGraphicEditorDoc* pDoc = GetDocument();
+
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			pDoc->vo[i]->m_groupIndex = pDoc->m_groupCurrent++;
+			pDoc->vo[i]->setSelected(FALSE);
+		}
+	}
+	if (m_currentSelected > 0)
+		pDoc->vo[m_currentSelected]->setSelected(TRUE);
+	Invalidate(FALSE);
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}

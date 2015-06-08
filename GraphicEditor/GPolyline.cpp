@@ -11,36 +11,40 @@ void GPolyline::draw(CDC* dc){
 	CPen pen(this->getPattern(),this->getThick(), this->getLineColor());
 	dc->SelectObject(&pen);
 	dc->Polyline(this->m_polypoints.GetData(), this->m_polypoints.GetCount());
-
-	if (this->getSelected() == TRUE){
-		//MessageBeep(1);
+	
+	if (this->m_polypoints.GetCount() != 0){
+		if (this->getSelected() == TRUE){
+			//MessageBeep(1);
 		
-		CBrush brush(RGB(255, 255, 255));
-		dc->SelectObject(&brush);
-		m_selectedRect[0] = new CRect(this->findleftest() - 5, this->findhighest() - 5, this->findleftest() + 5, this->findhighest() + 5);
-		m_selectedRect[1] = new CRect(this->findrightest() - 5, this->findhighest() - 5, this->findrightest() + 5, this->findhighest() + 5);
-		m_selectedRect[2] = new CRect(this->findleftest() - 5, this->findlowest() - 5, this->findleftest() + 5, this->findlowest() + 5);
-		m_selectedRect[3] = new CRect(this->findrightest() - 5, this->findlowest() - 5, this->findrightest() + 5, this->findlowest() + 5); // 메모리 누수의 위험 있음. 수정바람!
-		
-		for (int i = 0; i < 4; i++)
-		dc->Rectangle(m_selectedRect[i]);
-		
-		
-		
-		CPen pen2(PS_DOT, this->getThick(), this->getLineColor());
-		dc->SelectStockObject(NULL_BRUSH);
-		dc->SelectObject(&pen2);
-		m_selectedRect[4] = new CRect(this->findleftest(), this->findhighest(), this->findrightest(), this->findlowest());
-		dc->Rectangle(m_selectedRect[4]);
-
-
-		for (int i = 0; i < this->m_polypoints.GetCount(); i++)
-		{
+			CBrush brush(RGB(255, 255, 255));
 			dc->SelectObject(&brush);
-			m_selectedPointRect[i] = new CRect(this->m_polypoints[i].x - 5, this->m_polypoints[i].y - 5, this->m_polypoints[i].x + 5, this->m_polypoints[i].y + 5);
-			dc->Rectangle(m_selectedPointRect[i]);
-		}
+			m_selectedRect[0] = new CRect(this->findleftest() - 5, this->findhighest() - 5, this->findleftest() + 5, this->findhighest() + 5);
+			m_selectedRect[1] = new CRect(this->findrightest() - 5, this->findhighest() - 5, this->findrightest() + 5, this->findhighest() + 5);
+			m_selectedRect[2] = new CRect(this->findleftest() - 5, this->findlowest() - 5, this->findleftest() + 5, this->findlowest() + 5);
+			m_selectedRect[3] = new CRect(this->findrightest() - 5, this->findlowest() - 5, this->findrightest() + 5, this->findlowest() + 5); // 메모리 누수의 위험 있음. 수정바람!
 		
+			for (int i = 0; i < 4; i++)
+			dc->Rectangle(m_selectedRect[i]);
+		
+		
+		
+			CPen pen2(PS_DOT, this->getThick(), this->getLineColor());
+			dc->SelectStockObject(NULL_BRUSH);
+			dc->SelectObject(&pen2);
+			m_selectedRect[4] = new CRect(this->findleftest(), this->findhighest(), this->findrightest(), this->findlowest());
+
+		
+			dc->Rectangle(m_selectedRect[4]);
+
+
+			for (int i = 0; i < this->m_polypoints.GetCount(); i++)
+			{
+				dc->SelectObject(&brush);
+				m_selectedPointRect[i] = new CRect(this->m_polypoints[i].x - 5, this->m_polypoints[i].y - 5, this->m_polypoints[i].x + 5, this->m_polypoints[i].y + 5);
+				dc->Rectangle(m_selectedPointRect[i]);
+			}
+		
+		}
 	}
 }
 

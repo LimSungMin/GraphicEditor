@@ -99,8 +99,6 @@ void CGraphicEditorView::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
 	ResizeParentToFit();
-
-	
 }
 
 void CGraphicEditorView::OnRButtonUp(UINT /* nFlags */, CPoint point)
@@ -208,7 +206,6 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		}
 
 		case DrawMode::POLY:{
-
 			if (m_firstclick == TRUE){
 				pDoc->m_poly = new GPolyline();
 				pDoc->m_poly->m_groupIndex = pDoc->m_groupCurrent++;
@@ -292,8 +289,6 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	CFormView::OnLButtonDown(nFlags, point);
 }
 
-
-
 void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
@@ -345,18 +340,13 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		break;
 	}
 	case DrawMode::POLY:{
-
 		pDoc->vo.push_back(pDoc->m_poly);
 		//m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		break;
-						}
-
-
+	}
 	default:
 		m_move = FALSE;
-
-		
 		break;
 	}
 	CFormView::OnLButtonUp(nFlags, point);
@@ -409,10 +399,9 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					}
 					}
 				}
-				Invalidate();
+				Invalidate(FALSE);
 				return;
 			}
-			
 			switch (CurrentMode)
 			{
 			case DrawMode::LINE:{
@@ -429,38 +418,20 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 				Invalidate();
 				break;
 			}
-
-
 			case DrawMode::RECT:{
 				pDoc->m_rect->setEndX(point.x);
 				pDoc->m_rect->setEndY(point.y);
 				Invalidate(FALSE);
-
 				break;
 			}
 								
 			case DrawMode::TEXT:{
 				pDoc->m_text->setEndXY(point.x, point.y);
-				
 				Invalidate();
 				break;
-				
 			}
 			default:{
 				if (m_move == TRUE){ // 객체가 선택되었을 때 도형을 잡고 움직이는 상황
-					/*GObject* curr = pDoc->vo[m_currentSelected];
-
-					int startX = curr->getStartX();
-					int startY = curr->getStartY();
-					int endX = curr->getEndX();
-					int endY = curr->getEndY();
-
-					startX += point.x - m_clickedPoint.x;
-					startY += point.y - m_clickedPoint.y;
-					endX += point.x - m_clickedPoint.x;
-					endY += point.y - m_clickedPoint.y;
-
-					curr->move(startX, startY, endX, endY);*/
 					for (int i = 0; i < pDoc->vo.size(); i++){
 						if (pDoc->vo[i]->m_groupIndex  != -1 && pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
 							GObject* curr = pDoc->vo[i];
@@ -499,24 +470,6 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 			int startX, startY, endX, endY;
 			for (int i = 0; i < pDoc->vo.size();i++){
 				if (pDoc->vo[i]->getSelected() == TRUE){
-					//CString str;
-					//str.Format(_T("%d"), i);
-					//MessageBox(str, _T("test"), MB_OK);
-					/*GObject* curr = pDoc->vo[i];
-
-					int startX = curr->getStartX();
-					int startY = curr->getStartY();
-					int endX = curr->getEndX();
-					int endY = curr->getEndY();
-
-					startX += point.x - m_clickedPoint.x;
-					startY += point.y - m_clickedPoint.y;
-					endX += point.x - m_clickedPoint.x;
-					endY += point.y - m_clickedPoint.y;
-
-					curr->move(startX, startY, endX, endY);
-					m_clickedPoint = point;*/
-					
 					startX = pDoc->vo[i]->getStartX();
 					startY = pDoc->vo[i]->getStartY();
 					endX = pDoc->vo[i]->getEndX();
@@ -590,9 +543,6 @@ void CGraphicEditorView::OnText()
 		CurrentMode = DrawMode::NOTHING;
 }
 
-
-
-
 void CGraphicEditorView::OnUpdateText(CCmdUI *pCmdUI)
 {
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
@@ -635,18 +585,13 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 	
 	CGraphicEditorDoc* pDoc = GetDocument();
 	GObject* curr = pDoc->vo[m_currentSelected];
-
-	
 		if (nChar == _T('\b')){
 			if (curr->m_str.GetSize() > 0)
 				curr->m_str.RemoveAt(curr->m_str.GetSize() - 1);
 		}
-
 		else {
 			curr->m_str.Add(nChar);
 		}
-
-
 	Invalidate(FALSE);
 	CFormView::OnChar(nChar, nRepCnt, nFlags);
 	
@@ -654,11 +599,8 @@ void CGraphicEditorView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 void CGraphicEditorView::OnDraw(CDC* pDC)
 {
-	
 	CString str;
 	CGraphicEditorDoc* pDoc = GetDocument();
-
-
 
 	CBrush brush(RGB(255, 255, 255));
 	pDC->SelectObject(&brush);
@@ -681,7 +623,6 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		
 		break;
 		}
-
 	case DrawMode::POLY:{
 		pDoc->m_poly->draw(pDC);
 		break;
@@ -690,13 +631,9 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		pDoc->m_text->m_font = m_fontnumb;
 		pDoc->m_text->draw(pDC);
 	}
-	
 	}
-	
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }
-
-
 
 void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
@@ -708,10 +645,6 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	pDoc->m_poly->polypointset(point);
 	m_firstclick = TRUE;
 	
-
-	//pDoc->m_poly->deletepolypointset(1);
-	//pDoc->m_polypoints.Add(NULL);
-	//
 	CFormView::OnLButtonDblClk(nFlags, point);
 }
 
@@ -731,15 +664,13 @@ void CGraphicEditorView::OnBnClickedLinecolor() // 선 색 설정을 불러옴
 	CColorDialog cdlg;
 	CGraphicEditorDoc* pDoc = GetDocument();
 	
-
-
 	if (cdlg.DoModal() == IDOK)
 	{
 		if (m_currentSelected >= 0){
 			GObject* curr = pDoc->vo[m_currentSelected];
 			curr->setLineColor(cdlg.GetColor());
 			for (int i = 0; i < pDoc->vo.size(); i++){
-				if (pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+				if (pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex || pDoc->vo[i]->getSelected() == TRUE){
 					pDoc->vo[i]->setLineColor(cdlg.GetColor());
 		}
 			}
@@ -763,7 +694,7 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 			GObject* curr = pDoc->vo[m_currentSelected];
 			curr->setFillColor(cdlg.GetColor());
 			for (int i = 0; i < pDoc->vo.size(); i++){
-				if (pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+				if (pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex || pDoc->vo[i]->getSelected() == TRUE){
 					pDoc->vo[i]->setFillColor(cdlg.GetColor());
 				}
 			}
@@ -794,7 +725,6 @@ void CGraphicEditorView::OnDelete()
 	Invalidate(FALSE);
 }
 
-
 void CGraphicEditorView::OnSelect()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
@@ -803,7 +733,6 @@ void CGraphicEditorView::OnSelect()
 	for (auto i : pDoc->vo) i->setSelected(false);	// 모든 객체의 선택을 해제한다
 	Invalidate(FALSE);
 }
-
 
 BOOL CGraphicEditorView::OnEraseBkgnd(CDC* pDC)
 {

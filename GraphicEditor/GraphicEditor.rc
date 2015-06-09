@@ -210,7 +210,6 @@ BEGIN
     BEGIN
         MENUITEM "색 변경",                        IDC_LineColor
         MENUITEM "면색 변경",                       IDC_PaneColor
-
         MENUITEM "선택모드",                        ID_SELECT
         MENUITEM "그룹 해제",                       ID_GroupDeselect
         MENUITEM "잘라내기",                        ID_CUT
@@ -297,6 +296,7 @@ BEGIN
     LTEXT           "Font",IDC_STATIC,11,206,16,8
     COMBOBOX        IDC_FONT,9,217,48,55,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "FontColor",IDC_FontColor,8,57,50,14
+    PUSHBUTTON      "Button1",IDC_TEST,7,80,50,14
 END
 
 

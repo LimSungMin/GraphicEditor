@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_CBN_SELCHANGE(IDC_LineThick, &CMainFrame::OnCbnSelchangeLinethick)
 	ON_CBN_SELCHANGE(IDC_LinePattern, &CMainFrame::OnCbnSelchangeLinepattern)
 	ON_CBN_SELCHANGE(IDC_COMBO2, &CMainFrame::OnCbnSelchangeCombo2)
+	ON_CBN_SELCHANGE(IDC_FONT, &CMainFrame::OnCbnSelchangeFont)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -423,4 +424,15 @@ void CMainFrame::OnCbnSelchangeCombo2()
 		}
 	}
 	pDoc->UpdateAllViews(NULL);
+}
+
+
+void CMainFrame::OnCbnSelchangeFont()
+{
+	CString strBuf, strOut;
+	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_FONT);
+	pbox->GetWindowText(strBuf);
+	CT2A ascii(strBuf);
+	fr_font = atoi(ascii.m_psz);
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

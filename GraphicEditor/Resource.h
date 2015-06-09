@@ -25,6 +25,7 @@
 #define IDC_LinePattern                 1006
 #define IDC_COMBO2                      1008
 #define IDC_FILLPATTERN                 1008
+#define IDC_FONT                        1010
 #define ID_ELLIPSE                      32772
 #define ID_RECTANGLE                    32775
 #define ID_TEXT                         32777
@@ -50,7 +51,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        312
 #define _APS_NEXT_COMMAND_VALUE         32798
-#define _APS_NEXT_CONTROL_VALUE         1010
+#define _APS_NEXT_CONTROL_VALUE         1011
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

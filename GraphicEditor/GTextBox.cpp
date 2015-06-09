@@ -38,17 +38,19 @@ void GTextBox::draw(CDC* dc)
 	
 	CFont font;
 	CString fontname;
+
+	//this->m_font = 1;
 	// ±º∏≤ ±√º≠ πŸ≈¡
-	if (this->m_font == 1)
+	if (this->m_font == 0)
 	{
 		fontname = _T("±º∏≤");
 		MessageBeep(1);
 	}
-	else if (this->m_font == 2)
+	else if (this->m_font == 1)
 	{
 		fontname = _T("±√º≠");
 	}
-	else if (this->m_font == 3)
+	else if (this->m_font == 2)
 	{
 		fontname = _T("πŸ≈¡");
 	}

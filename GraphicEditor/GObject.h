@@ -50,6 +50,7 @@ public:
 	COLORREF getFillColor();
 	int m_groupIndex;
 
+	void setFont(int);
 	int m_font;
 private:
 	int m_startX;

@@ -19,6 +19,8 @@ void GPolyline::draw(CDC* dc){
 		if (this->getSelected() == TRUE){
 		
 			CBrush brush(RGB(255, 255, 255));
+			CPen pen3(PS_SOLID, 1, RGB(0, 0, 0));
+			dc->SelectObject(&pen3);
 			dc->SelectObject(&brush);
 			m_selectedRect[0] = new CRect(this->findleftest() - 5, this->findhighest() - 5, this->findleftest() + 5, this->findhighest() + 5);
 			m_selectedRect[1] = new CRect(this->findrightest() - 5, this->findhighest() - 5, this->findrightest() + 5, this->findhighest() + 5);
@@ -30,7 +32,7 @@ void GPolyline::draw(CDC* dc){
 		
 		
 		
-			CPen pen2(PS_DOT, this->getThick(), this->getLineColor());
+			CPen pen2(PS_DOT, 1, RGB(0,0,0));
 			dc->SelectStockObject(NULL_BRUSH);
 			dc->SelectObject(&pen2);
 			m_selectedRect[4] = new CRect(this->findleftest(), this->findhighest(), this->findrightest(), this->findlowest());
@@ -41,6 +43,7 @@ void GPolyline::draw(CDC* dc){
 
 			for (int i = 0; i < this->m_polypoints.GetCount(); i++)
 			{
+				dc->SelectObject(&pen3);
 				dc->SelectObject(&brush);
 				m_selectedPointRect[i] = new CRect(this->m_polypoints[i].x - 5, this->m_polypoints[i].y - 5, this->m_polypoints[i].x + 5, this->m_polypoints[i].y + 5);
 				dc->Rectangle(m_selectedPointRect[i]);

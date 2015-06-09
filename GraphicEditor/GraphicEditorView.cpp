@@ -315,6 +315,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 {
+
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
 	ldown = FALSE;
@@ -346,6 +347,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		// 콤보 박스 설정 부분		
 		pDoc->m_ellp->setThick(getLineSize());
 		pDoc->m_ellp->setPattern(getLinePattern());
+		pDoc->m_ellp->setFillPattern(getFillPattern());
 		/////////////////////////////////////////
 		pDoc->m_ellp->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_ellp);
@@ -357,6 +359,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		// 콤보 박스 설정 부분		
 		pDoc->m_rect->setThick(getLineSize());
 		pDoc->m_rect->setPattern(getLinePattern());
+		pDoc->m_rect->setFillPattern(getFillPattern());
 		/////////////////////////////////////////
 		pDoc->m_rect->setSelected(TRUE);
 		//pDoc->vo.push_back(pDoc->m_rect);
@@ -369,6 +372,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		// 콤보 박스 설정 부분		
 		pDoc->m_text->setThick(getLineSize());
 		pDoc->m_text->setPattern(getLinePattern());
+		pDoc->m_text->setFillPattern(getFillPattern());
 		/////////////////////////////////////////
 		pDoc->m_text->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_text);
@@ -415,7 +419,8 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					//m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point) // 몇번째 네모인지 확인
 				}
 				else{ // Polyline이 아닐 때. 즉, 일반적인 도형의 끄트머리를 잡고 움직일 때.
-					switch (m_changeSizePosition){
+
+					/*switch (m_changeSizePosition){
 					case 0:{ // 왼쪽 위
 						pDoc->vo[m_currentSelected]->setStartX(point.x);
 						pDoc->vo[m_currentSelected]->setStartY(point.y);
@@ -439,6 +444,43 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					default:{
 						break;
 					}
+					}*/
+					//CPoint* anchorPoint;
+					
+					switch (m_changeSizePosition){
+					case 0:{
+						int x = pDoc->vo[m_currentSelected]->getStartX();
+						int y = pDoc->vo[m_currentSelected]->getStartY();
+						for (int i = 0; i < pDoc->vo.size(); i++){
+							if (pDoc->vo[i]->m_groupIndex != -1 && pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+								CPoint* anchorPoint = new CPoint(pDoc->vo[i]->getStartX(), pDoc->vo[i]->getStartY());
+								int dx = x - anchorPoint->x;
+								int dy = y - anchorPoint->y;
+								pDoc->vo[i]->setStartX(point.x - dx);
+								pDoc->vo[i]->setStartY(point.y - dy);
+								delete anchorPoint;
+							}
+						}
+						//Invalidate();
+						break;
+					}
+					case 3:{
+						int x = pDoc->vo[m_currentSelected]->getEndX();
+						int y = pDoc->vo[m_currentSelected]->getEndY();
+						for (int i = 0; i < pDoc->vo.size(); i++){
+							if (pDoc->vo[i]->m_groupIndex != -1 && pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+								CPoint* anchorPoint = new CPoint(pDoc->vo[i]->getEndX(), pDoc->vo[i]->getEndY());
+								int dx = x - anchorPoint->x;
+								int dy = y - anchorPoint->y;
+								pDoc->vo[i]->setEndX(point.x - dx);
+								pDoc->vo[i]->setEndY(point.y - dy);
+								delete anchorPoint;
+							}
+						}
+						break;
+					}
+					default:
+						break;
 					}
 				}
 				Invalidate(FALSE);

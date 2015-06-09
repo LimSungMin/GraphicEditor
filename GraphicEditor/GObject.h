@@ -20,7 +20,9 @@ public:
 	virtual BOOL getSelected(){ return m_isSelected; }
 
 	virtual void setPattern(int pattern);
+	virtual void setFillPattern(int pattern);
 	virtual int getPattern();
+	virtual int getFillPattern();
 	void setThick(int thick);
 	int getThick();
 
@@ -64,6 +66,7 @@ private:
 	int m_thick;
 	CPen m_pen;
 	int m_pattern;
+	int m_fillPattern;
 	COLORREF m_panecolor;
 	COLORREF m_fontcolor;
 	BOOL polypointmove = FALSE;

@@ -26,6 +26,7 @@
 #define IDC_COMBO2                      1008
 #define IDC_FILLPATTERN                 1008
 #define IDC_FONT                        1010
+#define IDC_FontColor                   1011
 #define ID_ELLIPSE                      32772
 #define ID_RECTANGLE                    32775
 #define ID_TEXT                         32777

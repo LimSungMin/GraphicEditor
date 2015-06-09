@@ -36,6 +36,9 @@ public:
 	void setFillColor(COLORREF c);
 	void setFillColor(int r, int g, int b);
 
+	void setFontColor(COLORREF c);
+	void setFontColor(int r, int g, int b);
+
 	///// poly point만을 위한 함수들 
 	void polypointmovecheck(int x);
 
@@ -49,6 +52,10 @@ public:
 	CArray<TCHAR, TCHAR> m_tmpstr;
 	COLORREF getLineColor();
 	COLORREF getFillColor();
+	
+
+	COLORREF getFontColor();
+	
 	int m_groupIndex;
 
 	void setFont(int);
@@ -62,6 +69,7 @@ private:
 	int m_pattern;
 	int m_fillPattern;
 	COLORREF m_panecolor;
+	COLORREF m_fontcolor;
 	BOOL polypointmove = FALSE;
 protected:
 	BOOL m_isSelected;

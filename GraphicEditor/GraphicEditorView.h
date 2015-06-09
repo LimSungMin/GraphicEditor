@@ -108,6 +108,7 @@ public:
 	afx_msg void OnCbnSelchangeFillpattern();
 	afx_msg void OnCut();
 	afx_msg void OnPaste();
+	afx_msg void OnBnClickedFontcolor();
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

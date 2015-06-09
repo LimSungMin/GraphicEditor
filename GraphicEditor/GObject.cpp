@@ -88,6 +88,20 @@ void GObject::setFont(int font){
 	m_font = font;
 }
 
+void GObject::setFontColor(COLORREF c)
+{
+	m_fontcolor = c;
+}
+
+void GObject::setFontColor(int r, int g, int b)
+{
+	m_fontcolor = RGB(r, g, b);
+}
+
+COLORREF GObject::getFontColor()
+{
+	return m_fontcolor;
+}
 
 void GObject::polypointmovecheck(int x)
 {

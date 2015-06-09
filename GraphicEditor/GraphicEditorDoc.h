@@ -27,7 +27,7 @@ public:
 	GObject temp;
 	COLORREF m_colorLine;
 	COLORREF m_colorFill;
-
+	COLORREF m_fontcolor;
 	vector <GObject*> vo;
 	CArray <GObject*> co;
 	CArray<GObject, GObject&> m_group[5];

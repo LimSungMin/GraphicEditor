@@ -52,7 +52,7 @@ CMainFrame::CMainFrame()
 	// TODO: 여기에 멤버 초기화 코드를 추가합니다.
 	fr_lineSize = 1;
 	fr_linePattern = PS_SOLID;
-	fr_fillPattern = NULL;
+	fr_fillPattern = 6;
 }
 
 CMainFrame::~CMainFrame()
@@ -384,26 +384,42 @@ void CMainFrame::OnCbnSelchangeCombo2()
 	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_FILLPATTERN);
 	pbox->GetWindowText(strBuf);
 	CT2A ascii(strBuf);
-	fr_fillPattern = atoi(ascii.m_psz);
-	//Solid;Hatch;Pattern;
-	if (strBuf == "Solid")
+	fr_fillPattern = atoi(ascii.m_psz);	
+	HS_HORIZONTAL;	//0
+	HS_VERTICAL;	//1
+	HS_FDIAGONAL;	//2
+	HS_BDIAGONAL;	//3
+	HS_CROSS;		//4
+	HS_DIAGCROSS;	//5
+	if (strBuf == "HORIZONTAL")
 	{
-		fr_fillPattern = BS_SOLID;
+		fr_fillPattern = HS_HORIZONTAL;
 	}
-	else if (strBuf == "Hatch"){
-		fr_fillPattern = BS_HATCHED;
+	else if (strBuf == "VERTICAL"){
+		fr_fillPattern = HS_VERTICAL;
 	}
-	else if (strBuf == "Pattern"){
-		fr_fillPattern = BS_PATTERN;
+	else if (strBuf == "FDIAGONAL"){
+		fr_fillPattern = HS_FDIAGONAL;
 	}
-
+	else if (strBuf == "BDIAGONAL"){
+		fr_fillPattern = HS_BDIAGONAL;
+	}
+	else if (strBuf == "CROSS"){
+		fr_fillPattern = HS_CROSS;
+	}
+	else if (strBuf == "DIAGCROSS"){
+		fr_fillPattern = HS_DIAGCROSS;
+	}
+	else if (strBuf == "SOLID"){
+		fr_fillPattern = 6;
+	}
 	//
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();
 	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());
 	for (int i = 0; i < pDoc->vo.size(); i++){
 		if (pDoc->vo[i]->getSelected() == TRUE){
-			pDoc->vo[i]->setPattern(fr_fillPattern);
+			pDoc->vo[i]->setFillPattern(fr_fillPattern);
 		}
 	}
 	pDoc->UpdateAllViews(NULL);

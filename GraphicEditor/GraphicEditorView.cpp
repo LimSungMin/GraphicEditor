@@ -314,6 +314,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 {
+
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
 	ldown = FALSE;
@@ -345,7 +346,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		// 콤보 박스 설정 부분		
 		pDoc->m_ellp->setThick(getLineSize());
 		pDoc->m_ellp->setPattern(getLinePattern());
-		pDoc->m_ellp->setFillColor(getFillPattern());
+		pDoc->m_ellp->setFillPattern(getFillPattern());
 		/////////////////////////////////////////
 		pDoc->m_ellp->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_ellp);
@@ -357,7 +358,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		// 콤보 박스 설정 부분		
 		pDoc->m_rect->setThick(getLineSize());
 		pDoc->m_rect->setPattern(getLinePattern());
-		pDoc->m_rect->setFillColor(getFillPattern());
+		pDoc->m_rect->setFillPattern(getFillPattern());
 		/////////////////////////////////////////
 		pDoc->m_rect->setSelected(TRUE);
 		//pDoc->vo.push_back(pDoc->m_rect);
@@ -370,7 +371,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		// 콤보 박스 설정 부분		
 		pDoc->m_text->setThick(getLineSize());
 		pDoc->m_text->setPattern(getLinePattern());
-		pDoc->m_text->setFillColor(getFillPattern());
+		pDoc->m_text->setFillPattern(getFillPattern());
 		/////////////////////////////////////////
 		pDoc->m_text->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_text);

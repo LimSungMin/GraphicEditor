@@ -22,7 +22,7 @@ void GEllipse::draw(CDC* dc)
 	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
 	dc->SelectObject(&pen);
 	CBrush brush;
-	brush.CreateSolidBrush(this->getFillColor());
+	brush.CreateHatchBrush(this->getFillPattern(), this->getFillColor());	
 	
 	dc->SelectObject(&brush);
 	// 처음에 색이 NULL 이면 투명으로

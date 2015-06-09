@@ -54,11 +54,16 @@ void GObject::setFillColor(int r, int g, int b){
 void GObject::setPattern(int pattern){
 	m_pattern = pattern;
 }
+void GObject::setFillPattern(int pattern){
+	m_fillPattern = pattern;
+}
 
 int GObject::getPattern(){
 	return m_pattern;
 }
-
+int GObject::getFillPattern(){
+	return m_fillPattern;
+}
 int GObject::getThick(){
 	return m_thick;
 }

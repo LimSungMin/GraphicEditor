@@ -4,6 +4,9 @@
 
 GPolyline::GPolyline() : GObject(0, 0), m_endX(0), m_endY(0)
 {
+	this->setPattern(PS_DOT);
+	this->setLineColor(RGB(0, 0, 0));
+	this->setThick(1);
 }
 
 void GPolyline::draw(CDC* dc){

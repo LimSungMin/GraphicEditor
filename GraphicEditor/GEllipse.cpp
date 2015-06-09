@@ -6,6 +6,8 @@ GEllipse::GEllipse() : GObject(0, 0), m_endX(0), m_endY(0)
 {
 	this->setPattern(PS_DOT);
 	this->setFillColor(NULL);
+	this->setLineColor(RGB(0, 0, 0));
+	this->setThick(1);
 }
 
 

@@ -6,6 +6,9 @@
 #include "GraphicEditor.h"
 
 #include "MainFrm.h"
+#include "ChildFrm.h"
+#include "GraphicEditorDoc.h"
+#include "GraphicEditorView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,6 +51,9 @@ static UINT indicators[] =
 CMainFrame::CMainFrame()
 {
 	// TODO: 여기에 멤버 초기화 코드를 추가합니다.
+	fr_lineSize = 1;
+	fr_linePattern = PS_SOLID;
+	fr_fillPattern = NULL_BRUSH;
 }
 
 CMainFrame::~CMainFrame()
@@ -324,7 +330,17 @@ void CMainFrame::OnCbnSelchangeLinethick()
 	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_LineThick);
 	pbox->GetWindowText(strBuf);
 	CT2A ascii(strBuf);
-	fr_lineSize = atoi(ascii.m_psz);	
+	fr_lineSize = atoi(ascii.m_psz);
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();
+	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			pDoc->vo[i]->setThick(fr_lineSize);
+		}
+	}
+	pDoc->UpdateAllViews(NULL);
+	//Invalidate(FALSE);
 }
 
 
@@ -335,8 +351,21 @@ void CMainFrame::OnCbnSelchangeLinepattern()
 	CString strBuf, strOut;
 	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_LinePattern);
 	pbox->GetWindowText(strBuf);
-	CT2A ascii(strBuf);
-	fr_linePattern = atoi(ascii.m_psz);
+	if (strBuf == "SOLID")
+	{
+		fr_linePattern = PS_SOLID;
+	}
+	else if (strBuf == "DASH"){
+		fr_linePattern = PS_DASH;
+	}else if (strBuf == "DOT"){
+		fr_linePattern = PS_DOT;
+	}
+	else if (strBuf == "DASHDOT"){
+		fr_linePattern = PS_DASHDOT;
+	}
+	else if (strBuf == "DASHDOTDOT"){
+		fr_linePattern = PS_DASHDOTDOT;
+	}
 }
 
 

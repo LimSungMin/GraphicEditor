@@ -68,7 +68,7 @@ void GObject::setThick(int thick){
 }
 
 void GObject::setFont(int font){
-	m_font = 2;
+	m_font = font;
 }
 
 

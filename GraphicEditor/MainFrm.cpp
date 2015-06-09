@@ -386,6 +386,8 @@ void CMainFrame::OnCbnSelchangeCombo2()
 	pbox->GetWindowText(strBuf);
 	CT2A ascii(strBuf);
 	fr_fillPattern = atoi(ascii.m_psz);
+
+	
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();
 	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());
@@ -403,7 +405,31 @@ void CMainFrame::OnCbnSelchangeFont()
 	CString strBuf, strOut;
 	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_FONT);
 	pbox->GetWindowText(strBuf);
-	CT2A ascii(strBuf);
-	fr_font = atoi(ascii.m_psz);
+	//CT2A ascii(strBuf);
+	//fr_font = atoi(ascii.m_psz);
+
+	if (strBuf == _T("굴림"))
+	{
+		fr_font = 0;
+	}
+	else if (strBuf == _T("궁서"))
+	{
+		fr_font = 1;
+	}
+	else if (strBuf == _T("바탕"))
+	{
+		fr_font = 2;
+	}
+
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();
+	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			pDoc->vo[i]->setFont(fr_font);
+		}
+	}
+	pDoc->UpdateAllViews(NULL);
+
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }

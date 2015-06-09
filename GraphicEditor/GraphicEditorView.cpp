@@ -153,7 +153,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		{
 		case DrawMode::LINE:
 			//line.SetStart(point.x, point.y);
-			pDoc->m_line = new GLine();		
+			pDoc->m_line = new GLine();
 			pDoc->m_line->setPattern(PS_DOT);
 			pDoc->m_line->setStartX(point.x);
 			pDoc->m_line->setStartY(point.y);
@@ -164,6 +164,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			
 			
 			///////////////////////////////////////
+			//pDoc->vo.push_back(pDoc->m_line);
 			pDoc->m_line->m_groupIndex = pDoc->m_groupCurrent++;
 
 			break;
@@ -180,7 +181,9 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			
 			
 			///////////////////////////////////////
+			//pDoc->vo.push_back(pDoc->m_ellp);
 			pDoc->m_ellp->m_groupIndex = pDoc->m_groupCurrent++;
+			break;
 		}
 
 		case DrawMode::RECT:{
@@ -193,6 +196,8 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_rect->setStartY(point.y - 10);
 			pDoc->m_rect->setEndX(point.x + 10);
 			pDoc->m_rect->setEndY(point.y + 10);
+
+			pDoc->vo.push_back(pDoc->m_rect);
 			// 콤보 박스 설정 부분
 			
 			
@@ -214,6 +219,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			
 			
 			///////////////////////////////////////
+			//pDoc->vo.push_back(pDoc->m_text);
 			pDoc->m_text->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
 		}
@@ -317,7 +323,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->vo[m_currentSelected]->setSelected(TRUE);
 		return;
 	}
-	
+
 	
 	switch (CurrentMode)
 	{
@@ -641,7 +647,14 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	pDC->SelectObject(&brush);
 	pDC->Rectangle(0,0,10000,10000);
 
-	for (auto i : pDoc->vo) i->draw(pDC);
+	for (auto i : pDoc->vo){
+		if (i->getSelected() == TRUE){
+			//i->setThick(getLineSize());
+			//i->setPattern(getLinePattern());
+			//i->setFillColor(getFillPattern());
+		}
+		i->draw(pDC);
+	}
 	
 	switch (CurrentMode){
 	case DrawMode::LINE:{
@@ -654,7 +667,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 		break;
 	}
 	case DrawMode::RECT:{
-		pDoc->m_rect->draw(pDC);
+			//pDoc->m_rect->draw(pDC);
 		
 		break;
 		}

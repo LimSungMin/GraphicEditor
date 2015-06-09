@@ -6,6 +6,9 @@
 #include "GraphicEditor.h"
 
 #include "MainFrm.h"
+#include "ChildFrm.h"
+#include "GraphicEditorDoc.h"
+#include "GraphicEditorView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -326,7 +329,17 @@ void CMainFrame::OnCbnSelchangeLinethick()
 	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_LineThick);
 	pbox->GetWindowText(strBuf);
 	CT2A ascii(strBuf);
-	fr_lineSize = atoi(ascii.m_psz);	
+	fr_lineSize = atoi(ascii.m_psz);
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();
+	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			pDoc->vo[i]->setThick(fr_lineSize);
+		}
+	}
+	pDoc->UpdateAllViews(NULL);
+	//Invalidate(FALSE);
 }
 
 

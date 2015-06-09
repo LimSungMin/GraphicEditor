@@ -72,7 +72,7 @@ void CGraphicEditorDoc::Serialize(CArchive& ar)
 		// TODO: 여기에 로딩 코드를 추가합니다.
 		//co.RemoveAll();
 		//vo.erase(vo.end());
-		//vo.resize(vo.size());
+		vo.resize(vo.size());
 		co.Serialize(ar);
 		for (int i = 0; i < co.GetCount(); i++){			
 			vo.push_back(co.GetAt(i));

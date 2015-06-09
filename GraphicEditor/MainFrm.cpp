@@ -47,6 +47,9 @@ static UINT indicators[] =
 CMainFrame::CMainFrame()
 {
 	// TODO: 여기에 멤버 초기화 코드를 추가합니다.
+	fr_lineSize = 1;
+	fr_linePattern = PS_SOLID;
+	fr_fillPattern = NULL_BRUSH;
 }
 
 CMainFrame::~CMainFrame()
@@ -334,8 +337,21 @@ void CMainFrame::OnCbnSelchangeLinepattern()
 	CString strBuf, strOut;
 	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_LinePattern);
 	pbox->GetWindowText(strBuf);
-	CT2A ascii(strBuf);
-	fr_linePattern = atoi(ascii.m_psz);
+	if (strBuf == "SOLID")
+	{
+		fr_linePattern = PS_SOLID;
+	}
+	else if (strBuf == "DASH"){
+		fr_linePattern = PS_DASH;
+	}else if (strBuf == "DOT"){
+		fr_linePattern = PS_DOT;
+	}
+	else if (strBuf == "DASHDOT"){
+		fr_linePattern = PS_DASHDOT;
+	}
+	else if (strBuf == "DASHDOTDOT"){
+		fr_linePattern = PS_DASHDOTDOT;
+	}
 }
 
 

@@ -57,9 +57,6 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_WM_ERASEBKGND()
 	ON_COMMAND(ID_GROUP, &CGraphicEditorView::OnGroup)
 	ON_COMMAND(ID_GroupDeselect, &CGraphicEditorView::OnGroupdeselect)
-	//ON_CBN_SELCHANGE(IDC_LineThick, &CGraphicEditorView::OnCbnSelchangeLinethick)
-	//ON_CBN_SELCHANGE(IDC_LinePattern, &CGraphicEditorView::OnCbnSelchangeLinepattern)
-	//ON_CBN_SELCHANGE(IDC_FILLPATTERN, &CGraphicEditorView::OnCbnSelchangeFillpattern)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -156,16 +153,16 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 		{
 		case DrawMode::LINE:
 			//line.SetStart(point.x, point.y);
-			pDoc->m_line = new GLine();
-
+			pDoc->m_line = new GLine();		
+			pDoc->m_line->setPattern(PS_DOT);
 			pDoc->m_line->setStartX(point.x);
 			pDoc->m_line->setStartY(point.y);
 			pDoc->m_line->SetEnd(point);
 			pDoc->m_line->setEndX(point.x);
 			pDoc->m_line->setEndY(point.y);
 			// 콤보 박스 설정 부분
-			pDoc->m_line->setThick(getLineSize());
-			pDoc->m_line->setPattern(getLinePattern());
+			
+			
 			///////////////////////////////////////
 			pDoc->m_line->m_groupIndex = pDoc->m_groupCurrent++;
 
@@ -173,15 +170,15 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 		case DrawMode::ELLP:{
 			pDoc->m_ellp = new GEllipse();
-
+			pDoc->m_ellp->setPattern(PS_DOT);
 			pDoc->m_ellp->setStartX(point.x);
 			pDoc->m_ellp->setStartY(point.y);
 			pDoc->m_ellp->setEndX(point.x);
 			pDoc->m_ellp->setEndY(point.y);
 			pDoc->m_ellp->SetEnd(point);
 			// 콤보 박스 설정 부분
-			pDoc->m_ellp->setThick(getLineSize());
-			pDoc->m_ellp->setPattern(getLinePattern());
+			
+			
 			///////////////////////////////////////
 			pDoc->m_ellp->m_groupIndex = pDoc->m_groupCurrent++;
 		}
@@ -197,8 +194,8 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_rect->setEndX(point.x + 10);
 			pDoc->m_rect->setEndY(point.y + 10);
 			// 콤보 박스 설정 부분
-			pDoc->m_rect->setThick(getLineSize());
-			pDoc->m_rect->setPattern(getLinePattern());
+			
+			
 			///////////////////////////////////////
 			pDoc->m_rect->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
@@ -214,8 +211,8 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_text->setEndX(point.x + 10);
 			pDoc->m_text->setEndY(point.y + 10);
 			// 콤보 박스 설정 부분
-			pDoc->m_text->setThick(getLineSize());
-			pDoc->m_text->setPattern(getLinePattern());
+			
+			
 			///////////////////////////////////////
 			pDoc->m_text->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
@@ -225,8 +222,8 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			if (m_firstclick == TRUE){
 				pDoc->m_poly = new GPolyline();
 				// 콤보 박스 설정 부분
-				pDoc->m_poly->setThick(getLineSize());
-				pDoc->m_poly->setPattern(getLinePattern());
+				
+				
 				///////////////////////////////////////
 				pDoc->m_poly->m_groupIndex = pDoc->m_groupCurrent++;
 				m_firstclick = FALSE;
@@ -300,12 +297,12 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 				//m_currentSelected = i;
 				m_clickedPoint = point;
 				
-				Invalidate();
+				Invalidate(FALSE);
 				return;
 			}
 		}
 	}
-	Invalidate();
+	Invalidate(FALSE);
 	CFormView::OnLButtonDown(nFlags, point);
 }
 
@@ -320,49 +317,67 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->vo[m_currentSelected]->setSelected(TRUE);
 		return;
 	}
-
-	GLine line;
+	
+	
 	switch (CurrentMode)
 	{
 	case DrawMode::LINE:{
-		pDoc->m_line->setPattern(PS_SOLID);
+		//pDoc->m_line->setPattern(PS_SOLID);
+		// 콤보 박스 설정 부분		
+		pDoc->m_line->setThick(getLineSize());
+		pDoc->m_line->setPattern(getLinePattern());
+		/////////////////////////////////////////
 		pDoc->m_line->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_line);
 		m_currentSelected = pDoc->vo.size() - 1;
-		Invalidate();
+		Invalidate(FALSE);
 		break;
 	}
 						
 	case DrawMode::ELLP:{
-		pDoc->m_ellp->setPattern(PS_SOLID);
+
+		// 콤보 박스 설정 부분		
+		pDoc->m_ellp->setThick(getLineSize());
+		pDoc->m_ellp->setPattern(getLinePattern());
+		/////////////////////////////////////////
 		pDoc->m_ellp->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_ellp);
 		m_currentSelected = pDoc->vo.size() - 1;
-		Invalidate();
+		Invalidate(FALSE);
 		break;
 	}
 	case DrawMode::RECT:{
-		pDoc->m_rect->setPattern(PS_SOLID);
+		// 콤보 박스 설정 부분		
+		pDoc->m_rect->setThick(getLineSize());
+		pDoc->m_rect->setPattern(getLinePattern());
+		/////////////////////////////////////////
 		pDoc->m_rect->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_rect);
 		m_currentSelected = pDoc->vo.size() - 1;
-		Invalidate();
+		Invalidate(FALSE);
 		break;
 	}
 	
 	case DrawMode::TEXT:{
-		pDoc->m_text->setPattern(PS_SOLID);
+		// 콤보 박스 설정 부분		
+		pDoc->m_text->setThick(getLineSize());
+		pDoc->m_text->setPattern(getLinePattern());
+		/////////////////////////////////////////
 		pDoc->m_text->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_text);
 		m_currentSelected = pDoc->vo.size() - 1;
-		Invalidate();
+		Invalidate(FALSE);
 		
 		break;
 	}
 	case DrawMode::POLY:{
+		// 콤보 박스 설정 부분		
+		pDoc->m_poly->setThick(getLineSize());
+		pDoc->m_poly->setPattern(getLinePattern());
+		/////////////////////////////////////////
 		pDoc->vo.push_back(pDoc->m_poly);
 		//m_currentSelected = pDoc->vo.size() - 1;
-		Invalidate();
+		Invalidate(FALSE);
 		break;
 						}
 	default:
@@ -428,14 +443,14 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 				pDoc->m_line->SetEnd(point);
 				pDoc->m_line->setEndX(point.x);
 				pDoc->m_line->setEndY(point.y);
-				Invalidate();
+				Invalidate(FALSE);
 				break;
 			}
 			case DrawMode::ELLP:{
 				pDoc->m_ellp->SetEnd(point);
 				pDoc->m_ellp->setEndX(point.x);
 				pDoc->m_ellp->setEndY(point.y);
-				Invalidate();
+				Invalidate(FALSE);
 				break;
 			}
 			case DrawMode::RECT:{
@@ -447,7 +462,7 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 								
 			case DrawMode::TEXT:{
 				pDoc->m_text->setEndXY(point.x, point.y);
-				Invalidate();
+				Invalidate(FALSE);
 				break;
 			}
 			default:{
@@ -778,7 +793,7 @@ void CGraphicEditorView::OnCbnSelchangeFont()
 
 	pDoc->vo[m_currentSelected]->m_font = tmp;
 
-	Invalidate();
+	Invalidate(FALSE);
 
 }
 

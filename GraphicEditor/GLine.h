@@ -5,7 +5,7 @@ class GLine	: public GObject
 public:
 	GLine();
 	~GLine();
-	GLine(GLine& ref);
+	
 	void SetEnd(POINT point);
 	POINT GetEnd();
 

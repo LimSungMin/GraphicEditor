@@ -15,11 +15,7 @@ GLine::~GLine()
 	// 이것을 넣으면 heap 할당 에러가 뜬다.. 왜인지는 모름
 //	delete[] m_selectedRect;
 }
-GLine::GLine(GLine& ref) : GObject(ref)
-{
-	m_endX = ref.getEndX();
-	m_endY = ref.getEndY();
-}
+
 void GLine::draw(CDC* dc){
 	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
 	dc->SelectObject(&pen);

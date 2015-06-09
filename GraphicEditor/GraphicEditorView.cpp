@@ -964,12 +964,11 @@ int CGraphicEditorView::getFontSize()
 
 void CGraphicEditorView::OnCut()
 {
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
 	GObject obj(*pDoc->vo[m_currentSelected]);
-
-	tmp.push_back(pDoc->vo[m_currentSelected]);
 	
+	pDoc->tmp.push_back(pDoc->vo[m_currentSelected]);
+
 	CPoint point;
 	pDoc->SetModifiedFlag();
 	for (int i = 0; i < pDoc->vo.size(); i++){
@@ -987,7 +986,7 @@ void CGraphicEditorView::OnCut()
 	}
 	//pDoc->vo.resize(pDoc->vo.size());
 	m_currentSelected = -1;
-
+	//
 	Invalidate(FALSE);
 }
 
@@ -996,9 +995,9 @@ void CGraphicEditorView::OnPaste()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();	
-	pDoc->vo.push_back(tmp[0]);
+	pDoc->vo.push_back(pDoc->tmp[0]);
 
-	tmp.pop_back();
+	pDoc->tmp.pop_back();
 
 	Invalidate(FALSE);
 	

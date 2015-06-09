@@ -20,7 +20,7 @@ public:
 	BOOL isInBound(CPoint point);
 	void setSelected(BOOL selected);
 	int isInSizeBound(CPoint point);
-
+	int m_fontsize;
 	void setEndXY(int, int);
 
 private:

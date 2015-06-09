@@ -77,7 +77,7 @@ CGraphicEditorView::CGraphicEditorView()
 	//CurrentMode = DrawMode::LINE;								// 기본값은 라인
 	CurrentMode = DrawMode::NOTHING;
 	ldown = TRUE;
-
+	m_fontsize = 1;
 	
 }
 
@@ -149,7 +149,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 	ControlEdit dlg;
 
 	dlg.m_fontnumb = m_fontnumb;
-
+	
 	CGraphicEditorDoc* pDoc = GetDocument();
 	if (!(nFlags & MK_CONTROL)){ // Ctrl 키를 누르지 않고 클릭 -> 하나의 객체만 선택
 		for (int i = 0; i < pDoc->vo.size(); i++)
@@ -256,6 +256,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 						m_changeSize = TRUE;
 						pDoc->vo[m_currentSelected]->setSelected(TRUE);
 						polypointindex = m_changeSizePosition;
+						//pDoc->vo[m_currentSelected]->m_polypoints.RemoveAt(polypointindex);
 						break;
 					}
 
@@ -428,37 +429,10 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					else
 						index = pDoc->vo[m_currentSelected]->isInSizeBound(point);
 					pDoc->vo[m_currentSelected]->pointmover(point.x, point.y, index);
-					//m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point) // 몇번째 네모인지 확인
+					
 				}
 				else{ // Polyline이 아닐 때. 즉, 일반적인 도형의 끄트머리를 잡고 움직일 때.
 
-					/*switch (m_changeSizePosition){
-					case 0:{ // 왼쪽 위
-						pDoc->vo[m_currentSelected]->setStartX(point.x);
-						pDoc->vo[m_currentSelected]->setStartY(point.y);
-						break;
-					}
-					case 1:{ // 오른쪽 위
-						pDoc->vo[m_currentSelected]->setEndX(point.x);
-						pDoc->vo[m_currentSelected]->setStartY(point.y);
-						break;
-					}
-					case 2:{ // 왼쪽 아래
-						pDoc->vo[m_currentSelected]->setStartX(point.x);
-						pDoc->vo[m_currentSelected]->setEndY(point.y);
-						break;
-					}
-					case 3:{ // 오른쪽 아래
-						pDoc->vo[m_currentSelected]->setEndX(point.x);
-						pDoc->vo[m_currentSelected]->setEndY(point.y);
-						break;
-					}
-					default:{
-						break;
-					}
-					}*/
-					//CPoint* anchorPoint;
-					
 					switch (m_changeSizePosition){
 					case 0:{
 						int x = pDoc->vo[m_currentSelected]->getStartX();
@@ -733,6 +707,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	}
 	case DrawMode::TEXT:{
 		pDoc->m_text->m_font = m_fontnumb;
+		pDoc->m_text->setFontSize(m_fontsize);
 		pDoc->m_text->draw(pDC);
 	}
 	}
@@ -744,6 +719,23 @@ void CGraphicEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
 
 	CGraphicEditorDoc* pDoc = GetDocument();
+	int index;
+	pDoc->SetModifiedFlag();
+	
+
+	if ( CurrentMode == NOTHING)
+		if (pDoc->vo[m_currentSelected] == pDoc->m_poly){ // 폴리라인의 경우 특수하므로 바꾸어야됨
+			m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point);
+			pDoc->vo[m_currentSelected]->polypointmovecheck(1);
+
+			polypointmove = TRUE;
+			m_changeSize = TRUE;
+			pDoc->vo[m_currentSelected]->setSelected(TRUE);
+			pDoc->vo[m_currentSelected]->m_polypoints.RemoveAt(m_changeSizePosition);
+			
+		}
+	Invalidate(FALSE);
+	
 	
 	if (m_firstclick = FALSE)
 	pDoc->m_poly->polypointset(point);
@@ -839,10 +831,16 @@ void CGraphicEditorView::OnBnClickedFontcolor()
 void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
+	int index;
+	CPoint point;
 	pDoc->SetModifiedFlag();
 	for (int i = 0; i < pDoc->vo.size(); i++){
+		
+
 		if (pDoc->vo[i]->getSelected() == TRUE){
+			
 			if (pDoc->vo[i] == pDoc->m_poly){
+				
 				pDoc->vo[i]->m_polypoints.RemoveAll();
 			}
 			pDoc->vo.erase((pDoc->vo.begin() + i)); // vo의 크기가 줄어들음 => for문이 조기 종료됨!
@@ -949,6 +947,13 @@ int CGraphicEditorView::getFillPattern()
 	CMainFrame* pwnd = (CMainFrame*)AfxGetMainWnd();
 	m_fillPattern = pwnd->fr_fillPattern;
 	return m_fillPattern;
+}
+
+int CGraphicEditorView::getFontSize()
+{
+	CMainFrame* pwnd = (CMainFrame*)AfxGetMainWnd();
+	m_fontsize = pwnd->fr_fontsize;
+	return m_fontsize;
 }
 
 void CGraphicEditorView::OnCut()

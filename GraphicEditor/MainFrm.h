@@ -16,6 +16,7 @@ public:
 	int fr_linePattern;	// 선의 패턴
 	int fr_fillPattern;	// 내부 패턴
 	int fr_font;
+	int fr_fontsize;
 // 작업입니다.
 public:
 
@@ -57,6 +58,7 @@ public:
 	afx_msg void OnCbnSelchangeLinepattern();
 	afx_msg void OnCbnSelchangeCombo2();
 	afx_msg void OnCbnSelchangeFont();
+	afx_msg void OnCbnSelchangeFontsize();
 };
 
 

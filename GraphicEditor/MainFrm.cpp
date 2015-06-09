@@ -52,7 +52,7 @@ CMainFrame::CMainFrame()
 	// TODO: 여기에 멤버 초기화 코드를 추가합니다.
 	fr_lineSize = 1;
 	fr_linePattern = PS_SOLID;
-	fr_fillPattern = NULL_BRUSH;
+	fr_fillPattern = NULL;
 }
 
 CMainFrame::~CMainFrame()
@@ -385,6 +385,19 @@ void CMainFrame::OnCbnSelchangeCombo2()
 	pbox->GetWindowText(strBuf);
 	CT2A ascii(strBuf);
 	fr_fillPattern = atoi(ascii.m_psz);
+	//Solid;Hatch;Pattern;
+	if (strBuf == "Solid")
+	{
+		fr_fillPattern = BS_SOLID;
+	}
+	else if (strBuf == "Hatch"){
+		fr_fillPattern = BS_HATCHED;
+	}
+	else if (strBuf == "Pattern"){
+		fr_fillPattern = BS_PATTERN;
+	}
+
+	//
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();
 	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());

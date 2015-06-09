@@ -345,6 +345,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		// 콤보 박스 설정 부분		
 		pDoc->m_ellp->setThick(getLineSize());
 		pDoc->m_ellp->setPattern(getLinePattern());
+		pDoc->m_ellp->setFillColor(getFillPattern());
 		/////////////////////////////////////////
 		pDoc->m_ellp->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_ellp);
@@ -356,6 +357,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		// 콤보 박스 설정 부분		
 		pDoc->m_rect->setThick(getLineSize());
 		pDoc->m_rect->setPattern(getLinePattern());
+		pDoc->m_rect->setFillColor(getFillPattern());
 		/////////////////////////////////////////
 		pDoc->m_rect->setSelected(TRUE);
 		//pDoc->vo.push_back(pDoc->m_rect);
@@ -368,6 +370,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		// 콤보 박스 설정 부분		
 		pDoc->m_text->setThick(getLineSize());
 		pDoc->m_text->setPattern(getLinePattern());
+		pDoc->m_text->setFillColor(getFillPattern());
 		/////////////////////////////////////////
 		pDoc->m_text->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_text);

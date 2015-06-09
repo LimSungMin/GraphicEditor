@@ -62,7 +62,7 @@ void CGraphicEditorDoc::Serialize(CArchive& ar)
 	if (ar.IsStoring())
 	{
 		// TODO: 여기에 저장 코드를 추가합니다.
-		co.RemoveAll();
+		//co.RemoveAll();
 		for (auto i : vo) co.Add(i);
 		co.Serialize(ar);
 		UpdateAllViews(NULL);
@@ -70,7 +70,7 @@ void CGraphicEditorDoc::Serialize(CArchive& ar)
 	else
 	{
 		// TODO: 여기에 로딩 코드를 추가합니다.
-		co.RemoveAll();
+		//co.RemoveAll();
 		//vo.erase(vo.end());
 		//vo.resize(vo.size());
 		co.Serialize(ar);

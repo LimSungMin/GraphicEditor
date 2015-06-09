@@ -952,8 +952,9 @@ void CGraphicEditorView::OnCut()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
-	pDoc->temp = *pDoc->vo[m_currentSelected];
-		
+	GObject obj(*pDoc->vo[m_currentSelected]);
+	
+	pDoc->tmp = obj;
 	Invalidate(FALSE);
 }
 
@@ -961,10 +962,8 @@ void CGraphicEditorView::OnCut()
 void CGraphicEditorView::OnPaste()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-	CGraphicEditorDoc* pDoc = GetDocument();
-	CDC* pDC = GetDC();
-	pDoc->temp.draw(pDC);
-	pDoc->vo.push_back(&pDoc->temp);
+	CGraphicEditorDoc* pDoc = GetDocument();	
+	pDoc->vo.push_back(&pDoc->tmp);
 	Invalidate(FALSE);
 	
 }

@@ -24,7 +24,7 @@ public:
 	GEllipse* m_ellp;
 	GTextBox* m_text;
 
-
+	GObject temp;
 	COLORREF m_colorLine;
 	COLORREF m_colorFill;
 	COLORREF m_fontcolor;

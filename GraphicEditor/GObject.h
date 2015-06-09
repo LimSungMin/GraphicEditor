@@ -5,6 +5,7 @@ public:
 	GObject();
 	GObject(int x, int y);
 	GObject(const GObject& objectSrc){ *this = objectSrc; }
+	GObject(GObject& ref);
 	GObject& operator=(const GObject& objectSrc) { return *this; }
 	virtual ~GObject();
 	virtual void draw(CDC* dc){} // 다른 곳에서도 draw가 있으니까.

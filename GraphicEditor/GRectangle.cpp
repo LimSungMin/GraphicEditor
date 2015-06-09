@@ -6,6 +6,8 @@ GRectangle::GRectangle() : GObject(0, 0), m_endX(0), m_endY(0)
 {
 	this->setPattern(PS_DOT);
 	this->setFillColor(NULL);
+	this->setLineColor(RGB(0, 0, 0));
+	this->setThick(1);
 }
 
 GRectangle::GRectangle(int x1, int y1, int x2, int y2) : GObject(x1, y1), m_endX(x2), m_endY(y2)
@@ -16,7 +18,6 @@ GRectangle::GRectangle(int x1, int y1, int x2, int y2) : GObject(x1, y1), m_endX
 void GRectangle::draw(CDC* dc){
 	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
 	dc->SelectObject(&pen);
-	//dc->SelectStockObject(NULL_BRUSH);
 
 	CBrush brush2;
 	brush2.CreateHatchBrush(this->getFillPattern(), this->getFillColor());

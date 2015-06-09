@@ -106,6 +106,8 @@ public:
 	afx_msg void OnCbnSelchangeLinethick();
 	afx_msg void OnCbnSelchangeLinepattern();
 	afx_msg void OnCbnSelchangeFillpattern();
+	afx_msg void OnCut();
+	afx_msg void OnPaste();
 	afx_msg void OnBnClickedFontcolor();
 };
 

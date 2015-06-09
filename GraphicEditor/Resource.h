@@ -53,6 +53,10 @@
 #define ID_CENTER                       32803
 #define ID_BUTTON32804                  32804
 #define ID_RIGHT                        32804
+#define ID_32798                        32798
+#define ID_32799                        32799
+#define ID_CUT                          32800
+#define ID_PASTE                        32801
 
 // Next default values for new objects
 // 
@@ -61,6 +65,8 @@
 #define _APS_NEXT_RESOURCE_VALUE        312
 #define _APS_NEXT_COMMAND_VALUE         32805
 #define _APS_NEXT_CONTROL_VALUE         1012
+#define _APS_NEXT_COMMAND_VALUE         32802
+#define _APS_NEXT_CONTROL_VALUE         1011
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

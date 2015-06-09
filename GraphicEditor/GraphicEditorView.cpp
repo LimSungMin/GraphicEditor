@@ -57,6 +57,8 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_WM_ERASEBKGND()
 	ON_COMMAND(ID_GROUP, &CGraphicEditorView::OnGroup)
 	ON_COMMAND(ID_GroupDeselect, &CGraphicEditorView::OnGroupdeselect)
+	ON_COMMAND(ID_CUT, &CGraphicEditorView::OnCut)
+	ON_COMMAND(ID_PASTE, &CGraphicEditorView::OnPaste)
 	ON_BN_CLICKED(IDC_FontColor, &CGraphicEditorView::OnBnClickedFontcolor)
 END_MESSAGE_MAP()
 
@@ -323,6 +325,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		m_changeSize = FALSE;
 		m_changeSizePosition = -1;
 		pDoc->vo[m_currentSelected]->setSelected(TRUE);
+		pDoc->SetModifiedFlag();
 		return;
 	}
 
@@ -339,6 +342,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->vo.push_back(pDoc->m_line);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate(FALSE);
+		pDoc->SetModifiedFlag();
 		break;
 	}
 						
@@ -353,6 +357,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->vo.push_back(pDoc->m_ellp);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate(FALSE);
+		pDoc->SetModifiedFlag();
 		break;
 	}
 	case DrawMode::RECT:{
@@ -365,6 +370,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		//pDoc->vo.push_back(pDoc->m_rect);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate(FALSE);
+		pDoc->SetModifiedFlag();
 		break;
 	}
 	
@@ -378,6 +384,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->vo.push_back(pDoc->m_text);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate(FALSE);
+		pDoc->SetModifiedFlag();
 		
 		break;
 	}
@@ -389,6 +396,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->vo.push_back(pDoc->m_poly);
 		//m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate(FALSE);
+		pDoc->SetModifiedFlag();
 		break;
 						}
 	default:
@@ -407,6 +415,7 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 	int index;
 	if (!(nFlags&MK_CONTROL)){ // Ctrl키가 눌려 있지 않을 때.
 		if (ldown){ // 왼쪽 버튼이 눌려 있어야만 끌려야 하니까.
+			pDoc->SetModifiedFlag();
 			if (m_changeSize == TRUE){ // 크기 변경 사각형을 눌렀을 때.
 				if (pDoc->vo[m_currentSelected] == pDoc->m_poly){
 					pDoc->vo[m_currentSelected]->polypointmovecheck(1);
@@ -551,6 +560,7 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	else{ // Ctrl이 눌려있을 때. pDoc->m_group을 돌면서 이동을 시켜야 함.
 		if (ldown){
+			pDoc->SetModifiedFlag();
 			int startX, startY, endX, endY;
 			for (int i = 0; i < pDoc->vo.size();i++){
 				if (pDoc->vo[i]->getSelected() == TRUE){
@@ -826,7 +836,7 @@ void CGraphicEditorView::OnBnClickedFontcolor()
 void CGraphicEditorView::OnDelete()
 {
 	CGraphicEditorDoc* pDoc = GetDocument();
-	
+	pDoc->SetModifiedFlag();
 	for (int i = 0; i < pDoc->vo.size(); i++){
 		if (pDoc->vo[i]->getSelected() == TRUE){
 			if (pDoc->vo[i] == pDoc->m_poly){
@@ -895,6 +905,7 @@ void CGraphicEditorView::OnGroup()
 			pDoc->vo[i]->m_groupIndex = groupNum; // 선택되었던 모든 객체의 그룹 번호를 groupNum으로 설정한다.
 		}
 	}
+	pDoc->SetModifiedFlag();
 	//pDoc->m_group = group;
 
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
@@ -914,6 +925,7 @@ void CGraphicEditorView::OnGroupdeselect()
 	if (m_currentSelected > 0)
 		pDoc->vo[m_currentSelected]->setSelected(TRUE);
 	Invalidate(FALSE);
+	pDoc->SetModifiedFlag();
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 }
 
@@ -934,4 +946,25 @@ int CGraphicEditorView::getFillPattern()
 	CMainFrame* pwnd = (CMainFrame*)AfxGetMainWnd();
 	m_fillPattern = pwnd->fr_fillPattern;
 	return m_fillPattern;
+}
+
+void CGraphicEditorView::OnCut()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	pDoc->temp = *pDoc->vo[m_currentSelected];
+		
+	Invalidate(FALSE);
+}
+
+
+void CGraphicEditorView::OnPaste()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	CDC* pDC = GetDC();
+	pDoc->temp.draw(pDC);
+	pDoc->vo.push_back(&pDoc->temp);
+	Invalidate(FALSE);
+	
 }

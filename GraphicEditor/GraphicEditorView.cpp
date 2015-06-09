@@ -167,6 +167,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_line->setThick(getLineSize());
 			pDoc->m_line->setPattern(getLinePattern());
 			///////////////////////////////////////
+			pDoc->vo.push_back(pDoc->m_line);
 			pDoc->m_line->m_groupIndex = pDoc->m_groupCurrent++;
 
 			break;
@@ -183,6 +184,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_ellp->setThick(getLineSize());
 			pDoc->m_ellp->setPattern(getLinePattern());
 			///////////////////////////////////////
+			pDoc->vo.push_back(pDoc->m_ellp);
 			pDoc->m_ellp->m_groupIndex = pDoc->m_groupCurrent++;
 		}
 
@@ -196,9 +198,10 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_rect->setStartY(point.y - 10);
 			pDoc->m_rect->setEndX(point.x + 10);
 			pDoc->m_rect->setEndY(point.y + 10);
+
+			pDoc->vo.push_back(pDoc->m_rect);
 			// 콤보 박스 설정 부분
-			pDoc->m_rect->setThick(getLineSize());
-			pDoc->m_rect->setPattern(getLinePattern());
+			
 			///////////////////////////////////////
 			pDoc->m_rect->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
@@ -217,6 +220,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_text->setThick(getLineSize());
 			pDoc->m_text->setPattern(getLinePattern());
 			///////////////////////////////////////
+			pDoc->vo.push_back(pDoc->m_text);
 			pDoc->m_text->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
 		}
@@ -327,7 +331,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	case DrawMode::LINE:{
 		pDoc->m_line->setPattern(PS_SOLID);
 		pDoc->m_line->setSelected(TRUE);
-		pDoc->vo.push_back(pDoc->m_line);
+		//pDoc->vo.push_back(pDoc->m_line);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		break;
@@ -336,15 +340,17 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	case DrawMode::ELLP:{
 		pDoc->m_ellp->setPattern(PS_SOLID);
 		pDoc->m_ellp->setSelected(TRUE);
-		pDoc->vo.push_back(pDoc->m_ellp);
+		//pDoc->vo.push_back(pDoc->m_ellp);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		break;
 	}
 	case DrawMode::RECT:{
-		pDoc->m_rect->setPattern(PS_SOLID);
+		//pDoc->m_rect->setPattern(PS_SOLID);
 		pDoc->m_rect->setSelected(TRUE);
-		pDoc->vo.push_back(pDoc->m_rect);
+		pDoc->m_rect->setThick(getLineSize());
+		pDoc->m_rect->setPattern(getLinePattern());
+		//pDoc->vo.push_back(pDoc->m_rect);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		break;
@@ -353,7 +359,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	case DrawMode::TEXT:{
 		pDoc->m_text->setPattern(PS_SOLID);
 		pDoc->m_text->setSelected(TRUE);
-		pDoc->vo.push_back(pDoc->m_text);
+		//pDoc->vo.push_back(pDoc->m_text);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		
@@ -626,20 +632,27 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	pDC->SelectObject(&brush);
 	pDC->Rectangle(0,0,10000,10000);
 
-	for (auto i : pDoc->vo) i->draw(pDC);
+	for (auto i : pDoc->vo){
+		if (i->getSelected() == TRUE){
+			//i->setThick(getLineSize());
+			//i->setPattern(getLinePattern());
+			//i->setFillColor(getFillPattern());
+		}
+		i->draw(pDC);
+	}
 	
 	switch (CurrentMode){
 	case DrawMode::LINE:{
-		pDoc->m_line->draw(pDC);
+		//pDoc->m_line->draw(pDC);
 		
 		break;
 	}
 	case DrawMode::ELLP:{
-		pDoc->m_ellp->draw(pDC);
+		//pDoc->m_ellp->draw(pDC);
 		break;
 	}
 	case DrawMode::RECT:{
-		pDoc->m_rect->draw(pDC);
+			//pDoc->m_rect->draw(pDC);
 		
 		break;
 		}
@@ -649,7 +662,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	}
 	case DrawMode::TEXT:{
 		pDoc->m_text->m_font = m_fontnumb;
-		pDoc->m_text->draw(pDC);
+		//pDoc->m_text->draw(pDC);
 	}
 	}
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.

@@ -700,14 +700,17 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	pDC->SelectObject(&brush);
 	pDC->Rectangle(0,0,10000,10000);
 
-	for (auto i : pDoc->vo){
+	/*for (auto i : pDoc->vo){
 		if (i->getSelected() == TRUE){
 			//i->setThick(getLineSize());
 			//i->setPattern(getLinePattern());
 			//i->setFillColor(getFillPattern());
 		}
 		i->draw(pDC);
-	}
+	}*/
+
+	for (int i = 0; i < pDoc->vo.size(); i++)
+		pDoc->vo[i]->draw(pDC);
 	
 	switch (CurrentMode){
 	case DrawMode::LINE:{
@@ -755,7 +758,9 @@ void CGraphicEditorView::OnEditUndo()
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
 	Invalidate(FALSE);
-	pDoc->vo.pop_back();
+	if (pDoc->vo.size() > 0){
+		pDoc->vo.pop_back();
+	}
 	Invalidate(FALSE);
 }
 

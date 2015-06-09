@@ -39,12 +39,9 @@ void GTextBox::draw(CDC* dc)
 	CFont font;
 	CString fontname;
 
-	//this->m_font = 1;
-	// ±¼¸² ±Ã¼­ ¹ÙÅÁ
 	if (this->m_font == 0)
 	{
 		fontname = _T("±¼¸²");
-		MessageBeep(1);
 	}
 	else if (this->m_font == 1)
 	{
@@ -55,7 +52,6 @@ void GTextBox::draw(CDC* dc)
 		fontname = _T("¹ÙÅÁ");
 	}
 
-	//fontname = _T("±Ã¼­");
 	font.CreatePointFont(100, fontname);
 	dc->SelectObject(&font);
 	dc->DrawText(CString(this->m_str.GetData()), this->m_str.GetCount(), &rect, DT_WORDBREAK);

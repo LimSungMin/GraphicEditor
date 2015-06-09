@@ -384,6 +384,8 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->m_text->setPattern(getLinePattern());
 		pDoc->m_text->setFillPattern(getFillPattern());
 		/////////////////////////////////////////
+		//pDoc->m_text->m_font = m_fontnumb;
+		//pDoc->m_text->m_fontsize = m_fontsize;
 		pDoc->m_text->setSelected(TRUE);
 		pDoc->vo.push_back(pDoc->m_text);
 		m_currentSelected = pDoc->vo.size() - 1;
@@ -710,7 +712,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	}
 	case DrawMode::TEXT:{
 		pDoc->m_text->m_font = m_fontnumb;
-		pDoc->m_text->setFontSize(m_fontsize);
+		pDoc->m_text->m_fontsize = getFontSize();
 		pDoc->m_text->draw(pDC);
 	}
 	}

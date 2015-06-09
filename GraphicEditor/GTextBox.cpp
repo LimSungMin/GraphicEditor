@@ -59,7 +59,7 @@ void GTextBox::draw(CDC* dc)
 	if (this->m_fontsize == 1)
 		MessageBeep(1);
 
-	font.CreatePointFont(this->m_fontsize*100, fontname);
+	font.CreatePointFont(this->getFontSize(), fontname);
 	//font.CreatePointFont(100*2, fontname);
 	dc->SelectObject(&font);
 	dc->SetTextColor(this->getFontColor());

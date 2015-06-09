@@ -55,6 +55,7 @@ CMainFrame::CMainFrame()
 	fr_lineSize = 1;
 	fr_linePattern = PS_SOLID;
 	fr_fillPattern = 6;
+	fr_fontsize = 200;
 }
 
 CMainFrame::~CMainFrame()
@@ -474,8 +475,23 @@ void CMainFrame::OnCbnSelchangeFontsize()
 	pbox->GetWindowText(strBuf);
 	CT2A ascii(strBuf);
 
+	if (strBuf == "1")
+		fr_fontsize = 100;
 
-	fr_fontsize = atoi(ascii.m_psz);
+	else if (strBuf == "2")
+		fr_fontsize = 200;
+	
+	else if (strBuf == "3")
+		fr_fontsize = 300;
+	
+	else if (strBuf == "4")
+		fr_fontsize = 400;
+	
+	else if (strBuf == "5")
+		fr_fontsize = 500;
+	
+	else if (strBuf == "6")
+		fr_fontsize = 600;
 
 	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
 	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();

@@ -358,7 +358,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 		pDoc->m_rect->setPattern(getLinePattern());
 		/////////////////////////////////////////
 		pDoc->m_rect->setSelected(TRUE);
-		pDoc->vo.push_back(pDoc->m_rect);
+		//pDoc->vo.push_back(pDoc->m_rect);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate(FALSE);
 		break;

@@ -365,6 +365,15 @@ void CMainFrame::OnCbnSelchangeLinepattern()
 	else if (strBuf == "DASHDOTDOT"){
 		fr_linePattern = PS_DASHDOTDOT;
 	}
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();
+	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			pDoc->vo[i]->setPattern(fr_linePattern);
+		}
+	}
+	pDoc->UpdateAllViews(NULL);
 }
 
 
@@ -376,4 +385,13 @@ void CMainFrame::OnCbnSelchangeCombo2()
 	pbox->GetWindowText(strBuf);
 	CT2A ascii(strBuf);
 	fr_fillPattern = atoi(ascii.m_psz);
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();
+	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			pDoc->vo[i]->setPattern(fr_fillPattern);
+		}
+	}
+	pDoc->UpdateAllViews(NULL);
 }

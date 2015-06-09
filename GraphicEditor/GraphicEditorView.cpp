@@ -965,11 +965,29 @@ int CGraphicEditorView::getFontSize()
 
 void CGraphicEditorView::OnCut()
 {
-	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	CGraphicEditorDoc* pDoc = GetDocument();
 	GObject obj(*pDoc->vo[m_currentSelected]);
-	
-	pDoc->tmp = obj;
+
+	pDoc->tmp.push_back(pDoc->vo[m_currentSelected]);
+
+	CPoint point;
+	pDoc->SetModifiedFlag();
+	for (int i = 0; i < pDoc->vo.size(); i++){
+
+
+		if (pDoc->vo[i]->getSelected() == TRUE){
+
+			if (pDoc->vo[i] == pDoc->m_poly){
+
+				pDoc->vo[i]->m_polypoints.RemoveAll();
+			}
+			pDoc->vo.erase((pDoc->vo.begin() + i)); // vo의 크기가 줄어들음 => for문이 조기 종료됨!
+			i = -1; // 크기가 줄어드니까 그냥 처음부터 검사를 실행하자.
+		}
+	}
+	//pDoc->vo.resize(pDoc->vo.size());
+	m_currentSelected = -1;
+	//
 	Invalidate(FALSE);
 }
 
@@ -977,8 +995,11 @@ void CGraphicEditorView::OnCut()
 void CGraphicEditorView::OnPaste()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-	CGraphicEditorDoc* pDoc = GetDocument();	
-	pDoc->vo.push_back(&pDoc->tmp);
+	CGraphicEditorDoc* pDoc = GetDocument();
+	pDoc->vo.push_back(pDoc->tmp[0]);
+
+	pDoc->tmp.pop_back();
+
 	Invalidate(FALSE);
 	
 }

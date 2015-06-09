@@ -11,17 +11,6 @@ GObject::GObject(int x, int y) : m_startX(x), m_startY(y), m_thick(1), m_groupIn
 {
 }
 
-GObject::GObject(GObject& ref)
-{
-	m_startX = ref.getStartX();
-	m_startY = ref.getStartY();
-	m_linecolor = ref.getLineColor();
-	m_thick = ref.getThick();
-	m_pattern = ref.getPattern();
-	m_fillPattern = ref.getFillPattern();
-	m_panecolor = ref.getFillColor();
-	m_isSelected = ref.getSelected();
-}
 
 void GObject::setStartX(int x){
 	m_startX = x;

@@ -23,13 +23,12 @@ public:
 	GLine* m_line;
 	GEllipse* m_ellp;
 	GTextBox* m_text;
-
-	GObject tmp;
-	GLine ltmp;
+		
 	COLORREF m_colorLine;
 	COLORREF m_colorFill;
 	COLORREF m_fontcolor;
 	vector <GObject*> vo;
+	vector<GObject*> tmp;
 	CArray <GObject*> co;
 	CArray<GObject, GObject&> m_group[5];
 	int m_groupCurrent = 0;

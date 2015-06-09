@@ -16,7 +16,7 @@
 #include "GPolyline.h"
 #include "GLine.h"
 #include "GEllipse.h"
-
+#include "MainFrm.h"
 // 컨트롤 에딧 헤더파일
 #include "ControlEdit.h"
 
@@ -158,6 +158,10 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_line->SetEnd(point);
 			pDoc->m_line->setEndX(point.x);
 			pDoc->m_line->setEndY(point.y);
+			// 콤보 박스 설정 부분
+			pDoc->m_line->setThick(getLineSize());
+			pDoc->m_line->setPattern(getLinePattern());
+			///////////////////////////////////////
 			pDoc->m_line->m_groupIndex = pDoc->m_groupCurrent++;
 
 			break;
@@ -170,6 +174,10 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_ellp->setEndX(point.x);
 			pDoc->m_ellp->setEndY(point.y);
 			pDoc->m_ellp->SetEnd(point);
+			// 콤보 박스 설정 부분
+			pDoc->m_ellp->setThick(getLineSize());
+			pDoc->m_ellp->setPattern(getLinePattern());
+			///////////////////////////////////////
 			pDoc->m_ellp->m_groupIndex = pDoc->m_groupCurrent++;
 		}
 
@@ -183,6 +191,10 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_rect->setStartY(point.y - 10);
 			pDoc->m_rect->setEndX(point.x + 10);
 			pDoc->m_rect->setEndY(point.y + 10);
+			// 콤보 박스 설정 부분
+			pDoc->m_rect->setThick(getLineSize());
+			pDoc->m_rect->setPattern(getLinePattern());
+			///////////////////////////////////////
 			pDoc->m_rect->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
 		}
@@ -196,6 +208,10 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_text->setStartY(point.y - 10);
 			pDoc->m_text->setEndX(point.x + 10);
 			pDoc->m_text->setEndY(point.y + 10);
+			// 콤보 박스 설정 부분
+			pDoc->m_text->setThick(getLineSize());
+			pDoc->m_text->setPattern(getLinePattern());
+			///////////////////////////////////////
 			pDoc->m_text->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
 		}
@@ -204,6 +220,10 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 
 			if (m_firstclick == TRUE){
 				pDoc->m_poly = new GPolyline();
+				// 콤보 박스 설정 부분
+				pDoc->m_poly->setThick(getLineSize());
+				pDoc->m_poly->setPattern(getLinePattern());
+				///////////////////////////////////////
 				pDoc->m_poly->m_groupIndex = pDoc->m_groupCurrent++;
 				m_firstclick = FALSE;
 			}
@@ -829,4 +849,23 @@ void CGraphicEditorView::OnGroupdeselect()
 		pDoc->vo[m_currentSelected]->setSelected(TRUE);
 	Invalidate(FALSE);
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+int CGraphicEditorView::getLineSize()
+{
+	CMainFrame* pwnd = (CMainFrame*)AfxGetMainWnd();
+	m_lineSize = pwnd->fr_lineSize;
+	return m_lineSize;
+}
+int CGraphicEditorView::getLinePattern()
+{
+	CMainFrame* pwnd = (CMainFrame*)AfxGetMainWnd();
+	m_linePattern = pwnd->fr_linePattern;
+	return m_linePattern;
+}
+int CGraphicEditorView::getFillPattern()
+{
+	CMainFrame* pwnd = (CMainFrame*)AfxGetMainWnd();
+	m_fillPattern = pwnd->fr_fillPattern;
+	return m_fillPattern;
 }

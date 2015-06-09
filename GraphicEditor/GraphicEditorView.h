@@ -40,12 +40,16 @@ public:
 	GGroup m_group;
 
 	int polypointindex; // 선택된 사각형 임시 저장 좌표
-
+	int m_lineSize;		// MainFrm 으로부터 선 두께를 가져옵니다.
+	int m_linePattern;	// MainFrm 으로부터 선 패턴을 가져옵니다.
+	int m_fillPattern;	// MainFrm 으로부터 내부 패턴을 가져옵니다.
 	BOOL polypointmove = FALSE;
 
 // 작업입니다.
 public:
-
+	int getLineSize();
+	int getLinePattern();
+	int getFillPattern();
 // 재정의입니다.
 public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);

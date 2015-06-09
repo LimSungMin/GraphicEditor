@@ -30,6 +30,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_ELLIPSE, &CMainFrame::OnEllipse)
 	ON_COMMAND(ID_TEXT, &CMainFrame::OnText)
 	ON_CBN_SELCHANGE(IDC_LineThick, &CMainFrame::OnCbnSelchangeLinethick)
+	ON_CBN_SELCHANGE(IDC_LinePattern, &CMainFrame::OnCbnSelchangeLinepattern)
+	ON_CBN_SELCHANGE(IDC_COMBO2, &CMainFrame::OnCbnSelchangeCombo2)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -321,5 +323,28 @@ void CMainFrame::OnCbnSelchangeLinethick()
 	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_LineThick);
 	pbox->GetWindowText(strBuf);
 	CT2A ascii(strBuf);
-	fr_lineSize = atoi(ascii.m_psz);
+	fr_lineSize = atoi(ascii.m_psz);	
+}
+
+
+void CMainFrame::OnCbnSelchangeLinepattern()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	// IDC_LinePattern
+	CString strBuf, strOut;
+	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_LinePattern);
+	pbox->GetWindowText(strBuf);
+	CT2A ascii(strBuf);
+	fr_linePattern = atoi(ascii.m_psz);
+}
+
+
+void CMainFrame::OnCbnSelchangeCombo2()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString strBuf, strOut;
+	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_FILLPATTERN);
+	pbox->GetWindowText(strBuf);
+	CT2A ascii(strBuf);
+	fr_fillPattern = atoi(ascii.m_psz);
 }

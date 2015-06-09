@@ -12,7 +12,9 @@ public:
 
 // 특성입니다.
 public:
-	int fr_lineSize;
+	int fr_lineSize;	// 선의 두께
+	int fr_linePattern;	// 선의 패턴
+	int fr_fillPattern;	// 내부 패턴
 // 작업입니다.
 public:
 
@@ -51,6 +53,8 @@ public:
 	afx_msg void OnText();
 	CPaneDialog m_DockingBar;
 	afx_msg void OnCbnSelchangeLinethick();
+	afx_msg void OnCbnSelchangeLinepattern();
+	afx_msg void OnCbnSelchangeCombo2();
 };
 
 

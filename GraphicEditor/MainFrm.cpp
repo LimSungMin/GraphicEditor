@@ -498,7 +498,9 @@ void CMainFrame::OnCbnSelchangeFontsize()
 	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());
 	for (int i = 0; i < pDoc->vo.size(); i++){
 		if (pDoc->vo[i]->getSelected() == TRUE){
+			pDoc->vo[i]->firstchecker();
 			pDoc->vo[i]->setFontSize(fr_fontsize);
+			
 		}
 	}
 	pDoc->UpdateAllViews(NULL);

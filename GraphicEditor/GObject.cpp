@@ -116,6 +116,11 @@ void GObject::polyundo(){
 
 }
 
+void GObject::firstchecker()
+{
+	first = FALSE;
+}
+
 void GObject::pointmover(int x, int y, int index){
 
 	this->m_polypoints[index].x = x;

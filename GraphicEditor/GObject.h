@@ -63,6 +63,10 @@ public:
 
 	void setFont(int);
 
+	BOOL first = TRUE;
+
+	void firstchecker();
+
 	void setFontSize(int);
 	int getFontSize();
 	int m_font;

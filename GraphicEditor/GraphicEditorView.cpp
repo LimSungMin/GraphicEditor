@@ -77,7 +77,7 @@ CGraphicEditorView::CGraphicEditorView()
 	//CurrentMode = DrawMode::LINE;								// 기본값은 라인
 	CurrentMode = DrawMode::NOTHING;
 	ldown = TRUE;
-	m_fontsize = 1;
+	m_fontsize = 100;
 	
 }
 

@@ -213,10 +213,6 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_text->setStartY(point.y - 10);
 			pDoc->m_text->setEndX(point.x + 10);
 			pDoc->m_text->setEndY(point.y + 10);
-			// 콤보 박스 설정 부분
-			pDoc->m_text->setThick(getLineSize());
-			pDoc->m_text->setPattern(getLinePattern());
-			///////////////////////////////////////
 			pDoc->m_text->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
 		}
@@ -353,6 +349,12 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	case DrawMode::TEXT:{
 		pDoc->m_text->setPattern(PS_SOLID);
 		pDoc->m_text->setSelected(TRUE);
+		
+		// 콤보 박스 설정 부분
+		pDoc->m_text->setThick(getLineSize());
+		pDoc->m_text->setPattern(getLinePattern());
+		pDoc->m_text->setFont(getFont());
+		///////////////////////////////////////
 		pDoc->vo.push_back(pDoc->m_text);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
@@ -838,4 +840,11 @@ int CGraphicEditorView::getFillPattern()
 	CMainFrame* pwnd = (CMainFrame*)AfxGetMainWnd();
 	m_fillPattern = pwnd->fr_fillPattern;
 	return m_fillPattern;
+}
+
+int CGraphicEditorView::getFont()
+{
+	CMainFrame* pwnd = (CMainFrame*)AfxGetMainWnd();
+	m_fontnumb = pwnd->fr_font;
+	return m_fontnumb;
 }

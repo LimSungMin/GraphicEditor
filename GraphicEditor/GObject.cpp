@@ -67,6 +67,10 @@ void GObject::setThick(int thick){
 	m_thick = thick;
 }
 
+void GObject::setFont(int font){
+	m_font = 2;
+}
+
 
 void GObject::polypointmovecheck(int x)
 {

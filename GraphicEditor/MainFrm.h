@@ -15,6 +15,7 @@ public:
 	int fr_lineSize;	// 선의 두께
 	int fr_linePattern;	// 선의 패턴
 	int fr_fillPattern;	// 내부 패턴
+	int fr_font;
 // 작업입니다.
 public:
 
@@ -55,6 +56,7 @@ public:
 	afx_msg void OnCbnSelchangeLinethick();
 	afx_msg void OnCbnSelchangeLinepattern();
 	afx_msg void OnCbnSelchangeCombo2();
+	afx_msg void OnCbnSelchangeFont();
 };
 
 

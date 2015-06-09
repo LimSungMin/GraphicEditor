@@ -167,7 +167,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_line->setThick(getLineSize());
 			pDoc->m_line->setPattern(getLinePattern());
 			///////////////////////////////////////
-			pDoc->vo.push_back(pDoc->m_line);
+			//pDoc->vo.push_back(pDoc->m_line);
 			pDoc->m_line->m_groupIndex = pDoc->m_groupCurrent++;
 
 			break;
@@ -184,8 +184,9 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_ellp->setThick(getLineSize());
 			pDoc->m_ellp->setPattern(getLinePattern());
 			///////////////////////////////////////
-			pDoc->vo.push_back(pDoc->m_ellp);
+			//pDoc->vo.push_back(pDoc->m_ellp);
 			pDoc->m_ellp->m_groupIndex = pDoc->m_groupCurrent++;
+			break;
 		}
 
 		case DrawMode::RECT:{
@@ -220,7 +221,7 @@ void CGraphicEditorView::OnLButtonDown(UINT nFlags, CPoint point)
 			pDoc->m_text->setThick(getLineSize());
 			pDoc->m_text->setPattern(getLinePattern());
 			///////////////////////////////////////
-			pDoc->vo.push_back(pDoc->m_text);
+			//pDoc->vo.push_back(pDoc->m_text);
 			pDoc->m_text->m_groupIndex = pDoc->m_groupCurrent++;
 			break;
 		}
@@ -331,7 +332,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	case DrawMode::LINE:{
 		pDoc->m_line->setPattern(PS_SOLID);
 		pDoc->m_line->setSelected(TRUE);
-		//pDoc->vo.push_back(pDoc->m_line);
+		pDoc->vo.push_back(pDoc->m_line);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		break;
@@ -340,7 +341,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	case DrawMode::ELLP:{
 		pDoc->m_ellp->setPattern(PS_SOLID);
 		pDoc->m_ellp->setSelected(TRUE);
-		//pDoc->vo.push_back(pDoc->m_ellp);
+		pDoc->vo.push_back(pDoc->m_ellp);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		break;
@@ -359,7 +360,7 @@ void CGraphicEditorView::OnLButtonUp(UINT nFlags, CPoint point)
 	case DrawMode::TEXT:{
 		pDoc->m_text->setPattern(PS_SOLID);
 		pDoc->m_text->setSelected(TRUE);
-		//pDoc->vo.push_back(pDoc->m_text);
+		pDoc->vo.push_back(pDoc->m_text);
 		m_currentSelected = pDoc->vo.size() - 1;
 		Invalidate();
 		
@@ -643,12 +644,12 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	
 	switch (CurrentMode){
 	case DrawMode::LINE:{
-		//pDoc->m_line->draw(pDC);
+		pDoc->m_line->draw(pDC);
 		
 		break;
 	}
 	case DrawMode::ELLP:{
-		//pDoc->m_ellp->draw(pDC);
+		pDoc->m_ellp->draw(pDC);
 		break;
 	}
 	case DrawMode::RECT:{
@@ -662,7 +663,7 @@ void CGraphicEditorView::OnDraw(CDC* pDC)
 	}
 	case DrawMode::TEXT:{
 		pDoc->m_text->m_font = m_fontnumb;
-		//pDoc->m_text->draw(pDC);
+		pDoc->m_text->draw(pDC);
 	}
 	}
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.

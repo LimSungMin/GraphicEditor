@@ -110,7 +110,14 @@ void GObject::pointmover(int x, int y, int index){
 
 }
 
-
+void GObject::setFontSort(int fontsort)
+{
+	m_fontsort = fontsort;
+}
+int GObject::getFontSort()
+{
+	return m_fontsort;
+}
 GObject::~GObject()
 {
 }

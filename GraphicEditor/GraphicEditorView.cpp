@@ -60,6 +60,9 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_COMMAND(ID_CUT, &CGraphicEditorView::OnCut)
 	ON_COMMAND(ID_PASTE, &CGraphicEditorView::OnPaste)
 	ON_BN_CLICKED(IDC_FontColor, &CGraphicEditorView::OnBnClickedFontcolor)
+	ON_COMMAND(ID_LEFT, &CGraphicEditorView::OnLeft)
+	ON_COMMAND(ID_CENTER, &CGraphicEditorView::OnCenter)
+	ON_COMMAND(ID_RIGHT, &CGraphicEditorView::OnRight)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -967,4 +970,37 @@ void CGraphicEditorView::OnPaste()
 	pDoc->vo.push_back(&pDoc->temp);
 	Invalidate(FALSE);
 	
+}
+
+
+void CGraphicEditorView::OnLeft()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	GObject* curr = pDoc->vo[m_currentSelected];
+
+	curr->setFontSort(DT_LEFT);
+	Invalidate(FALSE);
+}
+
+
+void CGraphicEditorView::OnCenter()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	GObject* curr = pDoc->vo[m_currentSelected];
+
+	curr->setFontSort(DT_CENTER);
+	Invalidate(FALSE);
+}
+
+
+void CGraphicEditorView::OnRight()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	GObject* curr = pDoc->vo[m_currentSelected];
+
+	curr->setFontSort(DT_RIGHT);
+	Invalidate(FALSE);
 }

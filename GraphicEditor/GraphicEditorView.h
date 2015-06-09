@@ -109,6 +109,9 @@ public:
 	afx_msg void OnCut();
 	afx_msg void OnPaste();
 	afx_msg void OnBnClickedFontcolor();
+	afx_msg void OnLeft();
+	afx_msg void OnCenter();
+	afx_msg void OnRight();
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

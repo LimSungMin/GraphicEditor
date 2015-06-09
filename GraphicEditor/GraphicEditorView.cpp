@@ -57,6 +57,8 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_WM_ERASEBKGND()
 	ON_COMMAND(ID_GROUP, &CGraphicEditorView::OnGroup)
 	ON_COMMAND(ID_GroupDeselect, &CGraphicEditorView::OnGroupdeselect)
+	ON_COMMAND(ID_CUT, &CGraphicEditorView::OnCut)
+	ON_COMMAND(ID_PASTE, &CGraphicEditorView::OnPaste)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -908,4 +910,25 @@ int CGraphicEditorView::getFillPattern()
 	CMainFrame* pwnd = (CMainFrame*)AfxGetMainWnd();
 	m_fillPattern = pwnd->fr_fillPattern;
 	return m_fillPattern;
+}
+
+void CGraphicEditorView::OnCut()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	pDoc->temp = *pDoc->vo[m_currentSelected];
+		
+	Invalidate(FALSE);
+}
+
+
+void CGraphicEditorView::OnPaste()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	CGraphicEditorDoc* pDoc = GetDocument();
+	CDC* pDC = GetDC();
+	pDoc->temp.draw(pDC);
+	pDoc->vo.push_back(&pDoc->temp);
+	Invalidate(FALSE);
+	
 }

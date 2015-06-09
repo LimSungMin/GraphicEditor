@@ -8,7 +8,7 @@
 
 GTextBox::GTextBox()
 {
-
+	m_fontsize = 100;
 }
 
 void GTextBox::draw(CDC* dc)

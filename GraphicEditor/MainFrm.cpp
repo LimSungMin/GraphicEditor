@@ -471,7 +471,7 @@ void CMainFrame::OnCbnSelchangeFontsize()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
 	CString strBuf, strOut;
-	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_FILLPATTERN);
+	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_FontSize);
 	pbox->GetWindowText(strBuf);
 	CT2A ascii(strBuf);
 

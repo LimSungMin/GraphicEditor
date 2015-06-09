@@ -414,7 +414,8 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					//m_changeSizePosition = pDoc->vo[m_currentSelected]->isInSizeBound(point) // 몇번째 네모인지 확인
 				}
 				else{ // Polyline이 아닐 때. 즉, 일반적인 도형의 끄트머리를 잡고 움직일 때.
-					switch (m_changeSizePosition){
+
+					/*switch (m_changeSizePosition){
 					case 0:{ // 왼쪽 위
 						pDoc->vo[m_currentSelected]->setStartX(point.x);
 						pDoc->vo[m_currentSelected]->setStartY(point.y);
@@ -438,6 +439,43 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 					default:{
 						break;
 					}
+					}*/
+					//CPoint* anchorPoint;
+					
+					switch (m_changeSizePosition){
+					case 0:{
+						int x = pDoc->vo[m_currentSelected]->getStartX();
+						int y = pDoc->vo[m_currentSelected]->getStartY();
+						for (int i = 0; i < pDoc->vo.size(); i++){
+							if (pDoc->vo[i]->m_groupIndex != -1 && pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+								CPoint* anchorPoint = new CPoint(pDoc->vo[i]->getStartX(), pDoc->vo[i]->getStartY());
+								int dx = x - anchorPoint->x;
+								int dy = y - anchorPoint->y;
+								pDoc->vo[i]->setStartX(point.x - dx);
+								pDoc->vo[i]->setStartY(point.y - dy);
+								delete anchorPoint;
+							}
+						}
+						//Invalidate();
+						break;
+					}
+					case 3:{
+						int x = pDoc->vo[m_currentSelected]->getEndX();
+						int y = pDoc->vo[m_currentSelected]->getEndY();
+						for (int i = 0; i < pDoc->vo.size(); i++){
+							if (pDoc->vo[i]->m_groupIndex != -1 && pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+								CPoint* anchorPoint = new CPoint(pDoc->vo[i]->getEndX(), pDoc->vo[i]->getEndY());
+								int dx = x - anchorPoint->x;
+								int dy = y - anchorPoint->y;
+								pDoc->vo[i]->setEndX(point.x - dx);
+								pDoc->vo[i]->setEndY(point.y - dy);
+								delete anchorPoint;
+							}
+						}
+						break;
+					}
+					default:
+						break;
 					}
 				}
 				Invalidate(FALSE);

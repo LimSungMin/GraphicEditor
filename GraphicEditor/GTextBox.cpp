@@ -13,6 +13,7 @@ GTextBox::GTextBox()
 
 void GTextBox::draw(CDC* dc)
 {
+	////////////////////////////////////////////////////////////////////////////////////////////////// 글씨를 출력 
 	CRect rect;
 	if (this->getStartX() > this->getEndX() && this->getStartY() > this->getEndY())
 	{
@@ -27,12 +28,14 @@ void GTextBox::draw(CDC* dc)
 	
 	this->m_tmpstr.Copy(this->m_str);
 
-	this->m_tmpstr.Add('\0');
+	//this->m_tmpstr.Add('\0');
 	
 	CPen pen(this->getPattern(), this->getThick(), this->getLineColor());
 	
 	dc->SelectObject(&pen);
+	CBrush brush(this->getFillColor());
 
+	dc->SelectObject(&brush);
 	dc->Rectangle(this->getStartX(), this->getStartY(), this->getEndX(), this->getEndY());
 	
 	
@@ -51,19 +54,32 @@ void GTextBox::draw(CDC* dc)
 	{
 		fontname = _T("바탕");
 	}
-
+	HDC hdc = 0;
 	font.CreatePointFont(100, fontname);
 	dc->SelectObject(&font);
-	dc->DrawText(CString(this->m_str.GetData()), this->m_str.GetCount(), &rect, DT_WORDBREAK);
+	dc->SetTextColor(this->getFontColor());
+	dc->SetBkMode(TRANSPARENT);
+	//SetBkMode(hdc, TRANSPARENT);
+
+	//SetTextColor(hdc, this->getFontColor());
+	dc->DrawText(CString(this->m_str.GetData()), this->m_str.GetCount(), &rect,  DT_WORDBREAK | DT_LEFT);// | TRANSPARENT);
+
+	
 
 	this->m_tmpstr.RemoveAll();
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 선택시 주변 사각형 출력 
 	if ( this->getSelected() == TRUE){
-	
+		
 		m_selectedRect[0] = new CRect(this->getStartX() - 5, this->getStartY() - 5, this->getStartX() + 5, this->getStartY() + 5);
 		m_selectedRect[1] = new CRect(this->getEndX() - 5, this->getStartY() - 5, this->getEndX() + 5, this->getStartY() + 5);
 		m_selectedRect[2] = new CRect(this->getStartX() - 5, this->getEndY() - 5, this->getStartX() + 5, this->getEndY() + 5);
 		m_selectedRect[3] = new CRect(this->getEndX() - 5, this->getEndY() - 5, this->getEndX() + 5, this->getEndY() + 5); // 메모리 누수의 위험 있음. 수정바람!
 
+		CPen pen3(PS_SOLID, 1, RGB(0, 0, 0));
+		CBrush brush3(RGB(255, 255,255));
+		dc->SelectObject(pen3);
+		dc->SelectObject(brush3);
 		for (int i = 0; i < 4; i++)
 		{
 			dc->Rectangle(m_selectedRect[i]);
@@ -73,7 +89,7 @@ void GTextBox::draw(CDC* dc)
 	
 }
 
-
+/////////////////////////////////////////////////////
 
 
 int GTextBox::getEndX(){ return m_textendX; }

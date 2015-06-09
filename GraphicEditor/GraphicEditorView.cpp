@@ -57,6 +57,7 @@ BEGIN_MESSAGE_MAP(CGraphicEditorView, CFormView)
 	ON_WM_ERASEBKGND()
 	ON_COMMAND(ID_GROUP, &CGraphicEditorView::OnGroup)
 	ON_COMMAND(ID_GroupDeselect, &CGraphicEditorView::OnGroupdeselect)
+	ON_BN_CLICKED(IDC_FontColor, &CGraphicEditorView::OnBnClickedFontcolor)
 END_MESSAGE_MAP()
 
 // CGraphicEditorView 생성/소멸
@@ -753,6 +754,31 @@ void CGraphicEditorView::OnBnClickedPanecolor()
 
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }
+
+
+void CGraphicEditorView::OnBnClickedFontcolor()
+{
+	CColorDialog cdlg;
+	CGraphicEditorDoc* pDoc = GetDocument();
+
+	if (cdlg.DoModal() == IDOK)
+	{
+		if (m_currentSelected >= 0){
+			GObject* curr = pDoc->vo[m_currentSelected];
+			curr->setFontColor(cdlg.GetColor());
+			for (int i = 0; i < pDoc->vo.size(); i++){
+				if (pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex || pDoc->vo[i]->getSelected() == TRUE){
+					pDoc->vo[i]->setFontColor(cdlg.GetColor());
+				}
+			}
+		}
+		pDoc->m_fontcolor = cdlg.GetColor();
+		Invalidate(FALSE);
+	}
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
 
 // 삭제 함수 입니다.
 void CGraphicEditorView::OnDelete()

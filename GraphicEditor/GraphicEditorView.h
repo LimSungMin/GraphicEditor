@@ -106,6 +106,7 @@ public:
 	afx_msg void OnCbnSelchangeLinethick();
 	afx_msg void OnCbnSelchangeLinepattern();
 	afx_msg void OnCbnSelchangeFillpattern();
+	afx_msg void OnBnClickedFontcolor();
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

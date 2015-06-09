@@ -202,10 +202,10 @@ BEGIN
     BEGIN
         MENUITEM "색 변경",                        IDC_LineColor
         MENUITEM "면색 변경",                       IDC_PaneColor
-        MENUITEM "삭제",                          ID_DELETE
-        MENUITEM "선택모드",                        ID_SELECT
-        MENUITEM "그룹화",                         ID_GROUP
-        MENUITEM "그룹 해제",                       ID_GroupDeselect
+        MENUITEM "삭제\tDelete",                  ID_DELETE
+        MENUITEM "선택모드\tCtrl+Space",            ID_SELECT
+        MENUITEM "그룹화(&G)\tCtrl+G",             ID_GROUP
+        MENUITEM "그룹 해제(&D)\tCtrl+D",           ID_GroupDeselect
     END
 END
 
@@ -222,6 +222,7 @@ END
 
 IDR_MAINFRAME ACCELERATORS
 BEGIN
+    "D",            ID_DELETE,              VIRTKEY, NOINVERT
     "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
     VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
@@ -235,7 +236,14 @@ BEGIN
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
     VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
     VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
-    "D",            ID_DELETE,              VIRTKEY, NOINVERT
+END
+
+IDR_POPUP_EDIT ACCELERATORS
+BEGIN
+    VK_SPACE,       ID_SELECT,              VIRTKEY, CONTROL, NOINVERT
+    "D",            ID_GroupDeselect,       VIRTKEY, CONTROL, NOINVERT
+    "G",            ID_GROUP,               VIRTKEY, CONTROL, NOINVERT
+    VK_DELETE,      ID_DELETE,              VIRTKEY, NOINVERT
 END
 
 

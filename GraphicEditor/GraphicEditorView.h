@@ -39,6 +39,8 @@ public:
 	POINT m_clickedPoint; // 도형을 선택했을 때 클릭된 마우스 포인터의 좌표
 	GGroup m_group;
 
+	int m_fontnumb;
+
 	int polypointindex; // 선택된 사각형 임시 저장 좌표
 	int m_lineSize;		// MainFrm 으로부터 선 두께를 가져옵니다.
 	int m_linePattern;	// MainFrm 으로부터 선 패턴을 가져옵니다.
@@ -100,6 +102,9 @@ public:
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnGroup();
 	afx_msg void OnGroupdeselect();
+	afx_msg void OnCbnSelchangeLinethick();
+	afx_msg void OnCbnSelchangeLinepattern();
+	afx_msg void OnCbnSelchangeFillpattern();
 };
 
 #ifndef _DEBUG  // GraphicEditorView.cpp의 디버그 버전

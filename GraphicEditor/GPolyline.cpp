@@ -14,7 +14,6 @@ void GPolyline::draw(CDC* dc){
 	
 	if (this->m_polypoints.GetCount() != 0){
 		if (this->getSelected() == TRUE){
-			//MessageBeep(1);
 		
 			CBrush brush(RGB(255, 255, 255));
 			dc->SelectObject(&brush);
@@ -48,9 +47,6 @@ void GPolyline::draw(CDC* dc){
 	}
 }
 
-// statrtx = right / starty = high / endx = left / endy = low
-
-
 void GPolyline::polypointset(POINT point){ m_polypoints.Add(point); }
 
 int GPolyline::getEndX(){ return m_endX; }
@@ -83,7 +79,6 @@ void GPolyline::pointmover(int x, int y, int index){
 	this->m_polypoints[index].x = x;
 	this->m_polypoints[index].y = y;
 
-	//MessageBeep(1);
 }
 
 void GPolyline::polyundo(){

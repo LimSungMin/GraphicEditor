@@ -17,9 +17,11 @@ public:
 	BOOL isInBound(CPoint point);
 	//void setSelected(BOOL selected);
 	int isInSizeBound(CPoint point);
+	
 private:
 	int m_endX;
 	int m_endY;
 	int m_mode;
+	
 	CRect* m_selectedRect[4];
 };

@@ -87,6 +87,7 @@ void GObject::pointmover(int x, int y, int index){
 
 }
 
+
 GObject::~GObject()
 {
 }

@@ -47,6 +47,8 @@ public:
 	COLORREF getLineColor();
 	COLORREF getFillColor();
 	int m_groupIndex;
+
+	int m_font;
 private:
 	int m_startX;
 	int m_startY;

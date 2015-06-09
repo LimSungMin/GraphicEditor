@@ -28,7 +28,7 @@ private:
 	int m_textendY;
 	int m_mode;
 	CRect* m_selectedRect[4];
-
+	
 protected:
 	
 };

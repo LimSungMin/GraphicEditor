@@ -210,7 +210,6 @@ BEGIN
     BEGIN
         MENUITEM "색 변경",                        IDC_LineColor
         MENUITEM "면색 변경",                       IDC_PaneColor
-
         MENUITEM "선택모드",                        ID_SELECT
         MENUITEM "그룹 해제",                       ID_GroupDeselect
         MENUITEM "잘라내기",                        ID_CUT
@@ -288,15 +287,17 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     PUSHBUTTON      "PaneColor",IDC_PaneColor,7,38,50,14
     PUSHBUTTON      "LineColor",IDC_LineColor,8,16,50,14
-    COMBOBOX        IDC_LineThick,9,112,48,77,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Line Thick",IDC_STATIC,9,99,32,8
-    COMBOBOX        IDC_LinePattern,9,145,48,89,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Line Pattern",IDC_STATIC,9,133,40,8
-    LTEXT           "FillPattern",IDC_STATIC,9,169,33,8
-    COMBOBOX        IDC_FILLPATTERN,9,180,48,65,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Font",IDC_STATIC,11,206,16,8
-    COMBOBOX        IDC_FONT,9,217,48,55,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_LineThick,9,90,48,77,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Line Thick",IDC_STATIC,9,79,32,8
+    COMBOBOX        IDC_LinePattern,9,121,48,89,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Line Pattern",IDC_STATIC,9,110,40,8
+    LTEXT           "FillPattern",IDC_STATIC,9,142,33,8
+    COMBOBOX        IDC_FILLPATTERN,7,153,48,65,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Font",IDC_STATIC,9,170,16,8
+    COMBOBOX        IDC_FONT,9,180,48,55,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "FontColor",IDC_FontColor,8,57,50,14
+    LTEXT           "FontSize",IDC_STATIC,7,206,28,8
+    COMBOBOX        IDC_FontSize,6,217,48,48,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
 END
 
 
@@ -424,6 +425,16 @@ BEGIN
 0xc3b1, 0xadbc, "\000" 
     IDC_FONT, 0x403, 5, 0
 0xd9b9, 0xc1c5, "\000" 
+    IDC_FontSize, 0x403, 2, 0
+0x0031, 
+    IDC_FontSize, 0x403, 2, 0
+0x0032, 
+    IDC_FontSize, 0x403, 2, 0
+0x0033, 
+    IDC_FontSize, 0x403, 2, 0
+0x0034, 
+    IDC_FontSize, 0x403, 2, 0
+0x0035, 
     0
 END
 

@@ -27,6 +27,8 @@
 #define IDC_FILLPATTERN                 1008
 #define IDC_FONT                        1010
 #define IDC_FontColor                   1011
+#define IDC_COMBO1                      1012
+#define IDC_FontSize                    1012
 #define ID_ELLIPSE                      32772
 #define ID_RECTANGLE                    32775
 #define ID_TEXT                         32777
@@ -46,27 +48,25 @@
 #define ID_32796                        32796
 #define ID_GroupDeselect                32797
 #define ID_BUTTON32798                  32798
+#define ID_32798                        32798
 #define ID_BUTTON32799                  32799
+#define ID_32799                        32799
 #define ID_BUTTON32800                  32800
+#define ID_CUT                          32800
 #define ID_BUTTON32801                  32801
+#define ID_PASTE                        32801
 #define ID_LEFT                         32802
 #define ID_CENTER                       32803
 #define ID_BUTTON32804                  32804
 #define ID_RIGHT                        32804
-#define ID_32798                        32798
-#define ID_32799                        32799
-#define ID_CUT                          32800
-#define ID_PASTE                        32801
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        312
-#define _APS_NEXT_COMMAND_VALUE         32805
-#define _APS_NEXT_CONTROL_VALUE         1012
 #define _APS_NEXT_COMMAND_VALUE         32802
-#define _APS_NEXT_CONTROL_VALUE         1011
+#define _APS_NEXT_CONTROL_VALUE         1013
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

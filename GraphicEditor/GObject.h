@@ -62,6 +62,9 @@ public:
 	int m_groupIndex;
 
 	void setFont(int);
+
+	void setFontSize(int);
+	int getFontSize();
 	int m_font;
 private:
 	int m_startX;
@@ -75,6 +78,7 @@ private:
 	COLORREF m_fontcolor;
 	BOOL polypointmove = FALSE;
 	int m_fontsort;
+	int m_fontsize;
 protected:
 	BOOL m_isSelected;
 };

@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_CBN_SELCHANGE(IDC_LinePattern, &CMainFrame::OnCbnSelchangeLinepattern)
 	ON_CBN_SELCHANGE(IDC_COMBO2, &CMainFrame::OnCbnSelchangeCombo2)
 	ON_CBN_SELCHANGE(IDC_FONT, &CMainFrame::OnCbnSelchangeFont)
+	ON_CBN_SELCHANGE(IDC_FontSize, &CMainFrame::OnCbnSelchangeFontsize)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -461,4 +462,29 @@ void CMainFrame::OnCbnSelchangeFont()
 	pDoc->UpdateAllViews(NULL);
 
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+void CMainFrame::OnCbnSelchangeFontsize()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+
+	CString strBuf, strOut;
+	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_FILLPATTERN);
+	pbox->GetWindowText(strBuf);
+	CT2A ascii(strBuf);
+
+
+	fr_fontsize = atoi(ascii.m_psz);
+
+	CMainFrame* pFrame = (CMainFrame*)AfxGetMainWnd();
+	CChildFrame* pChild = (CChildFrame*)pFrame->GetActiveFrame();
+	CGraphicEditorDoc* pDoc = (CGraphicEditorDoc*)(pChild->GetActiveDocument());
+	for (int i = 0; i < pDoc->vo.size(); i++){
+		if (pDoc->vo[i]->getSelected() == TRUE){
+			pDoc->vo[i]->setFontSize(fr_fontsize);
+		}
+	}
+	pDoc->UpdateAllViews(NULL);
+
 }

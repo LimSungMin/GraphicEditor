@@ -131,6 +131,16 @@ int GObject::getFontSort()
 {
 	return m_fontsort;
 }
+
+void GObject::setFontSize(int fontsize)
+{
+	m_fontsize = fontsize;
+}
+
+int GObject::getFontSize()
+{
+	return m_fontsize;
+}
 GObject::~GObject()
 {
 }

@@ -46,7 +46,10 @@ public:
 	int m_linePattern;	// MainFrm 으로부터 선 패턴을 가져옵니다.
 	int m_fillPattern;	// MainFrm 으로부터 내부 패턴을 가져옵니다.
 	BOOL polypointmove = FALSE;
-
+	
+	int getFontSize();
+	
+	int m_fontsize;
 // 작업입니다.
 public:
 	int getLineSize();

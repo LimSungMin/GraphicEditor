@@ -974,7 +974,7 @@ void CGraphicEditorView::OnCut()
 	pDoc->SetModifiedFlag();
 	for (int i = 0; i < pDoc->vo.size(); i++){
 
-
+		
 		if (pDoc->vo[i]->getSelected() == TRUE){
 
 			if (pDoc->vo[i] == pDoc->m_poly){
@@ -987,7 +987,7 @@ void CGraphicEditorView::OnCut()
 	}
 	//pDoc->vo.resize(pDoc->vo.size());
 	m_currentSelected = -1;
-
+	//
 	Invalidate(FALSE);
 }
 

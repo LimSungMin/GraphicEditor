@@ -12,7 +12,7 @@ public:
 
 // 특성입니다.
 public:
-
+	int fr_lineSize;
 // 작업입니다.
 public:
 
@@ -50,6 +50,7 @@ public:
 	afx_msg void OnEllipse();
 	afx_msg void OnText();
 	CPaneDialog m_DockingBar;
+	afx_msg void OnCbnSelchangeLinethick();
 };
 
 

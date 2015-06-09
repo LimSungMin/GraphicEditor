@@ -29,6 +29,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_RECTANGLE, &CMainFrame::OnRectangle)
 	ON_COMMAND(ID_ELLIPSE, &CMainFrame::OnEllipse)
 	ON_COMMAND(ID_TEXT, &CMainFrame::OnText)
+	ON_CBN_SELCHANGE(IDC_LineThick, &CMainFrame::OnCbnSelchangeLinethick)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -310,4 +311,15 @@ void CMainFrame::OnEllipse()
 void CMainFrame::OnText()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CMainFrame::OnCbnSelchangeLinethick()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CString strBuf, strOut;
+	CComboBox *pbox = (CComboBox*)m_DockingBar.GetDlgItem(IDC_LineThick);
+	pbox->GetWindowText(strBuf);
+	CT2A ascii(strBuf);
+	fr_lineSize = atoi(ascii.m_psz);
 }

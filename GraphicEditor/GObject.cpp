@@ -4,6 +4,7 @@
 
 GObject::GObject() : m_startX(0), m_startY(0), m_thick(1), m_groupIndex(-1)
 {
+	m_fontsort = DT_LEFT;
 }
 
 GObject::GObject(int x, int y) : m_startX(x), m_startY(y), m_thick(1), m_groupIndex(-1)
@@ -122,7 +123,14 @@ void GObject::pointmover(int x, int y, int index){
 
 }
 
-
+void GObject::setFontSort(int fontsort)
+{
+	m_fontsort = fontsort;
+}
+int GObject::getFontSort()
+{
+	return m_fontsort;
+}
 GObject::~GObject()
 {
 }

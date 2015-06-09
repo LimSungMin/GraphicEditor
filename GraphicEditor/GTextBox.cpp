@@ -64,7 +64,7 @@ void GTextBox::draw(CDC* dc)
 	int sortflag = DT_RIGHT;
 
 	//SetTextColor(hdc, this->getFontColor());
-	dc->DrawText(CString(this->m_str.GetData()), this->m_str.GetCount(), &rect,  DT_WORDBREAK | sortflag);// | TRANSPARENT);
+	dc->DrawText(CString(this->m_str.GetData()), this->m_str.GetCount(), &rect,  DT_WORDBREAK | this->getFontSort());// | TRANSPARENT);
 
 	
 

@@ -56,6 +56,9 @@ public:
 
 	COLORREF getFontColor();
 	
+	void setFontSort(int);
+	int getFontSort();
+
 	int m_groupIndex;
 
 	void setFont(int);
@@ -71,6 +74,7 @@ private:
 	COLORREF m_panecolor;
 	COLORREF m_fontcolor;
 	BOOL polypointmove = FALSE;
+	int m_fontsort;
 protected:
 	BOOL m_isSelected;
 };

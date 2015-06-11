@@ -452,6 +452,38 @@ void CGraphicEditorView::OnMouseMove(UINT nFlags, CPoint point)
 						//Invalidate();
 						break;
 					}
+					case 1:{
+						int x = pDoc->vo[m_currentSelected]->getEndX();
+						int y = pDoc->vo[m_currentSelected]->getStartY();
+						for (int i = 0; i < pDoc->vo.size(); i++){
+							if (pDoc->vo[i]->m_groupIndex != -1 && pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+								CPoint* anchorPoint = new CPoint(pDoc->vo[i]->getEndX(), pDoc->vo[i]->getStartY());
+								int dx = x - anchorPoint->x;
+								int dy = y - anchorPoint->y;
+								pDoc->vo[i]->setEndX(point.x - dx);
+								pDoc->vo[i]->setStartY(point.y - dy);
+								delete anchorPoint;
+							}
+						}
+						//Invalidate();
+						break;
+					}
+					case 2:{
+						int x = pDoc->vo[m_currentSelected]->getStartX();
+						int y = pDoc->vo[m_currentSelected]->getEndY();
+						for (int i = 0; i < pDoc->vo.size(); i++){
+							if (pDoc->vo[i]->m_groupIndex != -1 && pDoc->vo[i]->m_groupIndex == pDoc->vo[m_currentSelected]->m_groupIndex){
+								CPoint* anchorPoint = new CPoint(pDoc->vo[i]->getStartX(), pDoc->vo[i]->getEndY());
+								int dx = x - anchorPoint->x;
+								int dy = y - anchorPoint->y;
+								pDoc->vo[i]->setStartX(point.x - dx);
+								pDoc->vo[i]->setEndY(point.y - dy);
+								delete anchorPoint;
+							}
+						}
+						//Invalidate();
+						break;
+					}
 					case 3:{
 						int x = pDoc->vo[m_currentSelected]->getEndX();
 						int y = pDoc->vo[m_currentSelected]->getEndY();
@@ -997,7 +1029,7 @@ void CGraphicEditorView::OnPaste()
 	
 	for (int i = pDoc->tmp.size()-1; i >= 0; i--){
 		pDoc->vo.push_back(pDoc->tmp[i]);
-		pDoc->tmp.pop_back(); // pop-back 시 tmp의 크기가 줄어드니까 조기 종료됨 => 역순으로 검사함
+		pDoc->tmp.pop_back(); // pop_back 시 tmp의 크기가 줄어드니까 조기 종료됨 => 역순으로 검사함
 	}
 
 	Invalidate(FALSE);

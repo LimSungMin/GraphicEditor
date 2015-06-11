@@ -788,7 +788,7 @@ void CGraphicEditorView::OnEditUndo()
 	CGraphicEditorDoc* pDoc = GetDocument();
 	Invalidate(FALSE);
 	if (pDoc->vo.size() > 0){
-		
+		pDoc->vo.pop_back();
 	}
 	Invalidate(FALSE);
 }
